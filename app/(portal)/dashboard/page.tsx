@@ -2,18 +2,7 @@
 
 import { useState } from "react";
 
-/* ─── Brand token ─── */
 const CNC_RED = "#ED1B24";
-
-/* ─── Shared decorative components ─── */
-const ECGLine = () => (
-  <svg viewBox="0 0 400 40" className="w-32 h-8" style={{ opacity: 0.6 }}>
-    <polyline
-      points="0,20 60,20 80,5 100,35 120,5 140,20 200,20 220,10 240,30 260,20 400,20"
-      fill="none" stroke={CNC_RED} strokeWidth="2"
-    />
-  </svg>
-);
 
 const AfricanDivider = () => (
   <div className="w-full overflow-hidden" style={{ height: 14 }}>
@@ -41,7 +30,6 @@ const SectionLabel = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
-/* ─── KPI card ─── */
 interface MetricCardProps {
   icon: string;
   value: string;
@@ -56,15 +44,10 @@ const MetricCard = ({ icon, value, label, badge, badgeColor }: MetricCardProps) 
   >
     <div className="p-5">
       <div className="flex items-start justify-between mb-3">
-        <div
-          className="w-10 h-10 rounded-full flex items-center justify-center text-lg"
-          style={{ background: "#fff5f5" }}
-        >
+        <div className="w-10 h-10 rounded-full flex items-center justify-center text-lg" style={{ background: "#fff5f5" }}>
           {icon}
         </div>
-        <span className="text-xs font-bold" style={{ color: badgeColor }}>
-          {badge}
-        </span>
+        <span className="text-xs font-bold" style={{ color: badgeColor }}>{badge}</span>
       </div>
       <p className="text-2xl font-black text-gray-900 mb-1">{value}</p>
       <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">{label}</p>
@@ -72,16 +55,12 @@ const MetricCard = ({ icon, value, label, badge, badgeColor }: MetricCardProps) 
   </div>
 );
 
-/* ─── Quick-access tile ─── */
 const QuickTile = ({ icon, label, href }: { icon: string; label: string; href: string }) => (
   <a
     href={href}
     className="flex flex-col items-center justify-center gap-2 py-6 bg-white border border-gray-100 rounded-sm shadow-sm hover:border-red-200 hover:shadow-md transition-all group cursor-pointer"
   >
-    <div
-      className="w-12 h-12 rounded-full flex items-center justify-center text-xl group-hover:scale-110 transition-transform"
-      style={{ background: "#fff5f5" }}
-    >
+    <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl group-hover:scale-110 transition-transform" style={{ background: "#fff5f5" }}>
       {icon}
     </div>
     <span className="text-xs font-bold uppercase tracking-widest text-gray-600 group-hover:text-red-600 transition-colors">
@@ -90,49 +69,41 @@ const QuickTile = ({ icon, label, href }: { icon: string; label: string; href: s
   </a>
 );
 
-/* ─── Recent activity row ─── */
-interface ActivityRow {
-  action: string;
-  module: string;
-  time: string;
-  status: "completed" | "pending" | "urgent";
-}
-const statusStyle: Record<ActivityRow["status"], string> = {
+type ActivityStatus = "completed" | "pending" | "urgent";
+interface ActivityRow { action: string; module: string; time: string; status: ActivityStatus; }
+
+const statusStyle: Record<ActivityStatus, string> = {
   completed: "bg-green-50 text-green-700",
   pending:   "bg-yellow-50 text-yellow-700",
   urgent:    "bg-red-50 text-red-700",
 };
 
-/* ─── Page data ─── */
 const metrics: MetricCardProps[] = [
-  { icon: "🩺", value: "5,842",   label: "Medical Tests This Month",  badge: "+8.2%",    badgeColor: "#16a34a" },
-  { icon: "🏢", value: "124",     label: "Active Clients",            badge: "+3 new",   badgeColor: "#16a34a" },
-  { icon: "💰", value: "R 1.23M", label: "Monthly Revenue",           badge: "+12.4%",   badgeColor: "#16a34a" },
-  { icon: "📈", value: "R 380K",  label: "Open Sales Pipeline",       badge: "−4 deals", badgeColor: CNC_RED   },
-  { icon: "👥", value: "47",      label: "Staff Headcount",           badge: "+2 this month", badgeColor: "#16a34a" },
-  { icon: "📋", value: "12",      label: "Pending Approvals",         badge: "3 urgent", badgeColor: CNC_RED   },
+  { icon: "🩺", value: "5,842",   label: "Medical Tests This Month",  badge: "+8.2%",         badgeColor: "#16a34a" },
+  { icon: "🏢", value: "124",     label: "Active Clients",            badge: "+3 new",         badgeColor: "#16a34a" },
+  { icon: "💰", value: "R 1.23M", label: "Monthly Revenue",           badge: "+12.4%",         badgeColor: "#16a34a" },
+  { icon: "📈", value: "R 380K",  label: "Open Sales Pipeline",       badge: "−4 deals",       badgeColor: CNC_RED   },
+  { icon: "👥", value: "47",      label: "Staff Headcount",           badge: "+2 this month",  badgeColor: "#16a34a" },
+  { icon: "📋", value: "12",      label: "Pending Approvals",         badge: "3 urgent",       badgeColor: CNC_RED   },
 ];
 
 const quickLinks = [
-  { icon: "👤", label: "Staff & HR",   href: "/staff" },
-  { icon: "💵", label: "Finance",      href: "/finance" },
-  { icon: "📊", label: "Sales & CRM",  href: "/sales" },
-  { icon: "⚙️",  label: "Operations",  href: "/operations" },
-  { icon: "🔧", label: "Admin",        href: "/admin" },
+  { icon: "👤", label: "Staff & HR",  href: "/staff"      },
+  { icon: "💵", label: "Finance",     href: "/finance"    },
+  { icon: "📊", label: "Sales & CRM", href: "/sales"      },
+  { icon: "⚙️",  label: "Operations", href: "/operations" },
+  { icon: "🔧", label: "Admin",       href: "/admin"      },
 ];
 
 const activity: ActivityRow[] = [
-  { action: "Invoice #INV-2094 issued to Harmony Mining",   module: "Finance",    time: "2 min ago",  status: "completed" },
+  { action: "Invoice #INV-2094 issued to Harmony Mining",    module: "Finance",    time: "2 min ago",  status: "completed" },
   { action: "New client onboarded: Impala Platinum Holdings",module: "Sales",      time: "18 min ago", status: "completed" },
-  { action: "Spirometry batch completed – Elandsfontein",   module: "Operations", time: "34 min ago", status: "completed" },
-  { action: "Leave request submitted – T. Mthembu",         module: "HR",         time: "1 hr ago",   status: "pending"   },
-  { action: "SLA breach risk flagged – Glencore site",      module: "Operations", time: "2 hr ago",   status: "urgent"    },
-  { action: "EMP201 submission reminder",                   module: "Finance",    time: "3 hr ago",   status: "pending"   },
+  { action: "Spirometry batch completed – Elandsfontein",    module: "Operations", time: "34 min ago", status: "completed" },
+  { action: "Leave request submitted – T. Mthembu",          module: "HR",         time: "1 hr ago",   status: "pending"   },
+  { action: "SLA breach risk flagged – Glencore site",       module: "Operations", time: "2 hr ago",   status: "urgent"    },
+  { action: "EMP201 submission reminder",                    module: "Finance",    time: "3 hr ago",   status: "pending"   },
 ];
 
-/* ══════════════════════════════════════════
-   PAGE COMPONENT
-══════════════════════════════════════════ */
 export default function DashboardPage() {
   const [activeNav, setActiveNav] = useState("Dashboard");
   const navItems = ["Dashboard", "Staff & HR", "Finance", "Sales & CRM", "Operations", "Admin"];
@@ -161,24 +132,12 @@ export default function DashboardPage() {
       <header className="bg-white shadow-sm sticky top-0 z-20">
         <div className="max-w-screen-xl mx-auto px-6 py-3 flex items-center justify-between">
 
-          {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div>
-              <span className="text-xl font-black text-gray-900 tracking-tight uppercase block">
-                CARE NET
-              </span>
-              <span
-                className="text-xs font-bold text-white px-2 py-0.5 tracking-widest uppercase block"
-                style={{ background: CNC_RED, letterSpacing: "0.15em" }}
-              >
-                CONSULTANTS
-              </span>
-              <span className="text-xs text-gray-400 mt-0.5 block">
-                Your Partner in Workplace Health
-              </span>
-            </div>
-            <ECGLine />
-          </div>
+          {/* ── Real logo image ── */}
+          <img
+            src="/care-net-logo.png"
+            alt="Care Net Consultants"
+            className="h-16 w-auto"
+          />
 
           {/* Navigation */}
           <nav className="flex gap-1">
@@ -224,55 +183,32 @@ export default function DashboardPage() {
           <div>
             <div className="flex items-center gap-3 mb-1">
               <div className="w-1 h-7 rounded-full" style={{ background: CNC_RED }} />
-              <h1 className="text-2xl font-black uppercase tracking-wide text-gray-900">
-                DASHBOARD
-              </h1>
+              <h1 className="text-2xl font-black uppercase tracking-wide text-gray-900">DASHBOARD</h1>
             </div>
             <p className="text-sm text-gray-400 ml-4">{today}</p>
           </div>
-          {/* Notification bell */}
-          <div className="flex items-center gap-3">
-            <button className="relative p-2 rounded-full bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-              <span className="text-lg">🔔</span>
-              <span
-                className="absolute top-0.5 right-0.5 w-4 h-4 rounded-full text-white text-xs flex items-center justify-center font-black"
-                style={{ background: CNC_RED, fontSize: 9 }}
-              >
-                3
-              </span>
-            </button>
-          </div>
+          <button className="relative p-2 rounded-full bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+            <span className="text-lg">🔔</span>
+            <span
+              className="absolute top-0.5 right-0.5 w-4 h-4 rounded-full text-white text-xs flex items-center justify-center font-black"
+              style={{ background: CNC_RED, fontSize: 9 }}
+            >3</span>
+          </button>
         </div>
 
         {/* Welcome banner */}
-        <div
-          className="rounded-sm mb-8 overflow-hidden relative"
-          style={{ background: CNC_RED }}
-        >
+        <div className="rounded-sm mb-8 overflow-hidden relative" style={{ background: CNC_RED }}>
           <div className="px-8 py-6 relative z-10">
-            <p className="text-red-200 text-xs font-bold uppercase tracking-widest mb-1">
-              WELCOME BACK
-            </p>
-            <h2 className="text-white text-2xl font-black mb-1">
-              Care Net Consultants Portal
-            </h2>
-            <p className="text-red-100 text-sm">
-              4 fixed clinics · National mobile units · 5,000+ medical tests/month
-            </p>
+            <p className="text-red-200 text-xs font-bold uppercase tracking-widest mb-1">WELCOME BACK</p>
+            <h2 className="text-white text-2xl font-black mb-1">Care Net Consultants Portal</h2>
+            <p className="text-red-100 text-sm">4 fixed clinics · National mobile units · 5,000+ medical tests/month</p>
           </div>
-          {/* Decorative ECG watermark */}
           <div className="absolute right-8 top-1/2 -translate-y-1/2 opacity-10">
             <svg viewBox="0 0 500 80" className="w-64 h-16">
-              <polyline
-                points="0,40 80,40 110,10 140,70 170,10 200,40 300,40 330,20 360,60 390,40 500,40"
-                fill="none" stroke="white" strokeWidth="4"
-              />
+              <polyline points="0,40 80,40 110,10 140,70 170,10 200,40 300,40 330,20 360,60 390,40 500,40" fill="none" stroke="white" strokeWidth="4" />
             </svg>
           </div>
-          {/* Heart watermark */}
-          <div className="absolute right-32 top-1/2 -translate-y-1/2 opacity-10 text-8xl">
-            🫀
-          </div>
+          <div className="absolute right-32 top-1/2 -translate-y-1/2 opacity-10 text-8xl">🫀</div>
         </div>
 
         {/* Alert banner */}
@@ -286,35 +222,26 @@ export default function DashboardPage() {
           </p>
         </div>
 
-        {/* ── KEY METRICS ── */}
+        {/* Key metrics */}
         <SectionLabel>KEY METRICS</SectionLabel>
         <div className="grid grid-cols-3 gap-4 mb-10">
-          {metrics.map((m, i) => (
-            <MetricCard key={i} {...m} />
-          ))}
+          {metrics.map((m, i) => <MetricCard key={i} {...m} />)}
         </div>
 
-        {/* ── QUICK ACCESS ── */}
+        {/* Quick access */}
         <SectionLabel>QUICK ACCESS</SectionLabel>
         <div className="grid grid-cols-5 gap-4 mb-10">
-          {quickLinks.map((q) => (
-            <QuickTile key={q.label} {...q} />
-          ))}
+          {quickLinks.map((q) => <QuickTile key={q.label} {...q} />)}
         </div>
 
-        {/* ── RECENT ACTIVITY ── */}
+        {/* Recent activity */}
         <SectionLabel>RECENT ACTIVITY</SectionLabel>
         <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden mb-8">
           <table className="w-full">
             <thead>
               <tr className="bg-gray-50 border-b border-gray-100">
                 {["Action", "Module", "Time", "Status"].map((h) => (
-                  <th
-                    key={h}
-                    className="px-6 py-3 text-left text-xs font-black uppercase tracking-widest text-gray-400"
-                  >
-                    {h}
-                  </th>
+                  <th key={h} className="px-6 py-3 text-left text-xs font-black uppercase tracking-widest text-gray-400">{h}</th>
                 ))}
               </tr>
             </thead>

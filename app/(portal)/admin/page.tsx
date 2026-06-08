@@ -1,129 +1,185 @@
-import type { Metadata } from 'next'
-import { Settings, Shield, Users, Database, FileText, Bell, Lock, Eye } from 'lucide-react'
-import { Header } from '@/components/layout/Header'
-import { StatCard } from '@/components/ui/StatCard'
+"use client";
+import { useState } from "react";
+const CNC_RED = "#ED1B24";
 
-export const metadata: Metadata = { title: 'Admin' }
+const AfricanDivider = () => (
+  <div className="w-full overflow-hidden" style={{ height: 14 }}>
+    <svg viewBox="0 0 800 14" className="w-full h-full" preserveAspectRatio="none">
+      {[...Array(40)].map((_, i) => (
+        <polygon key={i} points={`${i*20+10},0 ${i*20+20},14 ${i*20},14`}
+          fill={i%5===0?CNC_RED:i%5===1?"#1a1a1a":i%5===2?"#c8a850":i%5===3?"#2a6496":"#4a9e4a"} />
+      ))}
+    </svg>
+  </div>
+);
+const KpiCard = ({ icon, value, label, badge, badgeColor }: { icon:string;value:string;label:string;badge:string;badgeColor:string }) => (
+  <div className="bg-white rounded-sm border border-gray-100 shadow-sm overflow-hidden" style={{ borderTop:`4px solid ${CNC_RED}` }}>
+    <div className="p-5">
+      <div className="flex items-start justify-between mb-3">
+        <div className="w-10 h-10 rounded-full flex items-center justify-center text-lg" style={{ background:"#fff5f5" }}>{icon}</div>
+        <span className="text-xs font-bold" style={{ color:badgeColor }}>{badge}</span>
+      </div>
+      <p className="text-2xl font-black text-gray-900 mb-1">{value}</p>
+      <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">{label}</p>
+    </div>
+  </div>
+);
 
-const adminStats = [
-  { title: 'Portal Users', value: '14', icon: Users, iconBg: 'bg-cnc-gray-100', iconColor: 'text-cnc-gray-600' },
-  { title: 'Active Roles', value: '6', icon: Lock, iconBg: 'bg-purple-50', iconColor: 'text-purple-600' },
-  { title: 'Audit Log Entries', value: '12,840', icon: Eye, iconBg: 'bg-blue-50', iconColor: 'text-blue-600' },
-  { title: 'POPIA Compliance', value: '100%', icon: Shield, iconBg: 'bg-green-50', iconColor: 'text-green-600' },
-]
+const approvals = [
+  { item:"Leave request – T. Mthembu",         module:"HR",      submitted:"Today 08:12",   priority:"Normal" },
+  { item:"Invoice write-off – INV-2078",        module:"Finance", submitted:"Yesterday",     priority:"High"   },
+  { item:"New vendor – MedEquip SA",            module:"Procurement",submitted:"3 days ago", priority:"Normal" },
+  { item:"Access request – Cassandra (GitHub)", module:"IT",      submitted:"3 days ago",    priority:"Low"    },
+  { item:"Mobile unit deployment – Agri-Fresh", module:"Ops",     submitted:"4 days ago",    priority:"High"   },
+];
 
-const systemActions = [
-  { label: 'User Management', icon: Users, desc: 'Portal roles, permissions, and access levels', color: 'gray' },
-  { label: 'Security & Access', icon: Shield, desc: 'SK-074 · AES-256 · TLS 1.3 · MFA', color: 'purple' },
-  { label: 'Audit Trail', icon: FileText, desc: 'SK-032 · Every action logged with SAST timestamp', color: 'blue' },
-  { label: 'POPIA Compliance', icon: Lock, desc: 'SK-030 · Data subject rights · Breach protocols', color: 'green' },
-  { label: 'Integrations', icon: Database, desc: 'Supabase · AutoHive · Make.com · ElevenLabs', color: 'indigo' },
-  { label: 'Notifications', icon: Bell, desc: 'Alerts, escalations, SARS deadlines, SLA warnings', color: 'orange' },
-  { label: 'System Settings', icon: Settings, desc: 'Brand config, legal footer, SK numbering', color: 'gray' },
-  { label: 'View Audit Log', icon: Eye, desc: 'SK-032 · Full tamper-evident audit trail', color: 'blue' },
-]
+const integrations = [
+  { name:"AutoHive CRM",       status:"Connected", lastSync:"2 min ago",  icon:"🔗" },
+  { name:"Make.com",           status:"Connected", lastSync:"5 min ago",  icon:"⚡" },
+  { name:"Supabase",           status:"Connected", lastSync:"Live",       icon:"🗄️"  },
+  { name:"ElevenLabs (Thandi)",status:"Connected", lastSync:"Active",     icon:"🎧" },
+  { name:"Telnyx",             status:"Connected", lastSync:"Active",     icon:"📞" },
+  { name:"MyClinicOnline",     status:"Connected", lastSync:"15 min ago", icon:"🏥" },
+];
 
-const colorMap: Record<string, { bg: string; icon: string }> = {
-  gray: { bg: 'bg-cnc-gray-100', icon: 'text-cnc-gray-500' },
-  purple: { bg: 'bg-purple-50', icon: 'text-purple-600' },
-  blue: { bg: 'bg-blue-50', icon: 'text-blue-600' },
-  green: { bg: 'bg-green-50', icon: 'text-green-600' },
-  indigo: { bg: 'bg-indigo-50', icon: 'text-indigo-600' },
-  orange: { bg: 'bg-orange-50', icon: 'text-orange-500' },
-  red: { bg: 'bg-cnc-red/10', icon: 'text-cnc-red' },
-}
-
-const roles = [
-  { name: 'System Administrator', users: 2, access: 'Full system access', level: 'critical' },
-  { name: 'Finance Manager', users: 3, access: 'Finance module + reports', level: 'high' },
-  { name: 'HR Manager', users: 2, access: 'Staff & HR module', level: 'high' },
-  { name: 'Sales Manager', users: 4, access: 'Sales & CRM module', level: 'medium' },
-  { name: 'Operations Manager', users: 2, access: 'Operations module', level: 'medium' },
-  { name: 'Read Only', users: 1, access: 'Dashboard & reports only', level: 'low' },
-]
-
-const levelColors: Record<string, string> = {
-  critical: 'bg-cnc-red/10 text-cnc-red',
-  high: 'bg-orange-50 text-orange-700',
-  medium: 'bg-blue-50 text-blue-700',
-  low: 'bg-cnc-gray-100 text-cnc-gray-500',
-}
+const users = [
+  { name:"Odendaal Oosthuizen", role:"IT Admin",        access:"Full",    lastLogin:"Today 07:55"  },
+  { name:"Barteld Jans Bakker", role:"MD / Director",   access:"Full",    lastLogin:"Today 08:30"  },
+  { name:"Cassandra Louw",      role:"Frontend Dev",    access:"Limited", lastLogin:"Yesterday"    },
+  { name:"Quintus de Beer",     role:"DB Admin",        access:"Limited", lastLogin:"2 days ago"   },
+];
 
 export default function AdminPage() {
+  const [activeNav, setActiveNav] = useState("Admin");
+  const navItems = ["Dashboard","Staff & HR","Finance","Sales & CRM","Operations","Admin"];
   return (
-    <>
-      <Header title="Admin" subtitle="System settings · POPIA · King IV · Role-based access" />
-      <main className="flex-1 p-6 space-y-6">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {adminStats.map((s) => (
-            <StatCard key={s.title} {...s} />
-          ))}
+    <div className="min-h-screen bg-gray-50">
+      <div className="bg-gray-900 text-white text-xs px-6 py-1.5 flex justify-between items-center">
+        <div className="flex gap-4"><span>📞 +27 60 070 2723</span><span>✉️ ops@carenetconsultants.co.za</span></div>
+        <div className="flex gap-3 items-center">
+          <span className="text-gray-400">Internal Portal · POPIA Protected</span>
+          <span className="w-px h-3 bg-gray-600" />
+          <span style={{ color:CNC_RED }} className="font-bold">● LIVE</span>
+        </div>
+      </div>
+      <header className="bg-white shadow-sm sticky top-0 z-20">
+        <div className="max-w-screen-xl mx-auto px-6 py-3 flex items-center justify-between">
+          <img src="/care-net-logo.png" alt="Care Net Consultants" className="h-16 w-auto" />
+          <nav className="flex gap-1">
+            {navItems.map(item => (
+              <button key={item} onClick={() => setActiveNav(item)}
+                className="px-4 py-2 text-sm font-bold uppercase tracking-wide transition-all"
+                style={{ color:activeNav===item?"white":"#374151", background:activeNav===item?CNC_RED:"transparent", letterSpacing:"0.06em" }}>
+                {item}
+              </button>
+            ))}
+          </nav>
+          <div className="flex items-center gap-3">
+            <div className="text-right"><p className="text-sm font-bold text-gray-800">Portal Admin</p><p className="text-xs text-gray-400">carenetconsultants.co.za</p></div>
+            <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-black" style={{ background:CNC_RED }}>CN</div>
+          </div>
+        </div>
+        <AfricanDivider />
+      </header>
+      <main className="max-w-screen-xl mx-auto px-6 py-8">
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-1">
+            <div className="w-1 h-7 rounded-full" style={{ background:CNC_RED }} />
+            <h1 className="text-2xl font-black uppercase tracking-wide text-gray-900">ADMIN</h1>
+          </div>
+          <p className="text-sm text-gray-400 ml-4">System · Users · Integrations · Approvals</p>
         </div>
 
-        <section>
-          <h3 className="text-xs font-heading font-semibold text-cnc-gray-400 uppercase tracking-widest mb-3">
-            System Actions
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            {systemActions.map(({ label, icon: Icon, desc, color }) => {
-              const c = colorMap[color]
-              return (
-                <button
-                  key={label}
-                  className="flex items-start gap-3 p-4 bg-white rounded-xl border border-cnc-gray-100 hover:border-cnc-red hover:shadow-cnc-sm transition-all text-left group"
-                >
-                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 ${c.bg}`}>
-                    <Icon className={`w-4 h-4 ${c.icon}`} />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-sm font-heading font-semibold text-cnc-black">{label}</p>
-                    <p className="text-xs text-cnc-gray-400 mt-0.5 leading-relaxed">{desc}</p>
-                  </div>
-                </button>
-              )
-            })}
-          </div>
-        </section>
+        <div className="grid grid-cols-4 gap-4 mb-8">
+          <KpiCard icon="👤" value="4"    label="Portal Users"        badge="All active"  badgeColor="#16a34a" />
+          <KpiCard icon="📋" value="12"   label="Pending Approvals"   badge="3 urgent"    badgeColor={CNC_RED} />
+          <KpiCard icon="🔗" value="6/6"  label="Integrations Active" badge="All healthy" badgeColor="#16a34a" />
+          <KpiCard icon="🛡️" value="100%" label="System Uptime"       badge="30 days"     badgeColor="#16a34a" />
+        </div>
 
-        {/* Roles */}
-        <section>
-          <h3 className="text-xs font-heading font-semibold text-cnc-gray-400 uppercase tracking-widest mb-3">
-            Portal Roles
-          </h3>
-          <div className="bg-white rounded-xl border border-cnc-gray-100 overflow-hidden">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-cnc-gray-50">
-                  {['Role', 'Users', 'Access Scope', 'Level'].map((h) => (
-                    <th key={h} className="text-left px-5 py-3 text-xs font-semibold text-cnc-gray-400 uppercase tracking-wide">
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {roles.map((role, i) => (
-                  <tr key={i} className="border-b border-cnc-gray-50 last:border-0 hover:bg-cnc-gray-50/50 transition-colors">
-                    <td className="px-5 py-3 text-sm font-medium text-cnc-black">{role.name}</td>
-                    <td className="px-5 py-3 text-sm text-cnc-gray-500">{role.users}</td>
-                    <td className="px-5 py-3 text-sm text-cnc-gray-500">{role.access}</td>
-                    <td className="px-5 py-3">
-                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${levelColors[role.level]}`}>
-                        {role.level}
-                      </span>
-                    </td>
-                  </tr>
+        <div className="grid grid-cols-3 gap-6 mb-8">
+          <div className="col-span-2 bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
+            <div className="px-6 pt-5 pb-4 border-b border-gray-100 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-1 h-5 rounded-full" style={{ background:CNC_RED }} />
+                <h2 className="text-sm font-black uppercase tracking-widest text-gray-700">PENDING APPROVALS</h2>
+              </div>
+              <span className="text-xs font-bold text-white px-2 py-1 rounded-full" style={{ background:CNC_RED }}>12 pending</span>
+            </div>
+            <div className="divide-y divide-gray-50">
+              {approvals.map((a,i) => (
+                <div key={i} className="px-6 py-4 hover:bg-gray-50 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <p className="text-sm font-bold text-gray-800">{a.item}</p>
+                      <div className="flex items-center gap-3 mt-0.5">
+                        <span className="text-xs text-gray-400">{a.module}</span>
+                        <span className="text-xs text-gray-300">·</span>
+                        <span className="text-xs text-gray-400">{a.submitted}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 ml-4">
+                      <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${a.priority==="High"?"bg-red-50 text-red-700":a.priority==="Normal"?"bg-gray-100 text-gray-600":"bg-blue-50 text-blue-600"}`}>{a.priority}</span>
+                      <button className="text-xs font-bold text-white px-3 py-1.5" style={{ background:CNC_RED }}>Approve</button>
+                      <button className="text-xs font-bold text-gray-500 px-3 py-1.5 border border-gray-200">Decline</button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
+              <div className="px-5 pt-5 pb-4 border-b border-gray-100 flex items-center gap-3">
+                <div className="w-1 h-5 rounded-full" style={{ background:CNC_RED }} />
+                <h2 className="text-sm font-black uppercase tracking-widest text-gray-700">INTEGRATIONS</h2>
+              </div>
+              <div className="divide-y divide-gray-50">
+                {integrations.map((int,i) => (
+                  <div key={i} className="px-5 py-3 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="text-base">{int.icon}</span>
+                      <div>
+                        <p className="text-xs font-bold text-gray-800">{int.name}</p>
+                        <p className="text-xs text-gray-400">{int.lastSync}</p>
+                      </div>
+                    </div>
+                    <span className="w-2 h-2 rounded-full bg-green-400" />
+                  </div>
                 ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
+              </div>
+            </div>
 
-        <div className="bg-cnc-gray-50 border border-cnc-gray-200 rounded-xl p-4 text-sm text-cnc-gray-500">
-          <p className="font-semibold text-cnc-gray-700 mb-1">Module in development</p>
-          <p>Full RBAC with Supabase RLS, audit trail (SK-032), POPIA compliance dashboard (SK-030), data breach notification workflows, and system-wide settings are being built.</p>
+            <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
+              <div className="px-5 pt-5 pb-4 border-b border-gray-100 flex items-center gap-3">
+                <div className="w-1 h-5 rounded-full" style={{ background:CNC_RED }} />
+                <h2 className="text-sm font-black uppercase tracking-widest text-gray-700">PORTAL USERS</h2>
+              </div>
+              <div className="divide-y divide-gray-50">
+                {users.map((u,i) => (
+                  <div key={i} className="px-5 py-3">
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-black" style={{ background:CNC_RED }}>{u.name[0]}</div>
+                      <span className="text-xs font-bold text-gray-800">{u.name}</span>
+                    </div>
+                    <div className="flex justify-between text-xs text-gray-400 ml-8">
+                      <span>{u.role}</span>
+                      <span className={`font-bold ${u.access==="Full"?"text-red-600":"text-gray-500"}`}>{u.access}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
+
+        <AfricanDivider />
+        <p className="text-center text-xs text-gray-400 mt-3 pb-6">Care Net Consultants (Pty) Ltd · Internal Portal · POPIA Act 4 of 2013 · Confidential</p>
       </main>
-    </>
-  )
+      <div className="fixed bottom-6 right-6 z-50">
+        <button className="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg hover:scale-105 transition-transform" style={{ background:CNC_RED }} title="Chat with Sr Thandi"><span className="text-xl">🎧</span></button>
+      </div>
+    </div>
+  );
 }

@@ -1,146 +1,189 @@
-import type { Metadata } from 'next'
-import { Users, UserPlus, Calendar, ClipboardList, Award, Shield, TrendingUp } from 'lucide-react'
-import { Header } from '@/components/layout/Header'
-import { StatCard } from '@/components/ui/StatCard'
+"use client";
+import { useState } from "react";
+const CNC_RED = "#ED1B24";
 
-export const metadata: Metadata = { title: 'Staff & HR' }
-
-const staffStats = [
-  { title: 'Total Staff', value: '47', icon: Users, iconBg: 'bg-purple-50', iconColor: 'text-purple-600' },
-  { title: 'On Leave Today', value: '3', icon: Calendar, iconBg: 'bg-blue-50', iconColor: 'text-blue-600' },
-  { title: 'Open Vacancies', value: '1', icon: UserPlus, iconBg: 'bg-orange-50', iconColor: 'text-orange-500' },
-  { title: 'EE Compliance', value: '100%', icon: Shield, iconBg: 'bg-green-50', iconColor: 'text-green-600' },
-]
-
-const quickActions = [
-  { label: 'Add Employee', icon: UserPlus, desc: 'SK-051 · BCEA-compliant onboarding', color: 'purple' },
-  { label: 'Leave Requests', icon: Calendar, desc: '3 pending approvals · BCEA S20', color: 'blue' },
-  { label: 'Performance Reviews', icon: ClipboardList, desc: 'SK-052 · Q2 cycle open', color: 'orange' },
-  { label: 'Skills Development', icon: Award, desc: 'SK-114 · WSP/ATR tracking', color: 'green' },
-  { label: 'Recruitment Pipeline', icon: TrendingUp, desc: 'SK-050 · SANC/HPCSA verified', color: 'indigo' },
-  { label: 'Disciplinary Process', icon: Shield, desc: 'SK-054 · LRA Schedule 8', color: 'red' },
-]
-
-const colorMap: Record<string, { bg: string; icon: string; hover: string }> = {
-  purple: { bg: 'bg-purple-50', icon: 'text-purple-600', hover: 'group-hover:bg-purple-100' },
-  blue: { bg: 'bg-blue-50', icon: 'text-blue-600', hover: 'group-hover:bg-blue-100' },
-  orange: { bg: 'bg-orange-50', icon: 'text-orange-500', hover: 'group-hover:bg-orange-100' },
-  green: { bg: 'bg-green-50', icon: 'text-green-600', hover: 'group-hover:bg-green-100' },
-  indigo: { bg: 'bg-indigo-50', icon: 'text-indigo-600', hover: 'group-hover:bg-indigo-100' },
-  red: { bg: 'bg-cnc-red/10', icon: 'text-cnc-red', hover: 'group-hover:bg-cnc-red/20' },
-}
+const AfricanDivider = () => (
+  <div className="w-full overflow-hidden" style={{ height: 14 }}>
+    <svg viewBox="0 0 800 14" className="w-full h-full" preserveAspectRatio="none">
+      {[...Array(40)].map((_, i) => (
+        <polygon key={i} points={`${i*20+10},0 ${i*20+20},14 ${i*20},14`}
+          fill={i%5===0?CNC_RED:i%5===1?"#1a1a1a":i%5===2?"#c8a850":i%5===3?"#2a6496":"#4a9e4a"} />
+      ))}
+    </svg>
+  </div>
+);
+const SectionLabel = ({ children }: { children: React.ReactNode }) => (
+  <div className="flex items-center gap-3 mb-5">
+    <div className="w-1 h-5 rounded-full" style={{ background: CNC_RED }} />
+    <h2 className="text-xs font-black uppercase tracking-widest text-gray-500">{children}</h2>
+  </div>
+);
+const KpiCard = ({ icon, value, label, badge, badgeColor }: { icon:string;value:string;label:string;badge:string;badgeColor:string }) => (
+  <div className="bg-white rounded-sm border border-gray-100 shadow-sm overflow-hidden" style={{ borderTop:`4px solid ${CNC_RED}` }}>
+    <div className="p-5">
+      <div className="flex items-start justify-between mb-3">
+        <div className="w-10 h-10 rounded-full flex items-center justify-center text-lg" style={{ background:"#fff5f5" }}>{icon}</div>
+        <span className="text-xs font-bold" style={{ color:badgeColor }}>{badge}</span>
+      </div>
+      <p className="text-2xl font-black text-gray-900 mb-1">{value}</p>
+      <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">{label}</p>
+    </div>
+  </div>
+);
 
 const staff = [
-  { name: 'Thandi Mokoena', role: 'OH Nurse Practitioner', clinic: 'Johannesburg', status: 'active' },
-  { name: 'Rudi van der Merwe', role: 'Audiometrist', clinic: 'Cape Town', status: 'active' },
-  { name: 'Lerato Sithole', role: 'Spirometrist', clinic: 'Mobile Unit 1', status: 'on-leave' },
-  { name: 'Priya Naidoo', role: 'OH Administrator', clinic: 'Durban', status: 'active' },
-  { name: 'Johannes Botha', role: 'Clinical Manager', clinic: 'Head Office', status: 'active' },
-]
+  { name:"Annemarie van Zyl",   role:"Sales Consultant",       dept:"Sales",      status:"Active",  leave:"" },
+  { name:"Celeste Botha",       role:"Sales Consultant",       dept:"Sales",      status:"Active",  leave:"" },
+  { name:"Elsie Nkosi",         role:"Sales Consultant",       dept:"Sales",      status:"Active",  leave:"" },
+  { name:"Gladys Mthembu",      role:"Sales Consultant",       dept:"Sales",      status:"Active",  leave:"" },
+  { name:"Maryna Pretorius",    role:"Sales Consultant",       dept:"Sales",      status:"Active",  leave:"" },
+  { name:"Sire Dlamini",        role:"Senior Sales Consultant",dept:"Sales",      status:"Active",  leave:"" },
+  { name:"T. Mthembu",          role:"OH Nurse Practitioner",  dept:"Operations", status:"On Leave",leave:"8–12 Jun" },
+  { name:"Quintus de Beer",     role:"Database Administrator", dept:"IT",         status:"Active",  leave:"" },
+  { name:"Cassandra Louw",      role:"Frontend Developer",     dept:"IT",         status:"Active",  leave:"" },
+];
+
+const leaveRequests = [
+  { name:"T. Mthembu",       type:"Annual Leave",  dates:"8–12 Jun 2026",  status:"Pending" },
+  { name:"G. Mthembu",       type:"Sick Leave",    dates:"5 Jun 2026",     status:"Approved" },
+  { name:"C. Botha",         type:"Annual Leave",  dates:"23–27 Jun 2026", status:"Pending" },
+];
 
 export default function StaffPage() {
+  const [activeNav, setActiveNav] = useState("Staff & HR");
+  const navItems = ["Dashboard","Staff & HR","Finance","Sales & CRM","Operations","Admin"];
   return (
-    <>
-      <Header title="Staff & HR" subtitle="People management · BCEA · LRA · EEA compliant" />
-      <main className="flex-1 p-6 space-y-6">
-        {/* Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {staffStats.map((s) => (
-            <StatCard key={s.title} {...s} />
-          ))}
+    <div className="min-h-screen bg-gray-50">
+      <div className="bg-gray-900 text-white text-xs px-6 py-1.5 flex justify-between items-center">
+        <div className="flex gap-4"><span>📞 +27 60 070 2723</span><span>✉️ ops@carenetconsultants.co.za</span></div>
+        <div className="flex gap-3 items-center">
+          <span className="text-gray-400">Internal Portal · POPIA Protected</span>
+          <span className="w-px h-3 bg-gray-600" />
+          <span style={{ color:CNC_RED }} className="font-bold">● LIVE</span>
+        </div>
+      </div>
+      <header className="bg-white shadow-sm sticky top-0 z-20">
+        <div className="max-w-screen-xl mx-auto px-6 py-3 flex items-center justify-between">
+          <img src="/care-net-logo.png" alt="Care Net Consultants" className="h-16 w-auto" />
+          <nav className="flex gap-1">
+            {navItems.map(item => (
+              <button key={item} onClick={() => setActiveNav(item)}
+                className="px-4 py-2 text-sm font-bold uppercase tracking-wide transition-all"
+                style={{ color:activeNav===item?"white":"#374151", background:activeNav===item?CNC_RED:"transparent", letterSpacing:"0.06em" }}>
+                {item}
+              </button>
+            ))}
+          </nav>
+          <div className="flex items-center gap-3">
+            <div className="text-right"><p className="text-sm font-bold text-gray-800">Portal Admin</p><p className="text-xs text-gray-400">carenetconsultants.co.za</p></div>
+            <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-black" style={{ background:CNC_RED }}>CN</div>
+          </div>
+        </div>
+        <AfricanDivider />
+      </header>
+      <main className="max-w-screen-xl mx-auto px-6 py-8">
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-1">
+            <div className="w-1 h-7 rounded-full" style={{ background:CNC_RED }} />
+            <h1 className="text-2xl font-black uppercase tracking-wide text-gray-900">STAFF & HR</h1>
+          </div>
+          <p className="text-sm text-gray-400 ml-4">People management · Compliance · Leave</p>
         </div>
 
-        {/* Quick Actions */}
-        <section>
-          <h3 className="text-xs font-heading font-semibold text-cnc-gray-400 uppercase tracking-widest mb-3">
-            HR Actions
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {quickActions.map(({ label, icon: Icon, desc, color }) => {
-              const c = colorMap[color]
-              return (
-                <button
-                  key={label}
-                  className="flex items-center gap-4 p-4 bg-white rounded-xl border border-cnc-gray-100 hover:border-cnc-red hover:shadow-cnc-sm transition-all text-left group"
-                >
-                  <div
-                    className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${c.bg} ${c.hover} transition-colors`}
-                  >
-                    <Icon className={`w-5 h-5 ${c.icon}`} />
-                  </div>
-                  <div>
-                    <p className="text-sm font-heading font-semibold text-cnc-black">{label}</p>
-                    <p className="text-xs text-cnc-gray-400 mt-0.5">{desc}</p>
-                  </div>
-                </button>
-              )
-            })}
-          </div>
-        </section>
+        <div className="grid grid-cols-4 gap-4 mb-8">
+          <KpiCard icon="👥" value="47"  label="Total Headcount"      badge="+2 this month" badgeColor="#16a34a" />
+          <KpiCard icon="📋" value="3"   label="Open Positions"       badge="Urgent: 1"     badgeColor={CNC_RED} />
+          <KpiCard icon="🏖️" value="3"   label="Leave Requests"       badge="2 pending"     badgeColor="#d97706" />
+          <KpiCard icon="🎓" value="12"  label="CPD Credits Due"      badge="Jun deadline"  badgeColor={CNC_RED} />
+        </div>
 
-        {/* Staff Directory */}
-        <section>
-          <h3 className="text-xs font-heading font-semibold text-cnc-gray-400 uppercase tracking-widest mb-3">
-            Staff Directory (Sample)
-          </h3>
-          <div className="bg-white rounded-xl border border-cnc-gray-100 overflow-hidden">
+        <div className="grid grid-cols-3 gap-6 mb-8">
+          <div className="col-span-2 bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
+            <div className="px-6 pt-5 pb-4 border-b border-gray-100 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-1 h-5 rounded-full" style={{ background:CNC_RED }} />
+                <h2 className="text-sm font-black uppercase tracking-widest text-gray-700">STAFF DIRECTORY</h2>
+              </div>
+              <button className="text-xs font-bold uppercase tracking-wide text-white px-3 py-1.5" style={{ background:CNC_RED }}>+ Add Staff</button>
+            </div>
             <table className="w-full">
               <thead>
-                <tr className="border-b border-cnc-gray-50">
-                  {['Name', 'Role', 'Clinic / Unit', 'Status'].map((h) => (
-                    <th
-                      key={h}
-                      className="text-left px-5 py-3 text-xs font-semibold text-cnc-gray-400 uppercase tracking-wide"
-                    >
-                      {h}
-                    </th>
+                <tr className="bg-gray-50">
+                  {["Name","Role","Department","Status","Leave"].map(h => (
+                    <th key={h} className="px-5 py-3 text-left text-xs font-bold uppercase tracking-widest text-gray-400">{h}</th>
                   ))}
                 </tr>
               </thead>
-              <tbody>
-                {staff.map((s, i) => (
-                  <tr
-                    key={i}
-                    className="border-b border-cnc-gray-50 last:border-0 hover:bg-cnc-gray-50/50 transition-colors"
-                  >
-                    <td className="px-5 py-3">
-                      <div className="flex items-center gap-3">
-                        <div className="w-7 h-7 bg-cnc-red/10 rounded-full flex items-center justify-center flex-shrink-0">
-                          <span className="text-cnc-red text-xs font-bold">
-                            {s.name.split(' ').map((n) => n[0]).join('')}
-                          </span>
-                        </div>
-                        <span className="text-sm font-medium text-cnc-black">{s.name}</span>
+              <tbody className="divide-y divide-gray-50">
+                {staff.map((s,i) => (
+                  <tr key={i} className="hover:bg-red-50 cursor-pointer transition-colors">
+                    <td className="px-5 py-3 text-sm font-semibold text-gray-800">
+                      <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-black" style={{ background:CNC_RED }}>{s.name[0]}</div>
+                        {s.name}
                       </div>
                     </td>
-                    <td className="px-5 py-3 text-sm text-cnc-gray-500">{s.role}</td>
-                    <td className="px-5 py-3 text-sm text-cnc-gray-500">{s.clinic}</td>
+                    <td className="px-5 py-3 text-xs text-gray-600">{s.role}</td>
+                    <td className="px-5 py-3 text-xs text-gray-500">{s.dept}</td>
                     <td className="px-5 py-3">
-                      <span
-                        className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-                          s.status === 'active'
-                            ? 'bg-green-50 text-green-700'
-                            : 'bg-yellow-50 text-yellow-700'
-                        }`}
-                      >
-                        {s.status}
-                      </span>
+                      <span className={`text-xs font-bold px-2 py-1 rounded-full ${s.status==="Active"?"bg-green-50 text-green-700":"bg-yellow-50 text-yellow-700"}`}>{s.status}</span>
                     </td>
+                    <td className="px-5 py-3 text-xs text-gray-400">{s.leave || "—"}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        </section>
 
-        <div className="bg-cnc-gray-50 border border-cnc-gray-200 rounded-xl p-4 text-sm text-cnc-gray-500">
-          <p className="font-semibold text-cnc-gray-700 mb-1">Module in development</p>
-          <p>
-            Full staff management, leave tracking, recruitment pipeline (SK-050), BCEA compliance,
-            EE reporting (SK-115), and BEE scorecard (SK-116) are being built in the next sprint.
-          </p>
+          <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
+            <div className="px-5 pt-5 pb-4 border-b border-gray-100 flex items-center gap-3">
+              <div className="w-1 h-5 rounded-full" style={{ background:CNC_RED }} />
+              <h2 className="text-sm font-black uppercase tracking-widest text-gray-700">LEAVE REQUESTS</h2>
+            </div>
+            <div className="divide-y divide-gray-50">
+              {leaveRequests.map((r,i) => (
+                <div key={i} className="px-5 py-4">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-sm font-bold text-gray-800">{r.name}</span>
+                    <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${r.status==="Approved"?"bg-green-50 text-green-700":"bg-yellow-50 text-yellow-700"}`}>{r.status}</span>
+                  </div>
+                  <p className="text-xs text-gray-500">{r.type}</p>
+                  <p className="text-xs text-gray-400 mt-0.5">📅 {r.dates}</p>
+                  {r.status==="Pending" && (
+                    <div className="flex gap-2 mt-2">
+                      <button className="text-xs font-bold text-white px-3 py-1" style={{ background:CNC_RED }}>Approve</button>
+                      <button className="text-xs font-bold text-gray-500 px-3 py-1 border border-gray-200">Decline</button>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+            <div className="px-5 py-4 border-t border-gray-100">
+              <SectionLabel>COMPLIANCE REMINDERS</SectionLabel>
+              <div className="space-y-2">
+                {[
+                  { label:"EE Report submission", date:"30 Jun 2026", urgent:true },
+                  { label:"WSP/ATR deadline",     date:"30 Jun 2026", urgent:true },
+                  { label:"IRP5 certificates",    date:"31 May 2026", urgent:false },
+                ].map((c,i) => (
+                  <div key={i} className="flex items-center justify-between text-xs">
+                    <span className="text-gray-700">{c.label}</span>
+                    <span className={`font-bold ${c.urgent?"text-red-600":"text-gray-400"}`}>{c.date}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
+
+        <AfricanDivider />
+        <p className="text-center text-xs text-gray-400 mt-3 pb-6">Care Net Consultants (Pty) Ltd · Internal Portal · POPIA Act 4 of 2013 · Confidential</p>
       </main>
-    </>
-  )
+      <div className="fixed bottom-6 right-6 z-50">
+        <button className="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg hover:scale-105 transition-transform" style={{ background:CNC_RED }} title="Chat with Sr Thandi">
+          <span className="text-xl">🎧</span>
+        </button>
+      </div>
+    </div>
+  );
 }

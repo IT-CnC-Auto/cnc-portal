@@ -25,32 +25,41 @@ const KpiCard = ({ icon, value, label, badge, badgeColor }: { icon:string;value:
   </div>
 );
 
-const clinics = [
-  { name:"Cape Town",       address:"Parow Industria",        today:42, capacity:60, status:"Open"   },
-  { name:"Elandsfontein",   address:"Ekurhuleni",             today:38, capacity:50, status:"Open"   },
-  { name:"Gqeberha",        address:"Port Elizabeth",         today:21, capacity:40, status:"Open"   },
-  { name:"Midrand",         address:"Johannesburg North",     today:0,  capacity:50, status:"Closed" },
+const stages = [
+  { name:"Lead Captured", count:18, color:"#94a3b8" },
+  { name:"Qualified",     count:12, color:"#60a5fa" },
+  { name:"Proposal Sent", count:7,  color:CNC_RED   },
+  { name:"Negotiation",   count:4,  color:"#f97316" },
+  { name:"Closed Won",    count:9,  color:"#22c55e" },
 ];
-const mobileUnits = [
-  { unit:"MU-01", site:"Highveld Mining – Witbank",     tests:85,  crew:"Sr Dlamini + 1", status:"Active"    },
-  { unit:"MU-02", site:"BuildRight – Centurion",        tests:43,  crew:"Sr Nkosi + 1",   status:"Active"    },
-  { unit:"MU-03", site:"En route to Agri-Fresh",        tests:0,   crew:"Sr Pretorius",   status:"In Transit"},
+const reps = [
+  { name:"Sire",      leads:14, won:5, value:"R 142 000" },
+  { name:"Gladys",    leads:11, won:4, value:"R 118 000" },
+  { name:"Elsie",     leads:9,  won:3, value:"R 97 500"  },
+  { name:"Celeste",   leads:8,  won:2, value:"R 74 000"  },
+  { name:"Maryna",    leads:6,  won:2, value:"R 61 000"  },
+  { name:"Annemarie", leads:5,  won:1, value:"R 38 500"  },
 ];
-const recentTests = [
-  { type:"Spirometry",         clinic:"Cape Town",     count:18, time:"09:45" },
-  { type:"Audiometry",         clinic:"Elandsfontein", count:12, time:"10:15" },
-  { type:"Drug Screening",     clinic:"Cape Town",     count:9,  time:"10:30" },
-  { type:"Full Medical",       clinic:"MU-01",         count:7,  time:"11:00" },
-  { type:"Vision Test",        clinic:"Gqeberha",      count:14, time:"11:20" },
+const leads = [
+  { name:"Highveld Mining Ltd",     industry:"Mining",        stage:"Proposal Sent", rep:"Sire",     value:"R 48 000" },
+  { name:"BuildRight Construction", industry:"Construction",  stage:"Qualified",     rep:"Gladys",   value:"R 22 000" },
+  { name:"Agri-Fresh Packers",      industry:"Agriculture",   stage:"Negotiation",   rep:"Elsie",    value:"R 31 500" },
+  { name:"SA Steel Manufacturing",  industry:"Manufacturing", stage:"Lead Captured", rep:"Celeste",  value:"R 17 000" },
+  { name:"Swift Logistics",         industry:"Transport",     stage:"Closed Won",    rep:"Maryna",   value:"R 29 000" },
 ];
+const stageBadge: Record<string,string> = {
+  "Lead Captured":"bg-gray-100 text-gray-600","Qualified":"bg-blue-50 text-blue-700",
+  "Proposal Sent":"bg-red-50 text-red-700","Negotiation":"bg-orange-50 text-orange-700","Closed Won":"bg-green-50 text-green-700",
+};
+const totalLeads = stages.reduce((a,b)=>a+b.count,0);
 
-export default function OperationsPage() {
-  const [activeNav, setActiveNav] = useState("Operations");
+export default function SalesCRMPage() {
+  const [activeNav, setActiveNav] = useState("Sales & CRM");
   const navItems = ["Dashboard","Staff & HR","Finance","Sales & CRM","Operations","Admin"];
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="bg-gray-900 text-white text-xs px-6 py-1.5 flex justify-between items-center">
-        <div className="flex gap-4"><span>📞 +27 60 070 2723</span><span>✉️ ops@carenetconsultants.co.za</span></div>
+        <div className="flex gap-4"><span>📞 +27 60 070 2723</span><span>✉️ salesdesk@carenetconsultants.co.za</span></div>
         <div className="flex gap-3 items-center">
           <span className="text-gray-400">Internal Portal · POPIA Protected</span>
           <span className="w-px h-3 bg-gray-600" />
@@ -80,87 +89,85 @@ export default function OperationsPage() {
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-1">
             <div className="w-1 h-7 rounded-full" style={{ background:CNC_RED }} />
-            <h1 className="text-2xl font-black uppercase tracking-wide text-gray-900">OPERATIONS</h1>
+            <h1 className="text-2xl font-black uppercase tracking-wide text-gray-900">SALES & CRM</h1>
           </div>
-          <p className="text-sm text-gray-400 ml-4">4 Fixed Clinics · National Mobile Units · MyClinicOnline</p>
+          <p className="text-sm text-gray-400 ml-4">AutoHive CRM · Live sync · {new Date().toLocaleDateString("en-ZA",{month:"long",year:"numeric"})}</p>
         </div>
 
         <div className="grid grid-cols-4 gap-4 mb-8">
-          <KpiCard icon="🩺" value="5,842" label="Tests This Month"       badge="+8.2%"       badgeColor="#16a34a" />
-          <KpiCard icon="🏥" value="3/4"   label="Clinics Active Today"   badge="Midrand closed" badgeColor="#d97706" />
-          <KpiCard icon="🚐" value="2/3"   label="Mobile Units Deployed"  badge="1 in transit"  badgeColor="#2563eb" />
-          <KpiCard icon="⚙️"  value="4"    label="Calibrations Due"       badge="This week"     badgeColor={CNC_RED} />
+          <KpiCard icon="💼" value="R 531K"  label="Total Pipeline Value"  badge="Active"      badgeColor="#16a34a" />
+          <KpiCard icon="📊" value="50"      label="Active Opportunities"  badge="+18 new"     badgeColor="#16a34a" />
+          <KpiCard icon="✅" value="9"       label="Closed Won MTD"        badge="R 193 500"   badgeColor="#16a34a" />
+          <KpiCard icon="📈" value="18%"     label="Conversion Rate"       badge="+3% vs prev" badgeColor="#16a34a" />
         </div>
 
-        <div className="grid grid-cols-2 gap-6 mb-8">
-          <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
-            <div className="px-6 pt-5 pb-4 border-b border-gray-100 flex items-center gap-3">
-              <div className="w-1 h-5 rounded-full" style={{ background:CNC_RED }} />
-              <h2 className="text-sm font-black uppercase tracking-widest text-gray-700">FIXED CLINICS — TODAY</h2>
-            </div>
-            <div className="divide-y divide-gray-50">
-              {clinics.map((c,i) => (
-                <div key={i} className="px-6 py-4 hover:bg-gray-50 transition-colors">
-                  <div className="flex items-center justify-between mb-2">
-                    <div>
-                      <p className="text-sm font-bold text-gray-800">{c.name}</p>
-                      <p className="text-xs text-gray-400">{c.address}</p>
-                    </div>
-                    <span className={`text-xs font-bold px-2 py-1 rounded-full ${c.status==="Open"?"bg-green-50 text-green-700":"bg-gray-100 text-gray-500"}`}>{c.status}</span>
-                  </div>
-                  {c.status==="Open" && (
-                    <>
-                      <div className="flex justify-between text-xs text-gray-500 mb-1">
-                        <span>{c.today} tests done</span>
-                        <span>Capacity: {c.capacity}</span>
-                      </div>
-                      <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                        <div className="h-full rounded-full" style={{ width:`${(c.today/c.capacity)*100}%`, background:CNC_RED }} />
-                      </div>
-                    </>
-                  )}
-                </div>
-              ))}
+        <div className="bg-white rounded-sm shadow-sm border border-gray-100 mb-8 overflow-hidden">
+          <div className="px-6 pt-5 pb-4 border-b border-gray-100 flex items-center gap-3">
+            <div className="w-1 h-5 rounded-full" style={{ background:CNC_RED }} />
+            <h2 className="text-sm font-black uppercase tracking-widest text-gray-700">PIPELINE BY STAGE</h2>
+          </div>
+          <div className="flex divide-x divide-gray-100">
+            {stages.map(s => (
+              <div key={s.name} className="flex-1 px-5 py-5 text-center hover:bg-gray-50 cursor-pointer transition-colors">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-lg font-black mx-auto mb-2" style={{ background:s.color }}>{s.count}</div>
+                <p className="text-xs font-bold text-gray-600 uppercase tracking-wide leading-tight">{s.name}</p>
+              </div>
+            ))}
+          </div>
+          <div className="px-6 pb-5">
+            <div className="h-2 bg-gray-100 rounded-full overflow-hidden flex">
+              {stages.map(s => <div key={s.name} style={{ background:s.color, width:`${(s.count/totalLeads)*100}%` }} />)}
             </div>
           </div>
+        </div>
 
+        <div className="grid grid-cols-3 gap-6 mb-8">
+          <div className="col-span-2 bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
+            <div className="px-6 pt-5 pb-4 border-b border-gray-100 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-1 h-5 rounded-full" style={{ background:CNC_RED }} />
+                <h2 className="text-sm font-black uppercase tracking-widest text-gray-700">RECENT LEADS</h2>
+              </div>
+              <button className="text-xs font-bold uppercase tracking-wide text-white px-3 py-1.5" style={{ background:CNC_RED }}>+ Add Lead</button>
+            </div>
+            <table className="w-full">
+              <thead>
+                <tr className="bg-gray-50">{["Company","Industry","Stage","Rep","Value"].map(h=><th key={h} className="px-5 py-3 text-left text-xs font-bold uppercase tracking-widest text-gray-400">{h}</th>)}</tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {leads.map((l,i)=>(
+                  <tr key={i} className="hover:bg-red-50 cursor-pointer transition-colors">
+                    <td className="px-5 py-3 text-sm font-semibold text-gray-800">{l.name}</td>
+                    <td className="px-5 py-3 text-xs text-gray-500">{l.industry}</td>
+                    <td className="px-5 py-3"><span className={`text-xs font-bold px-2 py-1 rounded-full ${stageBadge[l.stage]}`}>{l.stage}</span></td>
+                    <td className="px-5 py-3 text-xs text-gray-600">{l.rep}</td>
+                    <td className="px-5 py-3 text-sm font-bold text-gray-800">{l.value}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
-            <div className="px-6 pt-5 pb-4 border-b border-gray-100 flex items-center gap-3">
+            <div className="px-5 pt-5 pb-4 border-b border-gray-100 flex items-center gap-3">
               <div className="w-1 h-5 rounded-full" style={{ background:CNC_RED }} />
-              <h2 className="text-sm font-black uppercase tracking-widest text-gray-700">MOBILE UNITS</h2>
+              <h2 className="text-sm font-black uppercase tracking-widest text-gray-700">SALES TEAM</h2>
             </div>
             <div className="divide-y divide-gray-50">
-              {mobileUnits.map((m,i) => (
-                <div key={i} className="px-6 py-4 hover:bg-gray-50 transition-colors">
-                  <div className="flex items-start justify-between mb-1">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-black px-2 py-0.5 text-white rounded-sm" style={{ background:CNC_RED }}>{m.unit}</span>
-                        <p className="text-sm font-bold text-gray-800">{m.site}</p>
-                      </div>
-                      <p className="text-xs text-gray-400 mt-0.5">Crew: {m.crew}</p>
+              {reps.map((r,i)=>(
+                <div key={i} className="px-5 py-3 hover:bg-red-50 transition-colors">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <div className="flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-black" style={{ background:i===0?CNC_RED:"#9ca3af" }}>{r.name[0]}</div>
+                      <span className="text-sm font-bold text-gray-800">{r.name}</span>
                     </div>
-                    <span className={`text-xs font-bold px-2 py-1 rounded-full ${m.status==="Active"?"bg-green-50 text-green-700":"bg-blue-50 text-blue-700"}`}>{m.status}</span>
+                    <span className="text-xs font-black text-gray-700">{r.value}</span>
                   </div>
-                  {m.tests > 0 && <p className="text-xs text-gray-500 mt-1">{m.tests} tests completed today</p>}
+                  <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                    <div className="h-full rounded-full" style={{ width:`${(r.leads/14)*100}%`, background:i===0?CNC_RED:"#d1d5db" }} />
+                  </div>
+                  <div className="flex justify-between text-xs text-gray-400 mt-1"><span>{r.leads} leads</span><span>{r.won} won</span></div>
                 </div>
               ))}
-            </div>
-            <div className="px-6 pt-4 pb-5 border-t border-gray-100">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-1 h-4 rounded-full" style={{ background:CNC_RED }} />
-                <h3 className="text-xs font-black uppercase tracking-widest text-gray-500">RECENT TEST ACTIVITY</h3>
-              </div>
-              <div className="space-y-2">
-                {recentTests.map((t,i) => (
-                  <div key={i} className="flex items-center justify-between text-xs">
-                    <span className="text-gray-700 font-semibold">{t.type}</span>
-                    <span className="text-gray-400">{t.clinic}</span>
-                    <span className="font-bold text-gray-800">{t.count} tests</span>
-                    <span className="text-gray-400">{t.time}</span>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
         </div>

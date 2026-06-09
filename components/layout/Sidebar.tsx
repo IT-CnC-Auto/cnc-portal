@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import {
@@ -10,8 +11,12 @@ import {
   Activity,
   Settings,
   LogOut,
-  HeartPulse,
   ChevronRight,
+  ChevronDown,
+  User,
+  Sun,
+  Moon,
+  Monitor,
 } from 'lucide-react'
 
 const navItems = [
@@ -53,23 +58,35 @@ const navItems = [
   },
 ]
 
+const CNC_LOGO =
+  'https://pub-d5b31319f7724cca83d8b708f94830b0.r2.dev/CNC%20-%20Logo%20Re-working%20-%20red%20-%20with%20tag%20line%20-%20transparent%20-%201.1.png'
+
+// NOTE: 'auto' follows the device. Wiring this to actually switch the app
+// theme is a follow-up for the back-end owner — for now it sets local UI state.
+type ThemeMode = 'light' | 'dark' | 'auto'
+
 export function Sidebar() {
   const pathname = usePathname()
+  const [profileOpen, setProfileOpen] = useState(false)
+  const [theme, setTheme] = useState<ThemeMode>('light')
+
+  const themeButtons: { mode: ThemeMode; label: string; Icon: typeof Sun }[] = [
+    { mode: 'light', label: 'Light', Icon: Sun },
+    { mode: 'dark', label: 'Dark', Icon: Moon },
+    { mode: 'auto', label: 'Auto', Icon: Monitor },
+  ]
 
   return (
     <aside className="fixed top-0 left-0 h-screen w-64 bg-cnc-black flex flex-col z-40 select-none">
-      {/* Logo */}
-      <div className="px-5 py-5 border-b border-white/[0.08]">
-        <Link href="/dashboard" className="flex items-center gap-3 group">
-          <div className="w-9 h-9 bg-cnc-red rounded-xl flex items-center justify-center flex-shrink-0 shadow-cnc-red group-hover:bg-cnc-red-dark transition-colors">
-            <HeartPulse className="w-5 h-5 text-white" />
-          </div>
-          <div>
-            <p className="text-white font-heading font-bold text-sm leading-tight">
-              Care Net
-            </p>
-            <p className="text-white/40 text-xs leading-tight">Consultants Portal</p>
-          </div>
+      {/* Logo — full-width white strip matching the topbar height */}
+      <div className="h-16 bg-white border-b border-cnc-gray-100 flex items-center justify-center px-4 overflow-hidden">
+        <Link href="/dashboard" className="flex items-center justify-center w-full h-full py-2">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={CNC_LOGO}
+            alt="Care Net Consultants"
+            className="h-full w-auto max-w-[170px] object-contain"
+          />
         </Link>
       </div>
 
@@ -78,7 +95,7 @@ export function Sidebar() {
         <p className="px-3 py-1.5 text-[10px] font-semibold text-white/30 uppercase tracking-widest mb-1">
           Modules
         </p>
-        {navItems.map(({ href, label, icon: Icon, description }) => {
+        {navItems.map(({ href, label, icon: Icon }) => {
           const isActive =
             pathname === href || (href !== '/dashboard' && pathname.startsWith(href + '/'))
           return (
@@ -97,13 +114,56 @@ export function Sidebar() {
                 }`}
               />
               <span className="flex-1">{label}</span>
-              {isActive && (
-                <ChevronRight className="w-3.5 h-3.5 text-white/60" />
-              )}
+              {isActive && <ChevronRight className="w-3.5 h-3.5 text-white/60" />}
             </Link>
           )
         })}
       </nav>
+
+      {/* My Profile — collapsible dropdown holding Settings → Appearance */}
+      <div className="px-3 pb-2">
+        <button
+          onClick={() => setProfileOpen((o) => !o)}
+          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/50 hover:text-white hover:bg-white/[0.06] transition-all w-full group"
+        >
+          <User className="w-[18px] h-[18px] flex-shrink-0 text-white/40 group-hover:text-white/80 transition-colors" />
+          <span className="flex-1 text-left">My profile</span>
+          <ChevronDown
+            className={`w-3.5 h-3.5 text-white/40 transition-transform duration-200 ${
+              profileOpen ? 'rotate-180' : ''
+            }`}
+          />
+        </button>
+
+        <div
+          className={`overflow-hidden transition-all duration-200 ${
+            profileOpen ? 'max-h-48' : 'max-h-0'
+          }`}
+        >
+          <div className="px-3 pt-2 pb-1">
+            <p className="text-[10px] font-semibold text-white/30 uppercase tracking-widest mb-2">
+              Settings
+            </p>
+            <p className="text-[11px] text-white/40 mb-2">Appearance</p>
+            <div className="flex border border-white/10 rounded-lg overflow-hidden bg-white/[0.04]">
+              {themeButtons.map(({ mode, label, Icon }) => (
+                <button
+                  key={mode}
+                  title={label}
+                  onClick={() => setTheme(mode)}
+                  className={`flex-1 h-9 flex items-center justify-center transition-colors ${
+                    theme === mode
+                      ? 'bg-cnc-red text-white'
+                      : 'text-white/50 hover:text-white'
+                  }`}
+                >
+                  <Icon className="w-[15px] h-[15px]" />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* User section */}
       <div className="px-3 pb-4 border-t border-white/[0.08] pt-3">
@@ -113,9 +173,7 @@ export function Sidebar() {
           </div>
           <div className="min-w-0 flex-1">
             <p className="text-white text-xs font-semibold truncate">Portal Admin</p>
-            <p className="text-white/30 text-[11px] truncate">
-              carenetconsultants.co.za
-            </p>
+            <p className="text-white/30 text-[11px] truncate">carenetconsultants.co.za</p>
           </div>
         </div>
         <button className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm text-white/40 hover:text-white hover:bg-white/[0.06] transition-all w-full group">

@@ -1,10 +1,23 @@
-import { Bell, Search } from 'lucide-react'
+import { Mail, Stethoscope, Bell, MessageCircle, MoreHorizontal } from 'lucide-react'
 
 interface HeaderProps {
   title: string
   subtitle?: string
   actions?: React.ReactNode
 }
+
+// Placeholder handlers — links to be wired in later:
+//  - Email  → Microsoft email
+//  - MCO    → My Clinic Online login
+//  - WhatsApp → opens WhatsApp app
+//  - 5th    → to be decided
+const actionButtons = [
+  { key: 'mail', label: 'Email — Microsoft', Icon: Mail },
+  { key: 'mco', label: 'My Clinic Online', Icon: Stethoscope },
+  { key: 'bell', label: 'Notifications — internal updates', Icon: Bell },
+  { key: 'whatsapp', label: 'WhatsApp', Icon: MessageCircle },
+  { key: 'more', label: 'More (coming soon)', Icon: MoreHorizontal },
+]
 
 export function Header({ title, subtitle, actions }: HeaderProps) {
   return (
@@ -14,23 +27,24 @@ export function Header({ title, subtitle, actions }: HeaderProps) {
         <h1 className="text-base font-heading font-bold text-cnc-black truncate">
           {title}
         </h1>
-        {subtitle && (
-          <p className="text-xs text-cnc-gray-400 truncate">{subtitle}</p>
-        )}
+        {subtitle && <p className="text-xs text-cnc-gray-400 truncate">{subtitle}</p>}
       </div>
 
-      {/* Actions slot */}
+      {/* Per-page actions slot (kept from original) */}
       {actions && <div className="flex items-center gap-2">{actions}</div>}
 
-      {/* Right icons */}
-      <div className="flex items-center gap-1">
-        <button className="w-9 h-9 flex items-center justify-center rounded-lg text-cnc-gray-400 hover:text-cnc-black hover:bg-cnc-gray-50 transition-colors">
-          <Search className="w-4 h-4" />
-        </button>
-        <button className="w-9 h-9 flex items-center justify-center rounded-lg text-cnc-gray-400 hover:text-cnc-black hover:bg-cnc-gray-50 transition-colors relative">
-          <Bell className="w-4 h-4" />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-cnc-red rounded-full" />
-        </button>
+      {/* CNC quick-action buttons — horizontal, circular */}
+      <div className="flex items-center gap-2.5">
+        {actionButtons.map(({ key, label, Icon }) => (
+          <button
+            key={key}
+            title={label}
+            aria-label={label}
+            className="w-10 h-10 rounded-full border border-cnc-gray-100 bg-white flex items-center justify-center text-cnc-red hover:border-cnc-red hover:shadow-cnc-red hover:-translate-y-0.5 transition-all"
+          >
+            <Icon className="w-[18px] h-[18px]" />
+          </button>
+        ))}
       </div>
     </header>
   )

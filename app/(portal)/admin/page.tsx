@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 const CNC_RED = "#ED1B24";
 
 const AfricanDivider = () => (
@@ -50,135 +49,107 @@ const users = [
 ];
 
 export default function AdminPage() {
-  const [activeNav, setActiveNav] = useState("Admin");
-  const navItems = ["Dashboard","Staff & HR","Finance","Sales & CRM","Operations","Admin"];
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-gray-900 text-white text-xs px-6 py-1.5 flex justify-between items-center">
-        <div className="flex gap-4"><span>📞 +27 60 070 2723</span><span>✉️ ops@carenetconsultants.co.za</span></div>
-        <div className="flex gap-3 items-center">
-          <span className="text-gray-400">Internal Portal · POPIA Protected</span>
-          <span className="w-px h-3 bg-gray-600" />
-          <span style={{ color:CNC_RED }} className="font-bold">● LIVE</span>
+    <div className="max-w-screen-xl mx-auto">
+      <div className="mb-8">
+        <div className="flex items-center gap-3 mb-1">
+          <div className="w-1 h-7 rounded-full" style={{ background:CNC_RED }} />
+          <h1 className="text-2xl font-black uppercase tracking-wide text-gray-900">ADMIN</h1>
         </div>
+        <p className="text-sm text-gray-400 ml-4">System · Users · Integrations · Approvals</p>
       </div>
-      <header className="bg-white shadow-sm sticky top-0 z-20">
-        <div className="max-w-screen-xl mx-auto px-6 py-3 flex items-center justify-between">
-          <img src="/care-net-logo.png" alt="Care Net Consultants" className="h-16 w-auto" />
-          <nav className="flex gap-1">
-            {navItems.map(item => (
-              <button key={item} onClick={() => setActiveNav(item)}
-                className="px-4 py-2 text-sm font-bold uppercase tracking-wide transition-all"
-                style={{ color:activeNav===item?"white":"#374151", background:activeNav===item?CNC_RED:"transparent", letterSpacing:"0.06em" }}>
-                {item}
-              </button>
-            ))}
-          </nav>
-          <div className="flex items-center gap-3">
-            <div className="text-right"><p className="text-sm font-bold text-gray-800">Portal Admin</p><p className="text-xs text-gray-400">carenetconsultants.co.za</p></div>
-            <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-black" style={{ background:CNC_RED }}>CN</div>
-          </div>
-        </div>
-        <AfricanDivider />
-      </header>
-      <main className="max-w-screen-xl mx-auto px-6 py-8">
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-1">
-            <div className="w-1 h-7 rounded-full" style={{ background:CNC_RED }} />
-            <h1 className="text-2xl font-black uppercase tracking-wide text-gray-900">ADMIN</h1>
-          </div>
-          <p className="text-sm text-gray-400 ml-4">System · Users · Integrations · Approvals</p>
-        </div>
 
-        <div className="grid grid-cols-4 gap-4 mb-8">
-          <KpiCard icon="👤" value="4"    label="Portal Users"        badge="All active"  badgeColor="#16a34a" />
-          <KpiCard icon="📋" value="12"   label="Pending Approvals"   badge="3 urgent"    badgeColor={CNC_RED} />
-          <KpiCard icon="🔗" value="6/6"  label="Integrations Active" badge="All healthy" badgeColor="#16a34a" />
-          <KpiCard icon="🛡️" value="100%" label="System Uptime"       badge="30 days"     badgeColor="#16a34a" />
-        </div>
+      <div className="grid grid-cols-4 gap-4 mb-8">
+        <KpiCard icon="👤" value="4"    label="Portal Users"        badge="All active"  badgeColor="#16a34a" />
+        <KpiCard icon="📋" value="12"   label="Pending Approvals"   badge="3 urgent"    badgeColor={CNC_RED} />
+        <KpiCard icon="🔗" value="6/6"  label="Integrations Active" badge="All healthy" badgeColor="#16a34a" />
+        <KpiCard icon="🛡️" value="100%" label="System Uptime"       badge="30 days"     badgeColor="#16a34a" />
+      </div>
 
-        <div className="grid grid-cols-3 gap-6 mb-8">
-          <div className="col-span-2 bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
-            <div className="px-6 pt-5 pb-4 border-b border-gray-100 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-1 h-5 rounded-full" style={{ background:CNC_RED }} />
-                <h2 className="text-sm font-black uppercase tracking-widest text-gray-700">PENDING APPROVALS</h2>
-              </div>
-              <span className="text-xs font-bold text-white px-2 py-1 rounded-full" style={{ background:CNC_RED }}>12 pending</span>
+      <div className="grid grid-cols-3 gap-6 mb-8">
+        <div className="col-span-2 bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
+          <div className="px-6 pt-5 pb-4 border-b border-gray-100 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-1 h-5 rounded-full" style={{ background:CNC_RED }} />
+              <h2 className="text-sm font-black uppercase tracking-widest text-gray-700">PENDING APPROVALS</h2>
             </div>
-            <div className="divide-y divide-gray-50">
-              {approvals.map((a,i) => (
-                <div key={i} className="px-6 py-4 hover:bg-gray-50 transition-colors">
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1">
-                      <p className="text-sm font-bold text-gray-800">{a.item}</p>
-                      <div className="flex items-center gap-3 mt-0.5">
-                        <span className="text-xs text-gray-400">{a.module}</span>
-                        <span className="text-xs text-gray-300">·</span>
-                        <span className="text-xs text-gray-400">{a.submitted}</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 ml-4">
-                      <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${a.priority==="High"?"bg-red-50 text-red-700":a.priority==="Normal"?"bg-gray-100 text-gray-600":"bg-blue-50 text-blue-600"}`}>{a.priority}</span>
-                      <button className="text-xs font-bold text-white px-3 py-1.5" style={{ background:CNC_RED }}>Approve</button>
-                      <button className="text-xs font-bold text-gray-500 px-3 py-1.5 border border-gray-200">Decline</button>
+            <span className="text-xs font-bold text-white px-2 py-1 rounded-full" style={{ background:CNC_RED }}>12 pending</span>
+          </div>
+          <div className="divide-y divide-gray-50">
+            {approvals.map((a,i) => (
+              <div key={i} className="px-6 py-4 hover:bg-gray-50 transition-colors">
+                <div className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <p className="text-sm font-bold text-gray-800">{a.item}</p>
+                    <div className="flex items-center gap-3 mt-0.5">
+                      <span className="text-xs text-gray-400">{a.module}</span>
+                      <span className="text-xs text-gray-300">·</span>
+                      <span className="text-xs text-gray-400">{a.submitted}</span>
                     </div>
                   </div>
+                  <div className="flex items-center gap-2 ml-4">
+                    <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${a.priority==="High"?"bg-red-50 text-red-700":a.priority==="Normal"?"bg-gray-100 text-gray-600":"bg-blue-50 text-blue-600"}`}>{a.priority}</span>
+                    <button className="text-xs font-bold text-white px-3 py-1.5" style={{ background:CNC_RED }}>Approve</button>
+                    <button className="text-xs font-bold text-gray-500 px-3 py-1.5 border border-gray-200">Decline</button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
+            <div className="px-5 pt-5 pb-4 border-b border-gray-100 flex items-center gap-3">
+              <div className="w-1 h-5 rounded-full" style={{ background:CNC_RED }} />
+              <h2 className="text-sm font-black uppercase tracking-widest text-gray-700">INTEGRATIONS</h2>
+            </div>
+            <div className="divide-y divide-gray-50">
+              {integrations.map((int,i) => (
+                <div key={i} className="px-5 py-3 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="text-base">{int.icon}</span>
+                    <div>
+                      <p className="text-xs font-bold text-gray-800">{int.name}</p>
+                      <p className="text-xs text-gray-400">{int.lastSync}</p>
+                    </div>
+                  </div>
+                  <span className="w-2 h-2 rounded-full bg-green-400" />
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="space-y-6">
-            <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
-              <div className="px-5 pt-5 pb-4 border-b border-gray-100 flex items-center gap-3">
-                <div className="w-1 h-5 rounded-full" style={{ background:CNC_RED }} />
-                <h2 className="text-sm font-black uppercase tracking-widest text-gray-700">INTEGRATIONS</h2>
-              </div>
-              <div className="divide-y divide-gray-50">
-                {integrations.map((int,i) => (
-                  <div key={i} className="px-5 py-3 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="text-base">{int.icon}</span>
-                      <div>
-                        <p className="text-xs font-bold text-gray-800">{int.name}</p>
-                        <p className="text-xs text-gray-400">{int.lastSync}</p>
-                      </div>
-                    </div>
-                    <span className="w-2 h-2 rounded-full bg-green-400" />
-                  </div>
-                ))}
-              </div>
+          <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
+            <div className="px-5 pt-5 pb-4 border-b border-gray-100 flex items-center gap-3">
+              <div className="w-1 h-5 rounded-full" style={{ background:CNC_RED }} />
+              <h2 className="text-sm font-black uppercase tracking-widest text-gray-700">PORTAL USERS</h2>
             </div>
-
-            <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
-              <div className="px-5 pt-5 pb-4 border-b border-gray-100 flex items-center gap-3">
-                <div className="w-1 h-5 rounded-full" style={{ background:CNC_RED }} />
-                <h2 className="text-sm font-black uppercase tracking-widest text-gray-700">PORTAL USERS</h2>
-              </div>
-              <div className="divide-y divide-gray-50">
-                {users.map((u,i) => (
-                  <div key={i} className="px-5 py-3">
-                    <div className="flex items-center gap-2 mb-0.5">
-                      <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-black" style={{ background:CNC_RED }}>{u.name[0]}</div>
-                      <span className="text-xs font-bold text-gray-800">{u.name}</span>
-                    </div>
-                    <div className="flex justify-between text-xs text-gray-400 ml-8">
-                      <span>{u.role}</span>
-                      <span className={`font-bold ${u.access==="Full"?"text-red-600":"text-gray-500"}`}>{u.access}</span>
-                    </div>
+            <div className="divide-y divide-gray-50">
+              {users.map((u,i) => (
+                <div key={i} className="px-5 py-3">
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-black" style={{ background:CNC_RED }}>{u.name[0]}</div>
+                    <span className="text-xs font-bold text-gray-800">{u.name}</span>
                   </div>
-                ))}
-              </div>
+                  <div className="flex justify-between text-xs text-gray-400 ml-8">
+                    <span>{u.role}</span>
+                    <span className={`font-bold ${u.access==="Full"?"text-red-600":"text-gray-500"}`}>{u.access}</span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
+      </div>
 
-        <AfricanDivider />
-        <p className="text-center text-xs text-gray-400 mt-3 pb-6">Care Net Consultants (Pty) Ltd · Internal Portal · POPIA Act 4 of 2013 · Confidential</p>
-      </main>
+      <AfricanDivider />
+      <p className="text-center text-xs text-gray-400 mt-3 pb-6">Care Net Consultants (Pty) Ltd · Internal Portal · POPIA Act 4 of 2013 · Confidential</p>
+
       <div className="fixed bottom-6 right-6 z-50">
-        <button className="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg hover:scale-105 transition-transform" style={{ background:CNC_RED }} title="Chat with Sr Thandi"><span className="text-xl">🎧</span></button>
+        <button className="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg hover:scale-105 transition-transform" style={{ background:CNC_RED }} title="Chat with Sr Thandi">
+          <span className="text-xl">🎧</span>
+        </button>
       </div>
     </div>
   );

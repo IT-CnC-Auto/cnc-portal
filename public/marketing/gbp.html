@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<title>GBP optimiser · autopilot · CNC Studio</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&family=Caveat:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="gbp">
+
+<div class="shell">
+  <div data-include="nav"></div>
+
+  <main>
+
+    <!-- ============ AUTOPILOT STATUS BAR ============ -->
+    <div class="autopilot-bar">
+      <div class="autopilot-left">
+        <div class="autopilot-dot"></div>
+        <div>
+          <div class="autopilot-title">GBP AUTOPILOT IS RUNNING</div>
+          <div class="autopilot-sub">3 agents on the dashboards · last action 4 min ago · next scheduled action in 26 min</div>
+        </div>
+      </div>
+      <div class="autopilot-right">
+        <button class="btn"><span class="icon-slot" data-icon="open" data-size="14"></span> View action log</button>
+        <button class="btn killswitch">PAUSE AUTOPILOT</button>
+      </div>
+    </div>
+
+    <div class="page-head">
+      <div>
+        <h1 class="title">GBP optimiser</h1>
+        <p class="sub">Every CNC Google Business Profile is audited continuously against Google's 16-point best-practice checklist. Three agents work directly on the dashboards: one audits, one optimises, one analyses engagement. Growth-mode cadence: two posts per location per week, bi-weekly full audit, twelve-hour review reply target, weekly photo refresh.</p>
+      </div>
+      <div class="actions">
+        <button class="btn"><span class="icon-slot" data-icon="refresh" data-size="14"></span> Force audit now</button>
+        <button class="btn primary"><span class="icon-slot" data-icon="download" data-size="14"></span> Director PDF · bi-weekly</button>
+      </div>
+    </div>
+
+    <!-- ============ HEADLINE KPI ROW · PROOF OF ROI ============ -->
+    <div class="kpi-grid">
+      <div class="card kpi">
+        <div class="label">Average score · 4 locations</div>
+        <div class="value">13.5/16</div>
+        <div class="delta up">+1.25 vs last month</div>
+      </div>
+      <div class="card kpi">
+        <div class="label">Customer actions · 30 days</div>
+        <div class="value">2 184</div>
+        <div class="delta up">+412 vs prior 30</div>
+      </div>
+      <div class="card kpi">
+        <div class="label">Review velocity · week</div>
+        <div class="value">11 new</div>
+        <div class="delta up">+4 vs last week · 4.78 avg star</div>
+      </div>
+      <div class="card kpi" style="border-left:3px solid var(--green);">
+        <div class="label">Time saved · Office Manager</div>
+        <div class="value">28h / month</div>
+        <div class="delta up">R 14 280 saved at R 510/h</div>
+      </div>
+    </div>
+
+    <!-- ============ FOUR LOCATION CARDS ============ -->
+    <h3 style="font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin:24px 0 12px;">All four locations · live from Google Business Profile API</h3>
+
+    <div class="gbp-grid">
+
+      <!-- LOCATION 1 · MIDRAND -->
+      <div class="card gbp-card">
+        <div class="gbp-head">
+          <div>
+            <div class="gbp-loc-name">CARE NET CONSULTANTS · MIDRAND</div>
+            <div class="gbp-loc-addr">875 16th Road, Unit 2 Alphen Square North, Midrand, 1685</div>
+          </div>
+          <div class="gbp-score gbp-score-yellow">
+            <div class="gbp-score-num">14<span>/16</span></div>
+            <div class="gbp-score-label">2 points to perfect</div>
+          </div>
+        </div>
+        <div class="gbp-stats">
+          <div><span class="gbp-stat-num">4.7</span><span class="gbp-stat-meta">★ · 369 reviews</span></div>
+          <div><span class="gbp-stat-num">624</span><span class="gbp-stat-meta">actions · 30d</span></div>
+          <div><span class="gbp-stat-num">+5</span><span class="gbp-stat-meta">reviews this week</span></div>
+        </div>
+        <div class="gbp-action-list">
+          <div class="gbp-action-head">AGENT ACTIONS THIS WEEK</div>
+          <div class="gbp-action-item">
+            <span class="gbp-action-tick">✓</span>
+            <div class="gbp-action-body">
+              <div class="gbp-action-name">Google Post published · Men's Health Week</div>
+              <div class="gbp-action-meta">04 Jun 06:00 · 1 247 views in 18h</div>
+            </div>
+          </div>
+          <div class="gbp-action-item">
+            <span class="gbp-action-tick">✓</span>
+            <div class="gbp-action-body">
+              <div class="gbp-action-name">Review reply drafted &amp; sent · Annemarie J.</div>
+              <div class="gbp-action-meta">03 Jun 14:22 · 5★ · 47 min reply latency</div>
+            </div>
+          </div>
+          <div class="gbp-action-item">
+            <span class="gbp-action-tick">✓</span>
+            <div class="gbp-action-body">
+              <div class="gbp-action-name">3 new clinic photos uploaded</div>
+              <div class="gbp-action-meta">02 Jun 09:15 · agent + Office Manager batch</div>
+            </div>
+          </div>
+          <div class="gbp-action-item pending">
+            <span class="gbp-action-tick" style="background:#FFB81C; color:#1F1F1F;">⟳</span>
+            <div class="gbp-action-body">
+              <div class="gbp-action-name">Adding 2 missing services · Pre-Employment · Exit Medicals</div>
+              <div class="gbp-action-meta">Queued for next autopilot cycle · ETA 06 Jun</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOCATION 2 · GQEBERHA -->
+      <div class="card gbp-card">
+        <div class="gbp-head">
+          <div>
+            <div class="gbp-loc-name">CARE NET CONSULTANTS · GQEBERHA</div>
+            <div class="gbp-loc-addr">40 6th Avenue, Gqeberha, 6045</div>
+          </div>
+          <div class="gbp-score gbp-score-yellow">
+            <div class="gbp-score-num">14<span>/16</span></div>
+            <div class="gbp-score-label">2 points to perfect</div>
+          </div>
+        </div>
+        <div class="gbp-stats">
+          <div><span class="gbp-stat-num">4.9</span><span class="gbp-stat-meta">★ · 44 reviews</span></div>
+          <div><span class="gbp-stat-num">312</span><span class="gbp-stat-meta">actions · 30d</span></div>
+          <div><span class="gbp-stat-num">+2</span><span class="gbp-stat-meta">reviews this week</span></div>
+        </div>
+        <div class="gbp-action-list">
+          <div class="gbp-action-head">AGENT ACTIONS THIS WEEK</div>
+          <div class="gbp-action-item">
+            <span class="gbp-action-tick">✓</span>
+            <div class="gbp-action-body">
+              <div class="gbp-action-name">Google Post · safety equipment compliance reminder</div>
+              <div class="gbp-action-meta">04 Jun 06:00 · 892 views</div>
+            </div>
+          </div>
+          <div class="gbp-action-item">
+            <span class="gbp-action-tick">✓</span>
+            <div class="gbp-action-body">
+              <div class="gbp-action-name">2 review replies sent · both 5★</div>
+              <div class="gbp-action-meta">03 Jun · avg latency 1h 8min</div>
+            </div>
+          </div>
+          <div class="gbp-action-item pending">
+            <span class="gbp-action-tick" style="background:#FFB81C; color:#1F1F1F;">⟳</span>
+            <div class="gbp-action-body">
+              <div class="gbp-action-name">Services tab empty · agent drafting 4 entries</div>
+              <div class="gbp-action-meta">Tanya Nel approval queued · awaiting Director sign-off</div>
+            </div>
+          </div>
+          <div class="gbp-action-item warning">
+            <span class="gbp-action-tick" style="background:var(--red); color:#FFF;">!</span>
+            <div class="gbp-action-body">
+              <div class="gbp-action-name">Anomaly · only 44 reviews vs Midrand's 369</div>
+              <div class="gbp-action-meta">Agent flagged · review-request flow needs rebuild · proposal in queue</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOCATION 3 · CAPE TOWN -->
+      <div class="card gbp-card">
+        <div class="gbp-head">
+          <div>
+            <div class="gbp-loc-name">CARE NET CONSULTANTS · CAPE TOWN</div>
+            <div class="gbp-loc-addr">Cnr Kruis &amp; Capricorn Way, Unit 15 Reserve 1, Western Cape, 7640</div>
+          </div>
+          <div class="gbp-score gbp-score-amber">
+            <div class="gbp-score-num">13<span>/16</span></div>
+            <div class="gbp-score-label">3 points to perfect</div>
+          </div>
+        </div>
+        <div class="gbp-stats">
+          <div><span class="gbp-stat-num">4.8</span><span class="gbp-stat-meta">★ · 201 reviews</span></div>
+          <div><span class="gbp-stat-num">578</span><span class="gbp-stat-meta">actions · 30d</span></div>
+          <div><span class="gbp-stat-num">+3</span><span class="gbp-stat-meta">reviews this week</span></div>
+        </div>
+        <div class="gbp-action-list">
+          <div class="gbp-action-head">AGENT ACTIONS THIS WEEK</div>
+          <div class="gbp-action-item">
+            <span class="gbp-action-tick">✓</span>
+            <div class="gbp-action-body">
+              <div class="gbp-action-name">Google Post · OHASA Act compliance for forecourts</div>
+              <div class="gbp-action-meta">04 Jun 06:00 · targeted to Engen, Shell, Sasol audiences</div>
+            </div>
+          </div>
+          <div class="gbp-action-item">
+            <span class="gbp-action-tick">✓</span>
+            <div class="gbp-action-body">
+              <div class="gbp-action-name">3 review replies · 2× 5★, 1× 4★ with Helena nuance</div>
+              <div class="gbp-action-meta">02 Jun · avg latency 2h 15min</div>
+            </div>
+          </div>
+          <div class="gbp-action-item pending">
+            <span class="gbp-action-tick" style="background:#FFB81C; color:#1F1F1F;">⟳</span>
+            <div class="gbp-action-body">
+              <div class="gbp-action-name">Services + Attributes both empty · agent drafting</div>
+              <div class="gbp-action-meta">3 points available if both completed · queued for autopilot</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOCATION 4 · ELANDSFONTEIN -->
+      <div class="card gbp-card">
+        <div class="gbp-head">
+          <div>
+            <div class="gbp-loc-name">CARE NET CONSULTANTS · ELANDSFONTEIN</div>
+            <div class="gbp-loc-addr">Cnr North Reef &amp; Atlas Road, Shop 2 Delmond Centre, Elandsfontein, 1429</div>
+          </div>
+          <div class="gbp-score gbp-score-amber">
+            <div class="gbp-score-num">13<span>/16</span></div>
+            <div class="gbp-score-label">3 points to perfect</div>
+          </div>
+        </div>
+        <div class="gbp-stats">
+          <div><span class="gbp-stat-num">4.6</span><span class="gbp-stat-meta">★ · 142 reviews</span></div>
+          <div><span class="gbp-stat-num">418</span><span class="gbp-stat-meta">actions · 30d</span></div>
+          <div><span class="gbp-stat-num">+1</span><span class="gbp-stat-meta">reviews this week</span></div>
+        </div>
+        <div class="gbp-action-list">
+          <div class="gbp-action-head">AGENT ACTIONS THIS WEEK</div>
+          <div class="gbp-action-item">
+            <span class="gbp-action-tick">✓</span>
+            <div class="gbp-action-body">
+              <div class="gbp-action-name">Google Post · transport &amp; logistics OHS audit checklist</div>
+              <div class="gbp-action-meta">04 Jun 06:00 · 736 views</div>
+            </div>
+          </div>
+          <div class="gbp-action-item">
+            <span class="gbp-action-tick">✓</span>
+            <div class="gbp-action-body">
+              <div class="gbp-action-name">2 review replies sent · 1× 5★, 1× 3★ escalated</div>
+              <div class="gbp-action-meta">03 Jun · 3★ flagged to OHNP review · resolved same day</div>
+            </div>
+          </div>
+          <div class="gbp-action-item warning">
+            <span class="gbp-action-tick" style="background:var(--red); color:#FFF;">!</span>
+            <div class="gbp-action-body">
+              <div class="gbp-action-name">Star average 4.6 is lowest of 4 locations</div>
+              <div class="gbp-action-meta">Agent proposed weekly satisfaction-survey trigger · Tanya Nel to approve</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ============ THE THREE AGENTS · "AGENT ON THE DASHBOARD" ============ -->
+    <div class="card" style="margin-top:24px;">
+      <div class="card-head"><h3>The three agents working the GBP profiles</h3><div class="meta">Each one runs on its own schedule, writes to audit_event, surfaces here</div></div>
+      <div class="card-body">
+        <div class="strat-grid">
+          <div class="strat-card" style="border-left:3px solid #001489;">
+            <div class="strat-tag" style="color:#001489;">AGENT 19 · AUDITOR</div>
+            <div class="strat-name">GBP Auditor</div>
+            <p class="strat-desc">Runs every 14 days at 03:00 SAST against all four profiles. Scores each one against Google's 16-point checklist. Writes a gbp_score row per location, a gbp_action row per gap, a one-page PDF audit report on CNC letterhead.</p>
+            <ul class="strat-list">
+              <li>Model: Anthropic Sonnet 4.6</li>
+              <li>Rand per audit: R 0.85</li>
+              <li>Output: gbp_score + gbp_action rows + PDF</li>
+            </ul>
+          </div>
+          <div class="strat-card" style="border-left:3px solid #ED1B24;">
+            <div class="strat-tag" style="color:#ED1B24;">AGENT 20 · OPTIMISER · AUTOPILOT</div>
+            <div class="strat-name">GBP Optimiser</div>
+            <p class="strat-desc">Reads the open gbp_action queue every hour. Drafts the change. Writes it. Posts it. Twice-weekly Google Posts. Twelve-hour review-reply target on all incoming reviews. Weekly photo refresh. Every action writes an audit_event row and a Resend digest to Tanya Nel at end of day.</p>
+            <ul class="strat-list">
+              <li>Model: Anthropic Sonnet 4.6 (Helena voice locked)</li>
+              <li>Rand per action: R 0.20 to R 1.50</li>
+              <li>Autopilot scope: posts, 5★ replies, photo captions, attributes</li>
+              <li>Human approval: 1-3★ replies, business description, new services</li>
+            </ul>
+          </div>
+          <div class="strat-card" style="border-left:3px solid #007703;">
+            <div class="strat-tag" style="color:#007703;">AGENT 21 · ENGAGEMENT</div>
+            <div class="strat-name">GBP Engagement Analyst</div>
+            <p class="strat-desc">Reads gbp_score history, customer-action data, review velocity. Adapts the post cadence per location based on what is actually working. Writes recommendations to ad_recipe for the rest of the marketing programme. Quantifies time saved in rand each month.</p>
+            <ul class="strat-list">
+              <li>Model: Anthropic Sonnet 4.6</li>
+              <li>Frequency: weekly</li>
+              <li>Output: recipe + avoid rows + Director email</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ AUTOPILOT SAFETY RAILS ============ -->
+    <div class="card" style="margin-top:20px; border-color:rgba(0,119,3,0.4);">
+      <div class="card-head"><h3>Autopilot safety rails</h3><div class="meta">What stops the agent doing something dumb on live customer profiles</div></div>
+      <div class="card-body" style="padding:0;">
+        <div class="audit-row">
+          <div class="sev" style="background:#007703;">✓</div>
+          <div class="body">
+            <div class="title">Helena voice lock on every customer-facing word</div>
+            <div class="desc">Every reply, every Google Post, every description draft passes the em-dash and Zoom-speak audit before it reaches Google. Violations roll back automatically.</div>
+          </div>
+          <span class="role-tag">AGENT 01 + 02</span>
+        </div>
+        <div class="audit-row">
+          <div class="sev" style="background:#007703;">✓</div>
+          <div class="body">
+            <div class="title">Confidence floor: 0.85</div>
+            <div class="desc">Anything the Optimiser is less than 85% confident about waits for Tanya Nel in the approval queue. Confidence is logged on every agent_run row.</div>
+          </div>
+          <span class="role-tag">FLOOR</span>
+        </div>
+        <div class="audit-row">
+          <div class="sev" style="background:#007703;">✓</div>
+          <div class="body">
+            <div class="title">Anomaly detection · daily Director digest</div>
+            <div class="desc">Star average drop &gt; 0.2 in 7 days, review velocity drop &gt; 30%, customer-action drop &gt; 20%: all trigger an alert email to Barteldt + Tanya before the next autopilot cycle runs.</div>
+          </div>
+          <span class="role-tag">ALERT</span>
+        </div>
+        <div class="audit-row">
+          <div class="sev" style="background:#007703;">✓</div>
+          <div class="body">
+            <div class="title">One-click kill-switch</div>
+            <div class="desc">The PAUSE AUTOPILOT button at the top of this page halts all three GBP agents within 60 seconds. State is preserved. Resume requires both Director signatures via Resend magic-link.</div>
+          </div>
+          <span class="role-tag">KILL</span>
+        </div>
+        <div class="audit-row">
+          <div class="sev" style="background:#007703;">✓</div>
+          <div class="body">
+            <div class="title">Append-only audit log</div>
+            <div class="desc">Every action writes an audit_event row with prompt hash, output hash, rand cost, latency, and the human reviewer if approval was required. Twelve-month retention by default, indefinite for Director-flagged events.</div>
+          </div>
+          <span class="role-tag">AUDIT</span>
+        </div>
+        <div class="audit-row">
+          <div class="sev" style="background:#007703;">✓</div>
+          <div class="body">
+            <div class="title">Daily rand ceiling: R 25 per location</div>
+            <div class="desc">If a single location burns more than R 25 of agent budget in 24 hours, autopilot pauses for that location and asks a human to look. Protects against runaway prompt loops.</div>
+          </div>
+          <span class="role-tag">CEILING</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ THE MONTHLY RHYTHM ============ -->
+    <div class="card" style="margin-top:20px;">
+      <div class="card-head"><h3>Monthly rhythm · growth mode</h3><div class="meta">What the autopilot does every week so the score never slips</div></div>
+      <div class="card-body">
+        <div class="loop">
+          <div class="loop-step">
+            <div class="loop-num">M</div>
+            <div class="loop-name">MONDAY</div>
+            <div class="loop-desc">06:00 SAST · Google Post per location. Industry-focused topic chosen from the awareness-day calendar.</div>
+          </div>
+          <div class="loop-arrow">→</div>
+          <div class="loop-step">
+            <div class="loop-num">W</div>
+            <div class="loop-name">WEDNESDAY</div>
+            <div class="loop-desc">Weekly photo refresh. Agent uploads 1 to 2 new approved photos per location.</div>
+          </div>
+          <div class="loop-arrow">→</div>
+          <div class="loop-step">
+            <div class="loop-num">T</div>
+            <div class="loop-name">THURSDAY</div>
+            <div class="loop-desc">06:00 SAST · second Google Post per location. Client-success or behind-the-scenes angle.</div>
+          </div>
+          <div class="loop-arrow">→</div>
+          <div class="loop-step">
+            <div class="loop-num">F</div>
+            <div class="loop-name">FRIDAY</div>
+            <div class="loop-desc">14:00 SAST · Engagement Analyst reads week, adjusts next-week cadence per location.</div>
+          </div>
+          <div class="loop-arrow">→</div>
+          <div class="loop-step">
+            <div class="loop-num">2W</div>
+            <div class="loop-name">BI-WEEKLY</div>
+            <div class="loop-desc">1st &amp; 15th 03:00 SAST · full audit, score update, Director PDF, approval queue refreshed.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ PROOF OF ROI ============ -->
+    <div class="card" style="margin-top:20px; border-color:rgba(255,184,28,0.4);">
+      <div class="card-head"><h3>Why this justifies the spend</h3><div class="meta">For the next Director conversation</div></div>
+      <div class="card-body">
+        <div class="strat-grid">
+          <div class="recipe">
+            <div class="recipe-tag">TIME · MONTHLY</div>
+            <div class="recipe-name">28 hours of Office Manager work reclaimed</div>
+            <div class="recipe-result">R 14 280 saved at R 510/h · R 171 360 per year</div>
+            <div class="recipe-note">Reviews, posts, photos, attribute updates that used to be a Monday-morning queue across four locations now run on rails. The Office Manager spends those hours on patient-facing work instead.</div>
+          </div>
+          <div class="recipe">
+            <div class="recipe-tag">DISCOVERY · MONTHLY</div>
+            <div class="recipe-name">2 184 customer actions across 4 locations</div>
+            <div class="recipe-result">+412 actions vs last month · +23%</div>
+            <div class="recipe-note">Direction requests, calls, photo views, website clicks. The Google-published signal that the local-pack algorithm rewards. Twice-weekly posts and 12-hour review reply are the two biggest movers.</div>
+          </div>
+          <div class="recipe">
+            <div class="recipe-tag">TRUST · ROLLING</div>
+            <div class="recipe-name">4.78 average across 756 reviews</div>
+            <div class="recipe-result">+11 new reviews this week</div>
+            <div class="recipe-note">Every reply written in Helena voice. No template, no AI giveaway phrases. The reviewer feels heard. The next prospect reads a thread that sounds like a real human cared.</div>
+          </div>
+        </div>
+
+        <div style="margin-top:18px; background:#FAFAFA; border-left:3px solid var(--red); padding:14px 18px; border-radius:6px; font-size:13px; line-height:1.6;">
+          <strong>The honest number.</strong> Agent compute cost across all four locations is R 1 240 per month. Office Manager time saved is R 14 280 per month. The ratio is roughly eleven to one. The customer-discovery lift sits on top of that, uncounted. When Barteldt or Tanya Nel asks why we pay for the agents, this is the answer.
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-band">I&nbsp;AM&nbsp;BECAUSE&nbsp;WE&nbsp;ARE.</div>
+  </main>
+</div>
+
+<script src="_icons.js"></script>
+<script src="_layout.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.icon-slot').forEach(el => {
+      el.outerHTML = icon(el.dataset.icon, parseInt(el.dataset.size, 10));
+    });
+  });
+</script>
+</body>
+</html>

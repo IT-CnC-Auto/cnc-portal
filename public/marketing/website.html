@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<title>Website engine · autopilot · CNC Studio</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&family=Caveat:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="website">
+
+<div class="shell">
+  <div data-include="nav"></div>
+
+  <main>
+
+    <!-- ============ AUTOPILOT STATUS BAR ============ -->
+    <div class="autopilot-bar">
+      <div class="autopilot-left">
+        <div class="autopilot-dot"></div>
+        <div>
+          <div class="autopilot-title">WEBSITE ENGINE IS RUNNING</div>
+          <div class="autopilot-sub">4 agents working www.carenetconsultants.co.za · last check 2 min ago · next site crawl in 58 min · 30 pages monitored</div>
+        </div>
+      </div>
+      <div class="autopilot-right">
+        <button class="btn"><span class="icon-slot" data-icon="open" data-size="14"></span> Open live site</button>
+        <button class="btn"><span class="icon-slot" data-icon="open" data-size="14"></span> View action log</button>
+        <button class="btn killswitch">PAUSE AUTOPILOT</button>
+      </div>
+    </div>
+
+    <div class="page-head">
+      <div>
+        <h1 class="title">Website engine</h1>
+        <p class="sub">Every page on carenetconsultants.co.za audited continuously. Every link checked every hour. Every form tested every hour. Every page Lighthouse-scored every day. Four agents read what visitors actually do, what customers actually say, and what converts. They draft the change, deploy the safe ones, queue the risky ones for Tanya Nel. The catalogue becomes a sales engine that learns from real signal, not opinions.</p>
+      </div>
+      <div class="actions">
+        <button class="btn"><span class="icon-slot" data-icon="refresh" data-size="14"></span> Force full crawl</button>
+        <button class="btn primary"><span class="icon-slot" data-icon="download" data-size="14"></span> Director PDF · weekly</button>
+      </div>
+    </div>
+
+    <!-- ============ HEADLINE KPIs · PROOF OF ROI ============ -->
+    <div class="kpi-grid">
+      <div class="card kpi">
+        <div class="label">Avg Lighthouse score · 30 pages</div>
+        <div class="value">94.2</div>
+        <div class="delta up">+6.1 vs last month · all 4 categories ≥ 90</div>
+      </div>
+      <div class="card kpi">
+        <div class="label">Quote requests · 30 days</div>
+        <div class="value">186</div>
+        <div class="delta up">+78 vs prior 30 · +72.2%</div>
+      </div>
+      <div class="card kpi">
+        <div class="label">Site uptime · 90 days</div>
+        <div class="value">99.97%</div>
+        <div class="delta">2 brief outages auto-flagged</div>
+      </div>
+      <div class="card kpi" style="border-left:3px solid var(--green);">
+        <div class="label">Conversion rate · landing pages</div>
+        <div class="value">4.84%</div>
+        <div class="delta up">+1.91 pts vs baseline · industry avg 2.1%</div>
+      </div>
+    </div>
+
+    <!-- ============ THE 10 LANDING PAGES ============ -->
+    <div class="card" style="margin-top:24px;">
+      <div class="card-head">
+        <h3>The 10 landing pages · sales engine</h3>
+        <div class="meta">Each page follows the same 5-stage psychological arc · Pattern Interrupt → Pain Recognition → Authority & Proof → Specific Outcome → Single Invitation</div>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <table class="ads-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Page</th>
+              <th>Industry / audience</th>
+              <th>Status</th>
+              <th>Sessions · 30d</th>
+              <th>Quote requests · 30d</th>
+              <th>Conv rate</th>
+              <th>Lighthouse</th>
+              <th>Verdict</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background:rgba(237,27,36,0.04);">
+              <td><strong style="color:var(--red);">01</strong><div class="row-sub" style="color:var(--red);">FLAGSHIP</div></td>
+              <td><strong>On-site clinic deployment</strong><div class="row-sub">/on-site-clinic-deployment · our own fix clinic</div></td>
+              <td>Any company size · small + large welcome</td>
+              <td><span class="pill green">LIVE · V2</span></td>
+              <td>2 184</td>
+              <td>42</td>
+              <td><span class="pill green">6.42%</span></td>
+              <td>96 / 98 / 100 / 100</td>
+              <td><span class="pill green">SCALE</span></td>
+            </tr>
+            <tr style="background:rgba(237,27,36,0.02);">
+              <td><strong style="color:var(--red);">02</strong><div class="row-sub" style="color:var(--red);">PRIORITY</div></td>
+              <td><strong>Mobile clinic for remote sites</strong><div class="row-sub">/mobile-clinic-remote-sites · 10+ employees</div></td>
+              <td>Mines, farms, construction sites</td>
+              <td><span class="pill green">LIVE · V1</span></td>
+              <td>1 902</td>
+              <td>38</td>
+              <td><span class="pill green">5.62%</span></td>
+              <td>95 / 97 / 100 / 100</td>
+              <td><span class="pill green">SCALE</span></td>
+            </tr>
+            <tr>
+              <td>03</td>
+              <td><strong>Construction OH compliance</strong><div class="row-sub">/construction-oh-compliance</div></td>
+              <td>Site managers, HSE leads</td>
+              <td><span class="pill green">LIVE · V2</span></td>
+              <td>1 471</td>
+              <td>32</td>
+              <td><span class="pill green">5.81%</span></td>
+              <td>94 / 96 / 100 / 100</td>
+              <td><span class="pill green">SCALE</span></td>
+            </tr>
+            <tr>
+              <td>04</td>
+              <td><strong>Food handling &amp; FBO medicals</strong><div class="row-sub">/food-handling-fbo-medicals</div></td>
+              <td>Restaurant chains, food processors</td>
+              <td><span class="pill green">LIVE · V1</span></td>
+              <td>1 638</td>
+              <td>27</td>
+              <td><span class="pill amber">4.32%</span></td>
+              <td>92 / 95 / 100 / 100</td>
+              <td><span class="pill amber">REFINE</span></td>
+            </tr>
+            <tr>
+              <td>05</td>
+              <td><strong>Manufacturing &amp; engineering OH</strong><div class="row-sub">/manufacturing-engineering-oh</div></td>
+              <td>Plant managers</td>
+              <td><span class="pill green">LIVE · V1</span></td>
+              <td>892</td>
+              <td>21</td>
+              <td><span class="pill green">5.18%</span></td>
+              <td>93 / 95 / 100 / 100</td>
+              <td><span class="pill green">SCALE</span></td>
+            </tr>
+            <tr>
+              <td>06</td>
+              <td><strong>Transport &amp; logistics driver wellness</strong><div class="row-sub">/transport-logistics-driver-wellness</div></td>
+              <td>Fleet managers</td>
+              <td><span class="pill amber">A/B TEST</span></td>
+              <td>1 047</td>
+              <td>18</td>
+              <td><span class="pill amber">3.91%</span></td>
+              <td>91 / 94 / 100 / 100</td>
+              <td><span class="pill amber">A/B running</span></td>
+            </tr>
+            <tr>
+              <td>07</td>
+              <td><strong>Cleaning, hygiene &amp; recycling</strong><div class="row-sub">/cleaning-hygiene-recycling</div></td>
+              <td>Operations directors</td>
+              <td><span class="pill amber">DRAFT V2</span></td>
+              <td>614</td>
+              <td>8</td>
+              <td><span class="pill amber">3.42%</span></td>
+              <td>90 / 93 / 100 / 100</td>
+              <td><span class="pill amber">REFINE</span></td>
+            </tr>
+            <tr>
+              <td>08</td>
+              <td><strong>Telecoms field-worker health</strong><div class="row-sub">/telecoms-field-worker-health</div></td>
+              <td>Network ops, contractors</td>
+              <td><span class="pill amber">DRAFT V1</span></td>
+              <td>421</td>
+              <td>4</td>
+              <td><span class="pill red">2.18%</span></td>
+              <td>89 / 93 / 100 / 100</td>
+              <td><span class="pill red">REWRITE</span></td>
+            </tr>
+            <tr>
+              <td>09</td>
+              <td><strong>Agriculture &amp; abattoir worker health</strong><div class="row-sub">/agriculture-abattoir-worker-health</div></td>
+              <td>Farm operators, abattoir directors</td>
+              <td><span class="pill amber">DRAFT V1</span></td>
+              <td>358</td>
+              <td>3</td>
+              <td><span class="pill red">2.04%</span></td>
+              <td>88 / 92 / 100 / 100</td>
+              <td><span class="pill red">REWRITE</span></td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td><strong>Safety &amp; security guard medicals</strong><div class="row-sub">/safety-security-guard-medicals</div></td>
+              <td>Security firms · PSIRA-aligned</td>
+              <td><span class="pill amber">DRAFT V1</span></td>
+              <td>284</td>
+              <td>2</td>
+              <td><span class="pill red">1.78%</span></td>
+              <td>89 / 92 / 100 / 100</td>
+              <td><span class="pill red">REWRITE</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ============ THE FIVE-STAGE FUNNEL DIAGRAM ============ -->
+    <div class="card" style="margin-top:20px;">
+      <div class="card-head">
+        <h3>The 5-stage psychological arc</h3>
+        <div class="meta">Every landing page builds in this order · Helena voice + PIF calibration on every word</div>
+      </div>
+      <div class="card-body">
+        <div class="funnel-grid">
+          <div class="funnel-step">
+            <div class="funnel-num">01</div>
+            <div class="funnel-name">PATTERN INTERRUPT</div>
+            <div class="funnel-desc">First fold names the reader. Specific role, specific industry, specific moment. No "Welcome to Care Net." Instead: "Construction HSE leads · the annual SHEQ audit is 12 weeks away."</div>
+            <div class="funnel-trigger">PIF · Adult ego-state · directness 8</div>
+          </div>
+          <div class="funnel-step">
+            <div class="funnel-num">02</div>
+            <div class="funnel-name">PAIN RECOGNITION</div>
+            <div class="funnel-desc">The specific situation they keep losing sleep over. Not "OH compliance is complex" but "the inspector arrives and you cannot find Lerato's exit medical from 2023."</div>
+            <div class="funnel-trigger">PIF · empathy 9 · pace 4</div>
+          </div>
+          <div class="funnel-step">
+            <div class="funnel-num">03</div>
+            <div class="funnel-name">AUTHORITY &amp; PROOF</div>
+            <div class="funnel-desc">CNC's qualification (OHASA Act 85 of 1993 expert), the four locations, the named-client stories. "Sasol Secunda. 600 staff. Three years zero non-compliance findings."</div>
+            <div class="funnel-trigger">PIF · social proof 8 · detail 7</div>
+          </div>
+          <div class="funnel-step">
+            <div class="funnel-num">04</div>
+            <div class="funnel-name">SPECIFIC OUTCOME</div>
+            <div class="funnel-desc">What changes after they sign. Named time savings. "Audit prep drops from 14 days to 3 hours. Lerato's records are one click. The inspector leaves at 11am."</div>
+            <div class="funnel-trigger">PIF · warmth 7 · autonomy 9</div>
+          </div>
+          <div class="funnel-step">
+            <div class="funnel-num">05</div>
+            <div class="funnel-name">SINGLE INVITATION</div>
+            <div class="funnel-desc">One CTA. No "learn more." Always action-led. "Book a 30-minute compliance audit." Pre-filled with industry, headcount, location, primary concern.</div>
+            <div class="funnel-trigger">PIF · directness 7 · empathy 8 · NO urgency</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ AGENT OPTIMISATION QUEUE ============ -->
+    <div class="card" style="margin-top:20px;">
+      <div class="card-head">
+        <h3>What the agents are doing right now</h3>
+        <div class="meta">Live queue · autopilot scope auto-deploys · human-gate scope waits for Tanya Nel</div>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <div class="reco-row">
+          <div class="reco-rank" style="background:#007703;">A</div>
+          <div class="reco-body">
+            <div class="reco-title">AUTOPILOT · Microcopy fix on /transport-logistics-driver-wellness</div>
+            <div class="reco-desc">PostHog shows 38% of mobile visitors rage-click the "Drivers · Wellness · Audit" pill in the hero. Optimiser rewrote it to "Book a driver medical · 30-min quote." Helena + PIF gates passed. Deployed to 50/50 split test at 09:14 SAST.</div>
+            <div class="reco-meta"><strong>Confidence</strong> · 0.91 · <strong>Cost</strong> R 1.20 · <strong>Test ends</strong> 11 Jun</div>
+          </div>
+          <div class="reco-actions">
+            <button class="btn">View variant</button>
+          </div>
+        </div>
+        <div class="reco-row">
+          <div class="reco-rank" style="background:#007703;">A</div>
+          <div class="reco-body">
+            <div class="reco-title">AUTOPILOT · 3 internal links added to /construction-oh-compliance</div>
+            <div class="reco-desc">Site Health Sentinel found 3 paragraphs that mention "exit medicals" and "SHEQ" without linking to the matching service pages. Added contextual links. Internal-link score +12%.</div>
+            <div class="reco-meta"><strong>Confidence</strong> · 0.96 · <strong>Cost</strong> R 0.40 · <strong>Deployed</strong> 08:42 SAST</div>
+          </div>
+          <div class="reco-actions">
+            <button class="btn">View change</button>
+          </div>
+        </div>
+        <div class="reco-row">
+          <div class="reco-rank" style="background:#FFB81C; color:#1F1F1F;">H</div>
+          <div class="reco-body">
+            <div class="reco-title">HUMAN GATE · Hero headline rewrite for /telecoms-field-worker-health</div>
+            <div class="reco-desc">Conversion 2.18% vs landing-page average 4.84%. Architect drafted 3 hero variants based on VoC theme "tower safety" and PIF calibration to network-ops manager profile. Awaiting Tanya Nel approval.</div>
+            <div class="reco-meta"><strong>Confidence</strong> · 0.79 · below floor · <strong>Magic-link</strong> sent 07:50 SAST</div>
+          </div>
+          <div class="reco-actions">
+            <button class="btn">Reject</button>
+            <button class="btn primary">Review &amp; approve</button>
+          </div>
+        </div>
+        <div class="reco-row">
+          <div class="reco-rank" style="background:#FFB81C; color:#1F1F1F;">H</div>
+          <div class="reco-body">
+            <div class="reco-title">HUMAN GATE · Full rewrite of /safety-security-guard-medicals</div>
+            <div class="reco-desc">Lowest converter (1.78%). VoC Synthesiser found 14 quotes this quarter mentioning "PSIRA renewal" not addressed on the page. Landing Page Architect drafted a complete V2. Vercel preview live.</div>
+            <div class="reco-meta"><strong>Confidence</strong> · 0.88 · scope: full page · <strong>Awaiting</strong> Tanya + Barteldt magic-links</div>
+          </div>
+          <div class="reco-actions">
+            <button class="btn">Open preview</button>
+            <button class="btn primary">Review &amp; approve</button>
+          </div>
+        </div>
+        <div class="reco-row">
+          <div class="reco-rank" style="background:#007703;">A</div>
+          <div class="reco-body">
+            <div class="reco-title">AUTOPILOT · Hero image swap on /on-site-clinic-deployment</div>
+            <div class="reco-desc">PostHog scroll-depth shows current hero photo holds attention 2.1s. Optimiser tried the Sister Ani portrait from the brand library. Scroll-depth 4.4s. Conversion +0.6 pts in 72 hours. Promoted to primary.</div>
+            <div class="reco-meta"><strong>Confidence</strong> · 0.94 · <strong>Cost</strong> R 0.20 · <strong>Promoted</strong> 03 Jun 14:08</div>
+          </div>
+          <div class="reco-actions">
+            <button class="btn">View before/after</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SITE HEALTH SENTINEL · live status ============ -->
+    <div class="card" style="margin-top:20px;">
+      <div class="card-head">
+        <h3>Site Health Sentinel · live status</h3>
+        <div class="meta">Hourly link check · hourly synthetic form submissions · daily Lighthouse · Resend alert within 5 min on any failure</div>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <div class="audit-row">
+          <div class="sev" style="background:#007703;">✓</div>
+          <div class="body">
+            <div class="title">All 247 internal links responding · 4 external links flagged for slow TTFB</div>
+            <div class="desc">2 are South African Government (slow, expected). 1 is a CIPC search URL (expected). 1 is an industry association page (raised auto-ticket to use cached archive).</div>
+          </div>
+          <span class="role-tag">LINK CHECK · 09:04 SAST</span>
+        </div>
+        <div class="audit-row">
+          <div class="sev" style="background:#007703;">✓</div>
+          <div class="body">
+            <div class="title">12 forms synthetically tested · all 12 reached GHL + Sales Dashboard</div>
+            <div class="desc">Quote-request form (5 pages), call-back form (3 pages), newsletter form (1 page), contact form (1 page), bursary form, employer enquiry. Avg response 612ms. Slowest 1.2s (bursary form, optimisation queued).</div>
+          </div>
+          <span class="role-tag">FORM CHECK · 09:04 SAST</span>
+        </div>
+        <div class="audit-row">
+          <div class="sev" style="background:#007703;">✓</div>
+          <div class="body">
+            <div class="title">Lighthouse rolling audit · 4 pages per hour · current floor 88</div>
+            <div class="desc">Lowest performer is /safety-security-guard-medicals at 88/92/100/100. Auto-ticket created. Performance score below 90 triggers immediate re-test then human ticket if still below.</div>
+          </div>
+          <span class="role-tag">LIGHTHOUSE · 08:45 SAST</span>
+        </div>
+        <div class="audit-row">
+          <div class="sev" style="background:#007703;">✓</div>
+          <div class="body">
+            <div class="title">TLS certificate · expires in 67 days · auto-renew armed</div>
+            <div class="desc">Cloudflare auto-renews at 30 days remaining. Sentinel alerts the team if auto-renew fails.</div>
+          </div>
+          <span class="role-tag">TLS · 09:04 SAST</span>
+        </div>
+        <div class="audit-row">
+          <div class="sev high">!</div>
+          <div class="body">
+            <div class="title">Slow form response on /bursary-application · 1.2s</div>
+            <div class="desc">Average is 612ms. This form submits a multi-page payload to GHL. Optimiser is investigating · likely a slow GHL workflow step. Auto-ticket created.</div>
+          </div>
+          <button class="btn" style="padding:4px 10px; font-size:11px;">Investigate</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ VOICE OF CUSTOMER ============ -->
+    <div class="card" style="margin-top:20px; border-color:rgba(0,20,137,0.4);">
+      <div class="card-head">
+        <h3>What clients and patients are actually saying</h3>
+        <div class="meta">VoC Synthesiser · this week · direct quotes only · no interpretation that wasn't said</div>
+      </div>
+      <div class="card-body">
+
+        <div class="voc-grid">
+          <div class="voc-theme">
+            <div class="voc-theme-label">THEME · 14 quotes · this week</div>
+            <div class="voc-theme-name">"We need PSIRA renewal medicals fast"</div>
+            <div class="voc-quote">
+              "I have 28 guards renewing this month. Your competitors take 14 days. If you can do it in 5 I'm yours."
+              <div class="voc-quote-source">SECURITY OPERATIONS · MIDRAND · GHL message · 03 Jun</div>
+            </div>
+            <div class="voc-quote">
+              "PSIRA fines stack up. I'm not picky who does the medicals, I'm picky on speed."
+              <div class="voc-quote-source">SECURITY DIRECTOR · CAPE TOWN · phone call · 02 Jun</div>
+            </div>
+            <div class="voc-action">→ Auto-queued · rewrite /safety-security-guard-medicals around 5-day turnaround promise</div>
+          </div>
+
+          <div class="voc-theme">
+            <div class="voc-theme-label">THEME · 9 quotes · this week</div>
+            <div class="voc-theme-name">"Tower safety is different from regular OH"</div>
+            <div class="voc-quote">
+              "Our riggers climb 80m. The general OH provider doesn't get it. They want a generic medical."
+              <div class="voc-quote-source">TELECOMS HSE LEAD · GHL message · 01 Jun</div>
+            </div>
+            <div class="voc-quote">
+              "Fit-for-heights is the test that matters. Everything else is paperwork."
+              <div class="voc-quote-source">NETWORK OPS MANAGER · web form · 30 May</div>
+            </div>
+            <div class="voc-action">→ Auto-queued · hero headline rewrite on /telecoms-field-worker-health</div>
+          </div>
+
+          <div class="voc-theme">
+            <div class="voc-theme-label">THEME · 7 quotes · this week</div>
+            <div class="voc-theme-name">"Mobile clinic timing matters more than mobile clinic itself"</div>
+            <div class="voc-quote">
+              "We have 200 workers on a remote site. They cannot stop for medicals on a Monday. Sunday is the only day that works."
+              <div class="voc-quote-source">FARM OPERATIONS · Limpopo · GBP message · 29 May</div>
+            </div>
+            <div class="voc-action">→ Director ticket created · explore weekend mobile-clinic scheduling</div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px; background:#FAFAFA; border-left:3px solid var(--blue); padding:14px 18px; border-radius:6px; font-size:13px; line-height:1.6;">
+          <strong>The honest principle.</strong> Every theme above is built from at least 5 direct quotes from real customer texts. Sentiment, intent, and emotional state come from PIF Calibrator (Agent 02) running on each quote. The agent flags a theme when frequency or emotional weight crosses a threshold. No theme appears without source quotes the team can read in full.
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ FEEDBACK LOOP DIAGRAM ============ -->
+    <div class="card" style="margin-top:20px;">
+      <div class="card-head"><h3>The continuous learning loop</h3><div class="meta">Three signals feed one rewrite cycle</div></div>
+      <div class="card-body">
+        <div class="loop">
+          <div class="loop-step">
+            <div class="loop-num">1</div>
+            <div class="loop-name">BEHAVIOUR</div>
+            <div class="loop-desc">PostHog reads scroll, clicks, rage-clicks, form abandonment per page per session. Where do they stop reading.</div>
+          </div>
+          <div class="loop-arrow">→</div>
+          <div class="loop-step">
+            <div class="loop-num">2</div>
+            <div class="loop-name">SENTIMENT</div>
+            <div class="loop-desc">PIF Calibrator reads every inbound text from forms, GHL, GBP, newsletter replies. What do they actually need.</div>
+          </div>
+          <div class="loop-arrow">→</div>
+          <div class="loop-step">
+            <div class="loop-num">3</div>
+            <div class="loop-name">CONVERSION</div>
+            <div class="loop-desc">GA4 + GHL track form_submit, quote_request, call_clicked per page. What turns into revenue.</div>
+          </div>
+          <div class="loop-arrow">→</div>
+          <div class="loop-step">
+            <div class="loop-num">4</div>
+            <div class="loop-name">SYNTHESIS</div>
+            <div class="loop-desc">VoC Synthesiser clusters the themes weekly. Architect drafts page-level rewrites monthly. Quarterly cycle rewrites the 3 lowest-converting pages.</div>
+          </div>
+          <div class="loop-arrow">→</div>
+          <div class="loop-step">
+            <div class="loop-num">5</div>
+            <div class="loop-name">DEPLOY &amp; LEARN</div>
+            <div class="loop-desc">Autopilot deploys safe changes. Tanya Nel approves the risky ones. A/B variants run 14 days. Winners templated to the other pages. Losers documented in ad_avoid.</div>
+          </div>
+        </div>
+
+        <div style="margin-top:20px; background:#FAFAFA; border-left:3px solid var(--red); padding:14px 18px; border-radius:6px; font-size:13px; line-height:1.6;">
+          <strong>The shift.</strong> The website stops being a brochure you update twice a year and starts being a living surface that reads its own visitors. Every week it understands the customer a little better than it did the week before. Six months in, the page that converted at 4.84% now converts at 7%. Twelve months in, the brand voice is so consistent across the four GMB profiles, the newsletter, and the website that prospects mistake the agents for the founder.
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ THE YEAR-LONG ROADMAP ============ -->
+    <div class="card" style="margin-top:20px;">
+      <div class="card-head"><h3>Year-long page-by-page roadmap</h3><div class="meta">June 2026 to June 2027 · 30 pages refactored on rolling schedule</div></div>
+      <div class="card-body">
+        <div class="roadmap">
+          <div class="roadmap-row">
+            <div class="roadmap-q">Q3 · JUL-SEP 2026</div>
+            <div class="roadmap-body">
+              <div class="roadmap-name">10 landing pages live · sales engine running</div>
+              <div class="roadmap-desc">All 10 industry pages built, deployed, A/B-tested. Conversion baseline locked. PostHog instrumented on every page. Forms double-loop into GHL + Sales Dashboard.</div>
+            </div>
+          </div>
+          <div class="roadmap-row">
+            <div class="roadmap-q">Q4 · OCT-DEC 2026</div>
+            <div class="roadmap-body">
+              <div class="roadmap-name">Homepage + about + contact + services hub</div>
+              <div class="roadmap-desc">Core 7 pages get the Architect treatment. Homepage built as a router into the 10 landing pages by industry. Contact form rewritten as a quote-request flow.</div>
+            </div>
+          </div>
+          <div class="roadmap-row">
+            <div class="roadmap-q">Q1 · JAN-MAR 2027</div>
+            <div class="roadmap-body">
+              <div class="roadmap-name">Case studies + resource library + blog</div>
+              <div class="roadmap-desc">8 case studies (one per industry). 12-resource library. Blog templated with Helena voice and Newsletter Agent feed. Search-engine schema across all.</div>
+            </div>
+          </div>
+          <div class="roadmap-row">
+            <div class="roadmap-q">Q2 · APR-JUN 2027</div>
+            <div class="roadmap-body">
+              <div class="roadmap-name">Location pages + careers + bursaries + investor</div>
+              <div class="roadmap-desc">5 location pages (1 per GMB profile + national). Careers as a recruiting funnel feeding the HR Portal. Bursary page rewritten. Investor / partner page for SME outreach.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-band">I&nbsp;AM&nbsp;BECAUSE&nbsp;WE&nbsp;ARE.</div>
+  </main>
+</div>
+
+<script src="_icons.js"></script>
+<script src="_layout.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.icon-slot').forEach(el => {
+      el.outerHTML = icon(el.dataset.icon, parseInt(el.dataset.size, 10));
+    });
+  });
+</script>
+</body>
+</html>

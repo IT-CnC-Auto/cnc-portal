@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<title>Library · CNC Studio</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&family=Caveat:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .t1 { background: linear-gradient(135deg, #ED1B24 0%, #FF6B6B 100%); }
+  .t2 { background: linear-gradient(135deg, #2C5F8F 0%, #7AB8E5 100%); }
+  .t3 { background: linear-gradient(135deg, #4A7C30 0%, #C8E68F 100%); }
+  .t4 { background: linear-gradient(135deg, #5E2B8F 0%, #C18FD8 100%); }
+  .t5 { background: linear-gradient(135deg, #B7141A 0%, #FDECEE 100%); }
+  .t6 { background: linear-gradient(135deg, #1F2937 0%, #6B7280 100%); }
+  .t7 { background: linear-gradient(135deg, #C58B16 0%, #FBE08A 100%); }
+  .t8 { background: linear-gradient(135deg, #0F766E 0%, #5EEAD4 100%); }
+  .t9 { background: radial-gradient(circle at 30% 40%, #FFF 0%, #FFF 30%, #ED1B24 30%, #ED1B24 60%, #111 60%, #111 100%); }
+  .t10 { background: linear-gradient(135deg, #111 0%, #ED1B24 60%, #FFC857 100%); }
+  .t11 { background: linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%); }
+  .t12 { background: linear-gradient(45deg, #ED1B24 25%, #FFF 25%, #FFF 50%, #ED1B24 50%, #ED1B24 75%, #FFF 75%); background-size: 22px 22px; }
+</style>
+</head>
+<body data-page="library">
+
+<div class="shell">
+  <div data-include="nav"></div>
+
+  <main>
+    <div class="page-head">
+      <div>
+        <div class="crumbs">
+          <span>Library</span><span class="sep"></span>
+          <span>Patient-centric</span><span class="sep"></span>
+          <span>Health Awareness Packs</span><span class="sep"></span>
+          <strong style="color:var(--ink);">June · Mens Health</strong>
+        </div>
+        <h1 class="title">Health Awareness Packs · June · Mens Health</h1>
+        <p class="sub">Patient-facing assets bundled for the Mens Health awareness window.
+          Posters, social cards, email headers, explainer videos, and the licensed soundbed all live here.</p>
+      </div>
+      <div class="actions">
+        <button class="btn" id="btn-subfolder"><span class="icon-slot" data-icon="plus" data-size="14"></span> Subfolder</button>
+        <button class="btn" id="btn-download"><span class="icon-slot" data-icon="download" data-size="14"></span> Download zip</button>
+        <button class="btn primary" id="btn-upload"><span class="icon-slot" data-icon="upload" data-size="14"></span> Upload</button>
+        <button class="btn danger" title="Delete folder"><span class="icon-slot" data-icon="trash" data-size="14"></span></button>
+      </div>
+    </div>
+
+    <div class="library">
+      <aside class="folder-tree">
+        <div class="tree-head">
+          <h4>Folders</h4>
+          <button class="add" title="New top-level folder"><span class="icon-slot" data-icon="plus" data-size="16"></span></button>
+        </div>
+        <div class="tree-search">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <span>Search folders</span>
+        </div>
+        <div id="tree-slot"></div>
+      </aside>
+
+      <section>
+        <div class="tabs">
+          <span class="tab active">All <strong style="margin-left:6px;">12</strong></span>
+          <span class="tab">Static <strong style="margin-left:6px; color:var(--muted-2);">6</strong></span>
+          <span class="tab">Video <strong style="margin-left:6px; color:var(--muted-2);">3</strong></span>
+          <span class="tab">Canvas <strong style="margin-left:6px; color:var(--muted-2);">2</strong></span>
+          <span class="tab">Audio <strong style="margin-left:6px; color:var(--muted-2);">1</strong></span>
+          <span style="flex:1;"></span>
+          <span class="tab">Latest only</span>
+        </div>
+
+        <div class="asset-grid">
+          <!-- placeholder cards; populated below -->
+          <div class="asset"><div class="thumb t5"><span class="badge brand">brand</span></div><div class="meta"><div class="name">mens-health-poster-a4</div><div class="tags">static<span class="dot"></span>health-awareness<span class="checkmark">✓</span></div></div></div>
+          <div class="asset"><div class="thumb t1"><span class="badge brand">brand</span><span class="ver">v3</span></div><div class="meta"><div class="name">mens-health-social-square</div><div class="tags">static<span class="dot"></span>1×1<span class="checkmark">✓</span></div></div></div>
+          <div class="asset"><div class="thumb t2"><span class="badge">video</span><span class="play-slot" data-icon="play" data-size="56"></span></div><div class="meta"><div class="name">prostate-screening-explainer</div><div class="tags">video<span class="dot"></span>0:58<span class="dot"></span>heygen</div></div></div>
+          <div class="asset"><div class="thumb t4"><span class="badge" style="background:#7B61FF;">canva</span></div><div class="meta"><div class="name">mens-health-instagram-story</div><div class="tags">canvas<span class="dot"></span>canva</div></div></div>
+          <div class="asset"><div class="thumb t10"><span class="badge brand">brand</span></div><div class="meta"><div class="name">mens-health-email-header</div><div class="tags">static<span class="dot"></span>16×9<span class="checkmark">✓</span></div></div></div>
+          <div class="asset"><div class="thumb t7"><span class="badge">video</span><span class="play-slot" data-icon="play" data-size="56"></span></div><div class="meta"><div class="name">blood-pressure-90s-walkthrough</div><div class="tags">video<span class="dot"></span>1:32<span class="dot"></span>vimeo</div></div></div>
+          <div class="asset"><div class="thumb t8"><span class="badge">audio</span><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="1.5" opacity=".9"><path d="M2 12 L4 12 L5 8 L7 16 L9 6 L11 18 L13 9 L15 14 L17 11 L19 12 L22 12"/></svg></div><div class="meta"><div class="name">awareness-pack-soundbed</div><div class="tags">audio<span class="dot"></span>artlist · 2:14</div></div></div>
+          <div class="asset"><div class="thumb t9"><span class="badge brand">brand</span></div><div class="meta"><div class="name">prostate-stat-card</div><div class="tags">static<span class="dot"></span>1×1<span class="checkmark">✓</span></div></div></div>
+          <div class="asset"><div class="thumb t3"><span class="badge brand">brand</span><span class="ver">v2</span></div><div class="meta"><div class="name">mens-health-print-flyer</div><div class="tags">static<span class="dot"></span>A5<span class="checkmark">✓</span></div></div></div>
+          <div class="asset"><div class="thumb t11"><span class="badge">video</span><span class="play-slot" data-icon="play" data-size="56"></span></div><div class="meta"><div class="name">testicular-check-self-exam</div><div class="tags">video<span class="dot"></span>2:04<span class="dot"></span>internal</div></div></div>
+          <div class="asset"><div class="thumb t12"></div><div class="meta"><div class="name">mens-health-pattern-tile</div><div class="tags">static<span class="dot"></span>brand<span class="checkmark">✓</span></div></div></div>
+          <div class="asset"><div class="thumb t6"><span class="badge" style="background:#7B61FF;">canva</span></div><div class="meta"><div class="name">mens-health-linkedin-banner</div><div class="tags">canvas<span class="dot"></span>figma</div></div></div>
+        </div>
+      </section>
+    </div>
+
+    <div class="brand-band">I&nbsp;AM&nbsp;BECAUSE&nbsp;WE&nbsp;ARE.</div>
+  </main>
+</div>
+
+<script src="_icons.js"></script>
+<script src="_tree.js"></script>
+<script src="_layout.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('tree-slot').innerHTML = renderTree(FOLDER_TREE);
+    document.querySelectorAll('.icon-slot, .play-slot').forEach(el => {
+      el.outerHTML = icon(el.dataset.icon, parseInt(el.dataset.size, 10));
+    });
+  });
+</script>
+</body>
+</html>

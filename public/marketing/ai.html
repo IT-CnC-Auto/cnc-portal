@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<title>AI Command Centre · CNC Studio</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&family=Caveat:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="ai">
+
+<div class="shell">
+  <div data-include="nav"></div>
+
+  <main>
+    <div class="page-head">
+      <div>
+        <h1 class="title">AI Command Centre</h1>
+        <p class="sub">Watch the agents work in real time. Each line is a routed LLM call: task, model picked, cost, and what it produced. When the team needs a human-sourced asset, the agent surfaces a prompt on the right.</p>
+      </div>
+      <div class="actions">
+        <button class="btn"><span class="icon-slot" data-icon="refresh" data-size="14"></span> Resync</button>
+        <button class="btn primary"><span class="icon-slot" data-icon="ai" data-size="14"></span> New brief</button>
+      </div>
+    </div>
+
+    <div class="tile-grid" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="tile"><div class="label">Agents running</div><div class="value">5</div><div class="delta flat">3 idle</div></div>
+      <div class="tile accent"><div class="label">Calls today</div><div class="value">218</div><div class="delta">94% on primary</div></div>
+      <div class="tile"><div class="label">Spend today</div><div class="value">$0.42</div><div class="delta">Within cap</div></div>
+      <div class="tile"><div class="label">Asset prompts open</div><div class="value">3</div><div class="delta down">2 due today</div></div>
+    </div>
+
+    <div class="ai-grid">
+      <!-- LIVE FEED -->
+      <div class="card">
+        <div class="card-head">
+          <h3>Agent activity</h3>
+          <div class="meta">Live · auto-refresh every 5 s</div>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <div class="agent-line">
+            <div class="avatar" style="background:var(--red-tint);"><span data-ico="ai"></span></div>
+            <div class="body">
+              <div class="who">Helena · Newsletter Drafter <span class="ts">just now</span></div>
+              <div class="what">
+                Drafted <strong>Construction · Article 24</strong> via <code class="k">claude-sonnet-4</code>. 4 paragraphs, 5 Vancouver citations. Em-dash audit clean. <span class="pill review">awaiting Director</span>
+              </div>
+            </div>
+          </div>
+          <div class="agent-line">
+            <div class="avatar" style="background:var(--blue-tint);"><span data-ico="audit"></span></div>
+            <div class="body">
+              <div class="who">Citation Verifier <span class="ts">2 min ago</span></div>
+              <div class="what">
+                Verified 5 of 5 sources for the Mens Health post via <code class="k">sonar-deep-research</code>. PubMed IDs cached. Cost: $0.038.
+              </div>
+            </div>
+          </div>
+          <div class="agent-line">
+            <div class="avatar" style="background:var(--green-tint);"><span data-ico="upload"></span></div>
+            <div class="body">
+              <div class="who">Asset Classifier <span class="ts">5 min ago</span></div>
+              <div class="what">
+                Tagged 14 newly uploaded photos. Folder routed to <code class="k">Brand &rsaquo; Brand Assets &rsaquo; Clinic Photos</code>. Auto-renamed using 9-part convention.
+              </div>
+            </div>
+          </div>
+          <div class="agent-line">
+            <div class="avatar" style="background:var(--amber-tint);"><span data-ico="approval"></span></div>
+            <div class="body">
+              <div class="who">Compliance Watcher <span class="ts">8 min ago</span></div>
+              <div class="what">
+                Flagged 1 newsletter for <strong>OMP review</strong>. Reason: clinical claim about blood-pressure thresholds needs medical sign-off before publish.
+              </div>
+            </div>
+          </div>
+          <div class="agent-line">
+            <div class="avatar" style="background:var(--red-tint);"><span data-ico="podcasts"></span></div>
+            <div class="body">
+              <div class="who">Podcast Distributor <span class="ts">14 min ago</span></div>
+              <div class="what">
+                Pushed Think Tank Ep. 18 to Megaphone (Spotify). RSS regenerated. Apple + Amazon will poll within 60 min.
+              </div>
+            </div>
+          </div>
+          <div class="agent-line">
+            <div class="avatar" style="background:var(--red-tint);"><span data-ico="tasks"></span></div>
+            <div class="body">
+              <div class="who">Asana Planner <span class="ts">22 min ago</span></div>
+              <div class="what">
+                Proposed 14 tasks for the next 14 days. Routed to designer queue. Janine gets 6, Sipho gets 4, Helena gets 4.
+              </div>
+            </div>
+          </div>
+          <div class="agent-line">
+            <div class="avatar" style="background:var(--blue-tint);"><span data-ico="audit"></span></div>
+            <div class="body">
+              <div class="who">Lighthouse Auditor <span class="ts">1 h ago</span></div>
+              <div class="what">
+                Weekly site audit run. <strong>Performance 88 · A11y 96 · SEO 94</strong>. Recommendations queued in Audits.
+              </div>
+            </div>
+          </div>
+          <div class="agent-line">
+            <div class="avatar" style="background:var(--green-tint);"><span data-ico="canvas"></span></div>
+            <div class="body">
+              <div class="who">Canva Sync <span class="ts">3 h ago</span></div>
+              <div class="what">
+                Mirrored 3 brand kit updates (new logo SVG, refreshed pulse line). 14 new designs imported as canvas-type assets.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ASSET PROMPTS -->
+      <div>
+        <div class="prompt-card">
+          <div class="label">Asset needed · due Thu</div>
+          <div class="title">Hero photo: Mining safety briefing</div>
+          <div class="body">Helena needs a candid wide-shot of a safety briefing on a South African mining site for the Mining · Article 12 newsletter. Five workers, hi-vis, no faces obscured.</div>
+          <div class="filename-hint">industry-specific--mining--safety-briefing--external--mining--20260605--landscape--16x9--auto</div>
+          <div style="display:flex; gap:6px;">
+            <button class="btn primary" style="font-size:11px; padding:5px 10px;"><span class="icon-slot" data-icon="upload" data-size="12"></span> Upload</button>
+            <button class="btn" style="font-size:11px; padding:5px 10px;">Request from Sipho</button>
+          </div>
+        </div>
+
+        <div class="prompt-card">
+          <div class="label">Asset needed · due Fri</div>
+          <div class="title">Birthday card: Annemarie Janse van Rensburg</div>
+          <div class="body">Internal birthday card for a long-tenured operations lead. Warm, dignified, ubuntu-rooted. Avoid generic stock-confetti imagery.</div>
+          <div class="filename-hint">employee-centric--birthday--annemarie-jvr--internal--cross-sector--20260606--square--1x1--auto</div>
+          <div style="display:flex; gap:6px;">
+            <button class="btn primary" style="font-size:11px; padding:5px 10px;"><span class="icon-slot" data-icon="upload" data-size="12"></span> Upload</button>
+            <button class="btn" style="font-size:11px; padding:5px 10px;">Generate in Canva</button>
+          </div>
+        </div>
+
+        <div class="prompt-card">
+          <div class="label">Asset needed · due next week</div>
+          <div class="title">Vehicle wrap mockup: Mobile clinic refresh</div>
+          <div class="body">Refresh of the Toyota Quantum mobile-clinic vehicle wrap. Pulse line on rear panel, pattern band on lower door, contact strip in white on red.</div>
+          <div class="filename-hint">corporate-specs--vehicle-wrap--mobile-clinic-quantum--internal--cross-sector--20260610--landscape--16x9--auto</div>
+          <div style="display:flex; gap:6px;">
+            <button class="btn primary" style="font-size:11px; padding:5px 10px;"><span class="icon-slot" data-icon="upload" data-size="12"></span> Upload</button>
+            <button class="btn" style="font-size:11px; padding:5px 10px;">Assign to designer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-band">I&nbsp;AM&nbsp;BECAUSE&nbsp;WE&nbsp;ARE.</div>
+  </main>
+</div>
+
+<script src="_icons.js"></script>
+<script src="_layout.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.icon-slot').forEach(el => {
+      el.outerHTML = icon(el.dataset.icon, parseInt(el.dataset.size, 10));
+    });
+    document.querySelectorAll('[data-ico]').forEach(el => {
+      el.outerHTML = icon(el.dataset.ico, 16);
+    });
+  });
+</script>
+</body>
+</html>

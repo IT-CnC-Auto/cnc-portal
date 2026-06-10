@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<title>Ads intelligence · CNC Studio</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&family=Caveat:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="ads">
+
+<div class="shell">
+  <div data-include="nav"></div>
+
+  <main>
+    <div class="page-head">
+      <div>
+        <h1 class="title">Ads intelligence</h1>
+        <p class="sub">Every paid account in one place. The agent reads the data, ranks the underperformers, and writes the exact change to test next. The aim is simple: more clicks for less rand, and a recipe that we can repeat.</p>
+      </div>
+      <div class="actions">
+        <button class="btn"><span class="icon-slot" data-icon="refresh" data-size="14"></span> Pull latest spend</button>
+        <button class="btn primary"><span class="icon-slot" data-icon="ai" data-size="14"></span> Generate new strategy</button>
+      </div>
+    </div>
+
+    <!-- ============ ACCOUNT STATUS ============ -->
+    <div class="card" style="margin-bottom:18px;">
+      <div class="card-head"><h3>Connected ad accounts</h3><div class="meta">4 platforms · combined 30-day spend R 48 217</div></div>
+      <div class="card-body" style="padding:0;">
+        <div class="audit-row">
+          <div class="sev" style="background:#1F9D55;">✓</div>
+          <div class="body">
+            <div class="title">Google Ads · 412-884-003</div>
+            <div class="desc">3 active campaigns. Search, Performance Max, and a YouTube view campaign for the Men's Health series.</div>
+          </div>
+          <span class="role-tag">Google</span>
+        </div>
+        <div class="audit-row">
+          <div class="sev" style="background:#1F9D55;">✓</div>
+          <div class="body">
+            <div class="title">Meta Ads · Care Net Consultants</div>
+            <div class="desc">Facebook + Instagram. 2 campaigns running. Lead-form objective on both, with WhatsApp click-to-message as backup CTA.</div>
+          </div>
+          <span class="role-tag">Meta</span>
+        </div>
+        <div class="audit-row">
+          <div class="sev" style="background:#1F9D55;">✓</div>
+          <div class="body">
+            <div class="title">LinkedIn Campaign Manager · CNC South Africa</div>
+            <div class="desc">1 campaign. Sponsored content targeting HR managers and Occupational Health buyers at companies with 50+ staff.</div>
+          </div>
+          <span class="role-tag">LinkedIn</span>
+        </div>
+        <div class="audit-row">
+          <div class="sev high">!</div>
+          <div class="body">
+            <div class="title">TikTok Ads · @carenetconsultants</div>
+            <div class="desc">Token expired 28 May. Reconnect to resume the awareness-day video campaigns and to pull the last 30 days of view data.</div>
+          </div>
+          <button class="btn" style="padding:4px 10px; font-size:11px;">Reconnect</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ HEADLINE KPIs ============ -->
+    <div class="kpi-grid">
+      <div class="card kpi">
+        <div class="label">30-day ad spend</div>
+        <div class="value">R 48 217</div>
+        <div class="delta down">-8.1% vs prior 30</div>
+      </div>
+      <div class="card kpi">
+        <div class="label">Average CTR · all platforms</div>
+        <div class="value">2.84%</div>
+        <div class="delta up">+0.42 pts</div>
+      </div>
+      <div class="card kpi">
+        <div class="label">Cost per lead</div>
+        <div class="value">R 187</div>
+        <div class="delta down">-R 42 vs prior 30</div>
+      </div>
+      <div class="card kpi">
+        <div class="label">Leads logged in GHL</div>
+        <div class="value">258</div>
+        <div class="delta up">+23.8%</div>
+      </div>
+    </div>
+
+    <!-- ============ CAMPAIGN TABLE ============ -->
+    <div class="card" style="margin-top:20px;">
+      <div class="card-head"><h3>Active campaigns · ranked by CTR</h3><div class="meta">Click a row to open the platform console in a new tab</div></div>
+      <div class="card-body" style="padding:0;">
+        <table class="ads-table">
+          <thead>
+            <tr>
+              <th>Campaign</th>
+              <th>Platform</th>
+              <th>Spend · 30d</th>
+              <th>CTR</th>
+              <th>CPL</th>
+              <th>Leads</th>
+              <th>Verdict</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Men's Health Week · YouTube</strong><div class="row-sub">Pre-roll on health channels · 30s creative</div></td>
+              <td>Google · YouTube</td>
+              <td>R 9 420</td>
+              <td><span class="pill green">4.81%</span></td>
+              <td>R 124</td>
+              <td>76</td>
+              <td><span class="pill green">SCALE</span></td>
+            </tr>
+            <tr>
+              <td><strong>OH Compliance · Construction</strong><div class="row-sub">Search · exact-match keywords · landing on /construction</div></td>
+              <td>Google · Search</td>
+              <td>R 12 884</td>
+              <td><span class="pill green">3.94%</span></td>
+              <td>R 162</td>
+              <td>80</td>
+              <td><span class="pill green">SCALE</span></td>
+            </tr>
+            <tr>
+              <td><strong>HR Manager Lead-form</strong><div class="row-sub">Sponsored content · Adult-to-Adult tone test</div></td>
+              <td>LinkedIn</td>
+              <td>R 7 612</td>
+              <td><span class="pill amber">2.18%</span></td>
+              <td>R 218</td>
+              <td>35</td>
+              <td><span class="pill amber">REFINE</span></td>
+            </tr>
+            <tr>
+              <td><strong>Mental Wellness · Awareness</strong><div class="row-sub">Carousel + lead form · Construction &amp; Retail audience</div></td>
+              <td>Meta · IG + FB</td>
+              <td>R 11 480</td>
+              <td><span class="pill amber">1.92%</span></td>
+              <td>R 242</td>
+              <td>47</td>
+              <td><span class="pill amber">REFINE</span></td>
+            </tr>
+            <tr>
+              <td><strong>Generic Brand · Retail audience</strong><div class="row-sub">Performance Max · broad targeting · no industry filter</div></td>
+              <td>Google · PMax</td>
+              <td>R 6 821</td>
+              <td><span class="pill red">0.78%</span></td>
+              <td>R 412</td>
+              <td>20</td>
+              <td><span class="pill red">PAUSE</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ============ AI RECOMMENDATIONS ============ -->
+    <div class="card" style="margin-top:20px;">
+      <div class="card-head"><h3>Agent recommendations · ranked by expected impact</h3><div class="meta">Generated 04:14 SAST · model Claude Sonnet 4.6 · cost R 0.18</div></div>
+      <div class="card-body" style="padding:0;">
+        <div class="reco-row">
+          <div class="reco-rank">1</div>
+          <div class="reco-body">
+            <div class="reco-title">Pause the Performance Max "Generic Brand · Retail" campaign</div>
+            <div class="reco-desc">CTR 0.78% and CPL R 412 over 23 days. The audience is too broad, Retail does not respond to generic occupational health copy. Reallocate the R 6 821 monthly budget into the Men's Health YouTube campaign which is already returning R 124 per lead.</div>
+            <div class="reco-meta"><strong>Expected impact</strong> · +24 leads/month · saves R 6 821 · confidence high</div>
+          </div>
+          <div class="reco-actions">
+            <button class="btn">Reject</button>
+            <button class="btn primary">Approve &amp; queue</button>
+          </div>
+        </div>
+        <div class="reco-row">
+          <div class="reco-rank">2</div>
+          <div class="reco-body">
+            <div class="reco-title">Rewrite the LinkedIn HR Manager headline</div>
+            <div class="reco-desc">Current headline runs 14 words and reads like Zoom-speak. The Helena rewrite is 7 words, names a specific outcome ("R 38 000 saved on the audit"), and asks an honest question instead of pushing. A/B test for 7 days, winner takes 100% of the budget.</div>
+            <div class="reco-meta"><strong>Expected impact</strong> · CTR +0.9 pts · CPL down to R 165 · confidence medium</div>
+          </div>
+          <div class="reco-actions">
+            <button class="btn">Reject</button>
+            <button class="btn primary">Approve &amp; queue</button>
+          </div>
+        </div>
+        <div class="reco-row">
+          <div class="reco-rank">3</div>
+          <div class="reco-body">
+            <div class="reco-title">Split the Mental Wellness Meta campaign by industry</div>
+            <div class="reco-desc">The combined Construction + Retail audience is masking two different stories. Construction is engaging at 2.6%, Retail is dragging the average down at 1.1%. Run two ad sets, judge them on day 14, kill the lower performer.</div>
+            <div class="reco-meta"><strong>Expected impact</strong> · CTR +0.7 pts · 12 extra leads/month · confidence medium</div>
+          </div>
+          <div class="reco-actions">
+            <button class="btn">Reject</button>
+            <button class="btn primary">Approve &amp; queue</button>
+          </div>
+        </div>
+        <div class="reco-row">
+          <div class="reco-rank">4</div>
+          <div class="reco-body">
+            <div class="reco-title">Increase Men's Health YouTube budget by 40%</div>
+            <div class="reco-desc">CTR 4.81%, CPL R 124, retention curve still strong at the 25-second mark. There is room to push to R 13 200 a month before frequency saturates. Hold for one week after Father's Day to capture the seasonal lift.</div>
+            <div class="reco-meta"><strong>Expected impact</strong> · +30 leads/month · CPL stays under R 140 · confidence high</div>
+          </div>
+          <div class="reco-actions">
+            <button class="btn">Reject</button>
+            <button class="btn primary">Approve &amp; queue</button>
+          </div>
+        </div>
+        <div class="reco-row">
+          <div class="reco-rank">5</div>
+          <div class="reco-body">
+            <div class="reco-title">Test a WhatsApp click-to-chat CTA on Meta</div>
+            <div class="reco-desc">The current lead-form objective gets the email, then drops the prospect into GHL where 38% never reply to the welcome email. WhatsApp click-to-chat opens a real conversation in seconds. Test on the Construction audience for 14 days against the lead-form control.</div>
+            <div class="reco-meta"><strong>Expected impact</strong> · reply rate 22% → 68% · confidence medium</div>
+          </div>
+          <div class="reco-actions">
+            <button class="btn">Reject</button>
+            <button class="btn primary">Approve &amp; queue</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ STRATEGY VARIANTS ============ -->
+    <div class="card" style="margin-top:20px;">
+      <div class="card-head"><h3>Strategy variants · pick one to run next cycle</h3><div class="meta">Each variant becomes a 30-day experiment with its own budget cap and pre-set kill criteria</div></div>
+      <div class="card-body">
+        <div class="strat-grid">
+          <div class="strat-card">
+            <div class="strat-tag" style="color:#001489;">A · CONSERVATIVE</div>
+            <div class="strat-name">Double down on what already works</div>
+            <p class="strat-desc">Pause the two underperformers. Push 70% of the budget into the Men's Health YouTube + Construction Search combination. Keep LinkedIn alive for brand presence at minimum spend. Reduce monthly spend from R 48k to R 38k.</p>
+            <ul class="strat-list">
+              <li>Forecast CPL: R 142</li>
+              <li>Forecast leads: 268</li>
+              <li>Risk: low · platform dependence on Google</li>
+            </ul>
+            <button class="btn primary" style="width:100%;">Run as next cycle</button>
+          </div>
+
+          <div class="strat-card">
+            <div class="strat-tag" style="color:#ED1B24;">B · GROWTH</div>
+            <div class="strat-name">Add a second YouTube angle for HR managers</div>
+            <p class="strat-desc">Keep the winners, then layer in a 45-second YouTube placement using the OHNP testimonial format aimed at HR Managers. Hold Meta and LinkedIn flat. Total monthly spend lifts to R 56k for one cycle, with a kill rule if CPL crosses R 220.</p>
+            <ul class="strat-list">
+              <li>Forecast CPL: R 168</li>
+              <li>Forecast leads: 333</li>
+              <li>Risk: medium · creative production cost R 12 400 once-off</li>
+            </ul>
+            <button class="btn primary" style="width:100%;">Run as next cycle</button>
+          </div>
+
+          <div class="strat-card">
+            <div class="strat-tag" style="color:#007703;">C · DISCOVERY</div>
+            <div class="strat-name">Test a podcast-sponsorship angle</div>
+            <p class="strat-desc">Hold paid social at minimum. Move R 14 000 into a 4-week sponsorship on three SA business podcasts (HR-focused). The CTA is WhatsApp click-to-chat. Discovery-stage cost-per-lead is unknown, so this is a learning cycle, not a revenue cycle.</p>
+            <ul class="strat-list">
+              <li>Forecast CPL: unknown</li>
+              <li>Goal: 60 first-touch conversations</li>
+              <li>Risk: medium · learning value high</li>
+            </ul>
+            <button class="btn primary" style="width:100%;">Run as next cycle</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ CONTINUOUS LEARNING LOOP ============ -->
+    <div class="card" style="margin-top:20px; border-color:rgba(237,27,36,0.25);">
+      <div class="card-head"><h3>Continuous learning · the recipe book</h3><div class="meta">Every cycle adds one entry. Winners are promoted, losers are documented so we do not repeat them.</div></div>
+      <div class="card-body">
+        <div class="loop">
+          <div class="loop-step">
+            <div class="loop-num">1</div>
+            <div class="loop-name">PLAN</div>
+            <div class="loop-desc">Pick one of A, B, or C above. The agent locks the budget, the kill rule, and the audit date.</div>
+          </div>
+          <div class="loop-arrow">→</div>
+          <div class="loop-step">
+            <div class="loop-num">2</div>
+            <div class="loop-name">RUN</div>
+            <div class="loop-desc">30-day window. Daily spend logged, daily CTR vs target tracked. No mid-flight panic edits.</div>
+          </div>
+          <div class="loop-arrow">→</div>
+          <div class="loop-step">
+            <div class="loop-num">3</div>
+            <div class="loop-name">REVIEW</div>
+            <div class="loop-desc">Director PDF on day 31. Wins, losses, surprise findings. Helena writes the plain-language summary.</div>
+          </div>
+          <div class="loop-arrow">→</div>
+          <div class="loop-step">
+            <div class="loop-num">4</div>
+            <div class="loop-name">RECORD</div>
+            <div class="loop-desc">Winner becomes a "recipe" in the brand library. Loser becomes an "avoid" note with a one-sentence reason.</div>
+          </div>
+          <div class="loop-arrow">→</div>
+          <div class="loop-step">
+            <div class="loop-num">5</div>
+            <div class="loop-name">REPEAT</div>
+            <div class="loop-desc">Next cycle starts with one extra recipe and one extra warning. The agent learns. The team learns. The spend gets sharper.</div>
+          </div>
+        </div>
+
+        <h4 style="font-family:'Bebas Neue', sans-serif; font-size:18px; letter-spacing:0.04em; margin:24px 0 10px;">Recipe book · 3 winners locked in</h4>
+        <div class="recipe-grid">
+          <div class="recipe">
+            <div class="recipe-tag">RECIPE 01 · MAY 2026</div>
+            <div class="recipe-name">Construction Search, exact-match, 8-word ad</div>
+            <div class="recipe-result">CTR 3.94% · CPL R 162 · proven over 28 days</div>
+            <div class="recipe-note">Adult-to-Adult headline that names the specific compliance pain. Landing page matches the headline word-for-word.</div>
+          </div>
+          <div class="recipe">
+            <div class="recipe-tag">RECIPE 02 · MAY 2026</div>
+            <div class="recipe-name">YouTube pre-roll, 30s OHNP testimonial</div>
+            <div class="recipe-result">CTR 4.81% · CPL R 124 · proven over 17 days</div>
+            <div class="recipe-note">Sister Ani in plain clinical white, no logo bug, named outcome at the 22-second mark. CTA card at 28 seconds.</div>
+          </div>
+          <div class="recipe">
+            <div class="recipe-tag">RECIPE 03 · APR 2026</div>
+            <div class="recipe-name">LinkedIn long-form post, no boosted spend</div>
+            <div class="recipe-result">68 inbound enquiries · zero ad-spend</div>
+            <div class="recipe-note">Director-authored honest opinion piece. Posted Tuesday 06:40. No CTA, no link. Inbox handles the rest.</div>
+          </div>
+        </div>
+
+        <h4 style="font-family:'Bebas Neue', sans-serif; font-size:18px; letter-spacing:0.04em; margin:24px 0 10px;">Avoid list · 2 things we will not repeat</h4>
+        <div class="avoid">
+          <div class="avoid-row">
+            <div class="avoid-name">Performance Max with no industry filter</div>
+            <div class="avoid-reason">Reach is wide, intent is shallow. CPL R 412 against a target of R 200.</div>
+          </div>
+          <div class="avoid-row">
+            <div class="avoid-name">Lead-form CTA on Construction audience</div>
+            <div class="avoid-reason">38% of leads never replied to the welcome email. Switch to WhatsApp click-to-chat for that segment.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-band">I&nbsp;AM&nbsp;BECAUSE&nbsp;WE&nbsp;ARE.</div>
+  </main>
+</div>
+
+<script src="_icons.js"></script>
+<script src="_layout.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.icon-slot').forEach(el => {
+      el.outerHTML = icon(el.dataset.icon, parseInt(el.dataset.size, 10));
+    });
+  });
+</script>
+</body>
+</html>

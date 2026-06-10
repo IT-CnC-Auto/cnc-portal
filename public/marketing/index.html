@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<title>Overview · CNC Studio</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&family=Caveat:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="overview">
+
+<div class="shell">
+  <div data-include="nav"></div>
+
+  <main>
+    <div class="page-head pattern-wash">
+      <div>
+        <h1 class="title">Marketing dashboard</h1>
+        <p class="sub">A live view of the CNC asset library, content pipeline, and channel performance. One place every brand decision happens.</p>
+      </div>
+      <div class="actions">
+        <button class="btn"><span class="icon-slot" data-icon="refresh" data-size="14"></span> Refresh</button>
+        <button class="btn primary"><span class="icon-slot" data-icon="plus" data-size="14"></span> New content task</button>
+      </div>
+    </div>
+
+    <!-- BRAND IDENTITY PREVIEW · transparent circle frame over the real portrait -->
+    <div class="brand-preview">
+      <div style="display:flex; flex-direction:column; align-items:center;">
+        <div class="portrait-frame">
+          <div class="photo" style="background-image: url('brand/sample-employee.png');"></div>
+          <div class="ring"></div>
+          <div class="caption">
+            <div class="name">Barteldt Bakker</div>
+            <div class="role">Owner · CNC</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="label">Brand identity · live</div>
+        <h3>The circle frame layers over every employee photo</h3>
+        <p class="desc">The Ndebele triangle ring is rendered as a transparent PNG, so any employee or clinic portrait drops in cleanly. The pattern is treated <em>very subtle</em> elsewhere on the dashboard. You can see it tiling faintly behind this hero. Logo, pattern, and colour swatches all read from <code style="font-family:'JetBrains Mono',monospace;color:var(--red);background:var(--red-tint);padding:1px 5px;border-radius:3px;font-size:11px;">/Library › Brand › Brand Assets</code>.</p>
+        <div class="swatches">
+          <div class="swatch" style="background:#ED1B24;" data-name="#ED1B24"></div>
+          <div class="swatch" style="background:#000000;" data-name="#000000"></div>
+          <div class="swatch" style="background:#007703;" data-name="#007703"></div>
+          <div class="swatch" style="background:#001489;" data-name="#001489"></div>
+          <div class="swatch" style="background:#FFB81C;" data-name="#FFB81C"></div>
+          <div class="swatch" style="background:#787878;" data-name="#787878"></div>
+          <div class="swatch" style="background:#FFFFFF; border-color:#D9D9D9;" data-name="#FFFFFF"></div>
+        </div>
+        <a href="brand.html" style="display:inline-block; margin-top:18px; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--red); font-weight:700;">Open the Brand Guidelines →</a>
+      </div>
+    </div>
+
+    <!-- Where to add brand assets so the user can populate the skinning -->
+    <div class="cta-box">
+      <div>
+        <div class="title">Add your CNC brand assets to refine the look</div>
+        <div class="body">
+          Drop logos, colours, fonts, photography, and approved illustrations into
+          <code>/Library &rsaquo; Brand &rsaquo; Brand Assets</code>. The skinning pulls from there, so the more you upload the more the Studio reflects your real brand.
+        </div>
+      </div>
+      <a href="upload.html" class="btn primary"><span class="icon-slot" data-icon="upload" data-size="14"></span> Upload brand assets</a>
+    </div>
+
+    <div class="tile-grid">
+      <div class="tile accent">
+        <div class="label">Assets (latest)</div>
+        <div class="value">1,247</div>
+        <div class="delta">+38 this week</div>
+      </div>
+      <div class="tile">
+        <div class="label">Awaiting approval</div>
+        <div class="value">14</div>
+        <div class="delta down">8 due this week</div>
+      </div>
+      <div class="tile">
+        <div class="label">Newsletters published</div>
+        <div class="value">62</div>
+        <div class="delta">+5 last 7 days</div>
+      </div>
+      <div class="tile">
+        <div class="label">7-day LLM spend</div>
+        <div class="value">$3.74</div>
+        <div class="delta">Within budget</div>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns: 1.4fr 1fr; gap:18px; margin-bottom:18px;">
+      <div class="card">
+        <div class="card-head"><h3>Recent activity</h3><div class="meta">Last 24 hours</div></div>
+        <div class="card-body" style="padding:0;">
+          <table class="t" style="border:none; border-radius:0;">
+            <tbody>
+              <tr>
+                <td style="width:36px;"><div class="ico-box" data-icon="newsletterAi"></div></td>
+                <td>
+                  <div style="font-weight:600;">Ghost Newsletter Agent · July cycle opened</div>
+                  <div style="font-size:11px;color:var(--muted-2);">Manager contributions invited. 3 of 8 divisions submitted. Assembly + Director review on 28 Jun.</div>
+                </td>
+                <td style="text-align:right; color:var(--muted-2); font-size:11px;">5 min ago</td>
+              </tr>
+              <tr>
+                <td><div class="ico-box" data-icon="youtube"></div></td>
+                <td>
+                  <div style="font-weight:600;">POPIA explainer uploaded to YouTube</div>
+                  <div style="font-size:11px;color:var(--muted-2);">Same video as Vimeo. Title, description, end-screen built from the asset meta tags.</div>
+                </td>
+                <td style="text-align:right; color:var(--muted-2); font-size:11px;">28 min ago</td>
+              </tr>
+              <tr>
+                <td><div class="ico-box" data-icon="pack"></div></td>
+                <td>
+                  <div style="font-weight:600;">Mens Health Awareness pack uploaded</div>
+                  <div style="font-size:11px;color:var(--muted-2);">12 assets · Patient-centric / Health Awareness Packs / June · Mens Health · by Janine</div>
+                </td>
+                <td style="text-align:right; color:var(--muted-2); font-size:11px;">8 min ago</td>
+              </tr>
+              <tr>
+                <td><div class="ico-box" data-icon="check"></div></td>
+                <td>
+                  <div style="font-weight:600;">Construction · Article 24 approved by Director</div>
+                  <div style="font-size:11px;color:var(--muted-2);">Helena drafted, OMP reviewed clinical claims, Director signed off · 04 Jun 09:00 SAST</div>
+                </td>
+                <td style="text-align:right; color:var(--muted-2); font-size:11px;">42 min ago</td>
+              </tr>
+              <tr>
+                <td><div class="ico-box" data-icon="podcasts"></div></td>
+                <td>
+                  <div style="font-weight:600;">Think Tank Ep. 18 distributed</div>
+                  <div style="font-size:11px;color:var(--muted-2);">Spotify, Apple, Amazon published. YouTube Music pending OAuth.</div>
+                </td>
+                <td style="text-align:right; color:var(--muted-2); font-size:11px;">2 h ago</td>
+              </tr>
+              <tr>
+                <td><div class="ico-box" data-icon="video"></div></td>
+                <td>
+                  <div style="font-weight:600;">HeyGen explainer ready, pushed to Vimeo</div>
+                  <div style="font-size:11px;color:var(--muted-2);">"POPIA in 90 seconds" · privacy: unlisted (external-training)</div>
+                </td>
+                <td style="text-align:right; color:var(--muted-2); font-size:11px;">3 h ago</td>
+              </tr>
+              <tr>
+                <td><div class="ico-box" data-icon="canvas"></div></td>
+                <td>
+                  <div style="font-weight:600;">14 designs imported from Canva</div>
+                  <div style="font-size:11px;color:var(--muted-2);">World Blood Donor Day, Youth Day, Burnout series</div>
+                </td>
+                <td style="text-align:right; color:var(--muted-2); font-size:11px;">5 h ago</td>
+              </tr>
+              <tr>
+                <td><div class="ico-box" data-icon="audit"></div></td>
+                <td>
+                  <div style="font-weight:600;">Weekly site audit completed</div>
+                  <div style="font-size:11px;color:var(--muted-2);">Lighthouse: Performance 88, Accessibility 96, SEO 94. 3 medium issues queued.</div>
+                </td>
+                <td style="text-align:right; color:var(--muted-2); font-size:11px;">Yesterday</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h3>This week</h3><div class="meta">From Asana smart plan</div></div>
+        <div class="card-body" style="padding:0;">
+          <div style="padding:14px 18px; border-bottom:1px solid var(--line-soft);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); font-weight:700;">Wed 04 Jun</div>
+                <div style="font-weight:600; margin-top:2px;">Construction · Article 24</div>
+                <div style="font-size:12px; color:var(--muted-2);">Helena drafting · 09:00 SAST</div>
+              </div>
+              <span class="pill approved">Approved</span>
+            </div>
+          </div>
+          <div style="padding:14px 18px; border-bottom:1px solid var(--line-soft);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); font-weight:700;">Thu 05 Jun</div>
+                <div style="font-weight:600; margin-top:2px;">Mining · Article 11</div>
+                <div style="font-size:12px; color:var(--muted-2);">Awaiting brief · 09:00 SAST</div>
+              </div>
+              <span class="pill proposed">Proposed</span>
+            </div>
+          </div>
+          <div style="padding:14px 18px; border-bottom:1px solid var(--line-soft);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); font-weight:700;">Fri 06 Jun</div>
+                <div style="font-weight:600; margin-top:2px;">Manufacturing · Article 19</div>
+                <div style="font-size:12px; color:var(--muted-2);">Helena drafting · 09:00 SAST</div>
+              </div>
+              <span class="pill approved">Approved</span>
+            </div>
+          </div>
+          <div style="padding:14px 18px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); font-weight:700;">Fri 06 Jun</div>
+                <div style="font-weight:600; margin-top:2px;">Mens Health · External</div>
+                <div style="font-size:12px; color:var(--muted-2);">5-source post · 12:00 SAST</div>
+              </div>
+              <span class="pill published">Published</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h3>Channels at a glance</h3><div class="meta">Last sync · 2 hours ago</div></div>
+      <div class="card-body">
+        <div style="display:grid; grid-template-columns: repeat(7, 1fr); gap:10px;">
+          <div style="text-align:center;">
+            <div style="width:44px; height:44px; border-radius:8px; background:#0F1217; color:#FFF; display:grid; place-items:center; margin:0 auto 6px; font-weight:700; font-size:13px;">G</div>
+            <div style="font-size:11px; font-weight:600;">Ghost</div>
+            <div style="font-size:10px; color:var(--green); font-weight:700;">CONNECTED</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:44px; height:44px; border-radius:8px; background:#FF6F61; color:#FFF; display:grid; place-items:center; margin:0 auto 6px; font-weight:700; font-size:13px;">GHL</div>
+            <div style="font-size:11px; font-weight:600;">GHL</div>
+            <div style="font-size:10px; color:var(--green); font-weight:700;">CONNECTED</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:44px; height:44px; border-radius:8px; background:#4285F4; color:#FFF; display:grid; place-items:center; margin:0 auto 6px; font-weight:700; font-size:13px;">GMB</div>
+            <div style="font-size:11px; font-weight:600;">Business Profile</div>
+            <div style="font-size:10px; color:var(--green); font-weight:700;">CONNECTED</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:44px; height:44px; border-radius:8px; background:#7B61FF; color:#FFF; display:grid; place-items:center; margin:0 auto 6px; font-weight:700; font-size:13px;">CV</div>
+            <div style="font-size:11px; font-weight:600;">Canva</div>
+            <div style="font-size:10px; color:var(--green); font-weight:700;">CONNECTED</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:44px; height:44px; border-radius:8px; background:#1AB7EA; color:#FFF; display:grid; place-items:center; margin:0 auto 6px; font-weight:700; font-size:13px;">V</div>
+            <div style="font-size:11px; font-weight:600;">Vimeo</div>
+            <div style="font-size:10px; color:var(--green); font-weight:700;">CONNECTED</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:44px; height:44px; border-radius:8px; background:#000; color:#FFF; display:grid; place-items:center; margin:0 auto 6px; font-weight:700; font-size:13px;">HG</div>
+            <div style="font-size:11px; font-weight:600;">HeyGen</div>
+            <div style="font-size:10px; color:var(--green); font-weight:700;">CONNECTED</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:44px; height:44px; border-radius:8px; background:#F44336; color:#FFF; display:grid; place-items:center; margin:0 auto 6px; font-weight:700; font-size:13px;">SS</div>
+            <div style="font-size:11px; font-weight:600;">Shutterstock</div>
+            <div style="font-size:10px; color:var(--green); font-weight:700;">CONNECTED</div>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(7, 1fr); gap:10px; margin-top:18px;">
+          <div style="text-align:center;">
+            <div style="width:44px; height:44px; border-radius:8px; background:#FF0000; color:#FFF; display:grid; place-items:center; margin:0 auto 6px; font-weight:700; font-size:13px;">YT</div>
+            <div style="font-size:11px; font-weight:600;">YouTube</div>
+            <div style="font-size:10px; color:var(--green); font-weight:700;">CONNECTED</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:44px; height:44px; border-radius:8px; background:#0F1217; color:#FFF; display:grid; place-items:center; margin:0 auto 6px; font-weight:700; font-size:13px;">G</div>
+            <div style="font-size:11px; font-weight:600;">Ghost Newsletter Agent</div>
+            <div style="font-size:10px; color:var(--green); font-weight:700;">ACTIVE</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:44px; height:44px; border-radius:8px; background:#1DB954; color:#FFF; display:grid; place-items:center; margin:0 auto 6px; font-weight:700; font-size:13px;">SP</div>
+            <div style="font-size:11px; font-weight:600;">Spotify</div>
+            <div style="font-size:10px; color:var(--green); font-weight:700;">CONNECTED</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:44px; height:44px; border-radius:8px; background:#FA243C; color:#FFF; display:grid; place-items:center; margin:0 auto 6px; font-weight:700; font-size:13px;">A</div>
+            <div style="font-size:11px; font-weight:600;">Apple Podcasts</div>
+            <div style="font-size:10px; color:var(--green); font-weight:700;">CONNECTED</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:44px; height:44px; border-radius:8px; background:#F06A6A; color:#FFF; display:grid; place-items:center; margin:0 auto 6px; font-weight:700; font-size:13px;">A</div>
+            <div style="font-size:11px; font-weight:600;">Asana</div>
+            <div style="font-size:10px; color:var(--green); font-weight:700;">CONNECTED</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:44px; height:44px; border-radius:8px; background:#1877F2; color:#FFF; display:grid; place-items:center; margin:0 auto 6px; font-weight:700; font-size:13px;">M</div>
+            <div style="font-size:11px; font-weight:600;">Meta</div>
+            <div style="font-size:10px; color:var(--amber); font-weight:700;">PENDING</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:44px; height:44px; border-radius:8px; background:#0A66C2; color:#FFF; display:grid; place-items:center; margin:0 auto 6px; font-weight:700; font-size:13px;">L</div>
+            <div style="font-size:11px; font-weight:600;">LinkedIn</div>
+            <div style="font-size:10px; color:var(--amber); font-weight:700;">PENDING</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-band">I&nbsp;AM&nbsp;BECAUSE&nbsp;WE&nbsp;ARE.</div>
+  </main>
+</div>
+
+<script src="_icons.js"></script>
+<script src="_layout.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.icon-slot').forEach(el => {
+      el.outerHTML = icon(el.dataset.icon, parseInt(el.dataset.size, 10));
+    });
+    // activity feed icon boxes
+    document.querySelectorAll('.ico-box').forEach(el => {
+      const ico = el.dataset.icon;
+      el.style.cssText = 'width:30px;height:30px;border-radius:6px;background:var(--red-tint);display:grid;place-items:center;';
+      el.innerHTML = icon(ico, 16);
+    });
+  });
+</script>
+</body>
+</html>

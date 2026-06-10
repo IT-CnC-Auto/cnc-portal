@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<title>Audits · CNC Studio</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&family=Caveat:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="audits">
+
+<div class="shell">
+  <div data-include="nav"></div>
+
+  <main>
+    <div class="page-head">
+      <div>
+        <h1 class="title">Audits</h1>
+        <p class="sub">Monthly Lighthouse audits of the CNC site and the newsletter pages, plus a rolling analysis of every paid and organic campaign. The agent ranks each finding and writes the fix recommendation.</p>
+      </div>
+      <div class="actions">
+        <button class="btn"><span class="icon-slot" data-icon="refresh" data-size="14"></span> Run audit now</button>
+        <button class="btn primary"><span class="icon-slot" data-icon="audit" data-size="14"></span> New finding</button>
+      </div>
+    </div>
+
+    <h3 style="font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin:0 0 12px;">carenetconsultants.co.za · 2026-06</h3>
+    <div class="gauge-grid">
+      <div class="gauge">
+        <div class="ring">
+          <svg width="84" height="84"><circle cx="42" cy="42" r="36" stroke="#F0F0F0" stroke-width="8" fill="none"/><circle cx="42" cy="42" r="36" stroke="#C58B16" stroke-width="8" fill="none" stroke-linecap="round" stroke-dasharray="226" stroke-dashoffset="27"/></svg>
+          <div class="score amber">88</div>
+        </div>
+        <div class="label">Performance</div>
+        <div class="delta">+4 vs May</div>
+      </div>
+      <div class="gauge">
+        <div class="ring">
+          <svg width="84" height="84"><circle cx="42" cy="42" r="36" stroke="#F0F0F0" stroke-width="8" fill="none"/><circle cx="42" cy="42" r="36" stroke="#1F9D55" stroke-width="8" fill="none" stroke-linecap="round" stroke-dasharray="226" stroke-dashoffset="9"/></svg>
+          <div class="score green">96</div>
+        </div>
+        <div class="label">Accessibility</div>
+        <div class="delta">+2 vs May</div>
+      </div>
+      <div class="gauge">
+        <div class="ring">
+          <svg width="84" height="84"><circle cx="42" cy="42" r="36" stroke="#F0F0F0" stroke-width="8" fill="none"/><circle cx="42" cy="42" r="36" stroke="#1F9D55" stroke-width="8" fill="none" stroke-linecap="round" stroke-dasharray="226" stroke-dashoffset="13"/></svg>
+          <div class="score green">94</div>
+        </div>
+        <div class="label">SEO</div>
+        <div class="delta">+1 vs May</div>
+      </div>
+      <div class="gauge">
+        <div class="ring">
+          <svg width="84" height="84"><circle cx="42" cy="42" r="36" stroke="#F0F0F0" stroke-width="8" fill="none"/><circle cx="42" cy="42" r="36" stroke="#ED1B24" stroke-width="8" fill="none" stroke-linecap="round" stroke-dasharray="226" stroke-dashoffset="68"/></svg>
+          <div class="score red">70</div>
+        </div>
+        <div class="label">Best Practices</div>
+        <div class="delta down" style="color:var(--red);">-3 vs May</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:18px;">
+      <div class="card-head"><h3>Recommendations</h3><div class="meta">11 findings · 3 high · 6 medium · 2 low</div></div>
+      <div class="card-body" style="padding:0;">
+        <div class="audit-row">
+          <div class="sev high">!</div>
+          <div class="body">
+            <div class="title">Large hero image on homepage is 1.8 MB</div>
+            <div class="desc">Convert to AVIF, serve responsive srcset for ≤480 px viewports, and preload only the LCP variant. Estimated LCP improvement: 0.9 s.</div>
+          </div>
+          <button class="btn" style="padding:4px 10px; font-size:11px;">Create task</button>
+        </div>
+        <div class="audit-row">
+          <div class="sev high">!</div>
+          <div class="body">
+            <div class="title">3 newsletter pages return mixed-content warnings</div>
+            <div class="desc">Asset URLs in three June posts still reference http://. Rewrite via the brand-mirror agent or regenerate the post.</div>
+          </div>
+          <button class="btn" style="padding:4px 10px; font-size:11px;">Create task</button>
+        </div>
+        <div class="audit-row">
+          <div class="sev high">!</div>
+          <div class="body">
+            <div class="title">Cookie banner blocks first paint on mobile (CLS 0.18)</div>
+            <div class="desc">Hold the banner above the fold, reserve 88 px of vertical space, swap in once GA consent resolves.</div>
+          </div>
+          <button class="btn" style="padding:4px 10px; font-size:11px;">Create task</button>
+        </div>
+        <div class="audit-row">
+          <div class="sev med">~</div>
+          <div class="body">
+            <div class="title">Lighthouse SEO: 7 pages missing canonical link tag</div>
+            <div class="desc">All seven are awareness-day posts auto-generated last week. Add canonical to the post template, regenerate.</div>
+          </div>
+          <button class="btn" style="padding:4px 10px; font-size:11px;">Create task</button>
+        </div>
+        <div class="audit-row">
+          <div class="sev med">~</div>
+          <div class="body">
+            <div class="title">Ghost newsletter open-rate dipped 4.2% week-over-week</div>
+            <div class="desc">Subject-line A/B test on top 3 industries this week. Construction subject was 18 words. Recommend reducing to ≤10.</div>
+          </div>
+          <button class="btn" style="padding:4px 10px; font-size:11px;">Create task</button>
+        </div>
+        <div class="audit-row">
+          <div class="sev med">~</div>
+          <div class="body">
+            <div class="title">GMB post engagement down 12% in May</div>
+            <div class="desc">GMB only saw 2 posts in May vs 4 in April. Restore the weekly Monday cron and add a Friday recap post.</div>
+          </div>
+          <button class="btn" style="padding:4px 10px; font-size:11px;">Create task</button>
+        </div>
+        <div class="audit-row">
+          <div class="sev low">·</div>
+          <div class="body">
+            <div class="title">28 assets have no alt text</div>
+            <div class="desc">Batch-route to <code class="k">batch.metatag</code> on Gemini Flash. Estimated cost: $0.06.</div>
+          </div>
+          <button class="btn" style="padding:4px 10px; font-size:11px;">Run batch</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-band">I&nbsp;AM&nbsp;BECAUSE&nbsp;WE&nbsp;ARE.</div>
+  </main>
+</div>
+
+<script src="_icons.js"></script>
+<script src="_layout.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.icon-slot').forEach(el => {
+      el.outerHTML = icon(el.dataset.icon, parseInt(el.dataset.size, 10));
+    });
+  });
+</script>
+</body>
+</html>

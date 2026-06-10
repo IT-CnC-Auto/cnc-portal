@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<title>Sales dashboard · MVP · CNC Studio</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&family=Caveat:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="sales">
+
+<div class="shell">
+  <div data-include="nav"></div>
+
+  <main>
+
+    <!-- ============ SOFT-LAUNCH BANNER ============ -->
+    <div class="soft-launch-banner">
+      <div class="soft-launch-pill">SOFT LAUNCH · NOT PRODUCTION READY</div>
+      <div class="soft-launch-body">
+        This is the Sales Dashboard MVP. It runs in parallel with GHL through the double-loop lead router, which means every incoming lead lands in <strong>both</strong> destinations. Use this dashboard for sales-team testing only. Do not act on the data alone until the soft-launch QA window closes on 30 June 2026.
+      </div>
+    </div>
+
+    <div class="page-head">
+      <div>
+        <h1 class="title">Sales dashboard</h1>
+        <p class="sub">Live view of every incoming enquiry across the four GMB locations, ad lead-forms, newsletter clicks, and the public web form. Each lead lands here and in GHL at the same time. Owners can claim a lead in one click and the audit trail follows them.</p>
+      </div>
+      <div class="actions">
+        <button class="btn"><span class="icon-slot" data-icon="refresh" data-size="14"></span> Sync from GHL</button>
+        <button class="btn primary"><span class="icon-slot" data-icon="plus" data-size="14"></span> Manual lead entry</button>
+      </div>
+    </div>
+
+    <!-- ============ HEADLINE KPIs ============ -->
+    <div class="kpi-grid">
+      <div class="card kpi">
+        <div class="label">New leads · 7 days</div>
+        <div class="value">42</div>
+        <div class="delta up">+11 vs prior 7</div>
+      </div>
+      <div class="card kpi">
+        <div class="label">Open in pipeline</div>
+        <div class="value">28</div>
+        <div class="delta">14 stale &gt; 3 days</div>
+      </div>
+      <div class="card kpi">
+        <div class="label">Avg time to first reply</div>
+        <div class="value">2.4h</div>
+        <div class="delta down">-1.1h vs prior week</div>
+      </div>
+      <div class="card kpi">
+        <div class="label">Closed-won · MTD</div>
+        <div class="value">R 168 400</div>
+        <div class="delta up">+22.3% MoM</div>
+      </div>
+    </div>
+
+    <!-- ============ DOUBLE-LOOP ROUTING DIAGRAM ============ -->
+    <div class="card" style="margin-top:20px;">
+      <div class="card-head"><h3>Double-loop lead routing</h3><div class="meta">Every incoming lead lands in both destinations at the same time</div></div>
+      <div class="card-body">
+        <div class="loop-diagram">
+          <div class="loop-source">
+            <div class="loop-src-card"><div class="loop-src-name">Web form</div><div class="loop-src-meta">carenetconsultants.co.za /contact</div></div>
+            <div class="loop-src-card"><div class="loop-src-name">Ad lead-forms</div><div class="loop-src-meta">Meta · LinkedIn · Google</div></div>
+            <div class="loop-src-card"><div class="loop-src-name">GBP enquiries</div><div class="loop-src-meta">4 locations · calls + messages</div></div>
+            <div class="loop-src-card"><div class="loop-src-name">Newsletter clicks</div><div class="loop-src-meta">Ghost CTA tracking</div></div>
+          </div>
+          <div class="loop-arrow-down">↓</div>
+          <div class="loop-router">
+            <div class="loop-router-icon">⊕</div>
+            <div class="loop-router-name">Lead router · Supabase Edge Function</div>
+            <div class="loop-router-meta">Validates payload · enriches with location + source · writes lead row · fires webhooks to both destinations</div>
+          </div>
+          <div class="loop-fork">
+            <div class="loop-fork-arm">
+              <div class="loop-fork-label">DESTINATION 1 · LIVE</div>
+              <div class="loop-fork-card primary">
+                <div class="loop-fork-name">GHL · Go High Level</div>
+                <div class="loop-fork-desc">Existing CRM, sales pipeline, reputation manager, SMS + WhatsApp + email follow-up. This is the source of truth during the soft-launch window.</div>
+              </div>
+            </div>
+            <div class="loop-fork-arm">
+              <div class="loop-fork-label">DESTINATION 2 · SOFT LAUNCH</div>
+              <div class="loop-fork-card amber">
+                <div class="loop-fork-name">Sales Dashboard · /sales</div>
+                <div class="loop-fork-desc">This page. Same payload, parallel processing. Used for testing the new pipeline, the AI lead-scorer, and the rep-of-the-week leaderboard until QA passes.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ LEADS TABLE ============ -->
+    <div class="card" style="margin-top:20px;">
+      <div class="card-head"><h3>Open leads · ranked by AI score</h3><div class="meta">Last 7 days · click a row to open lead detail</div></div>
+      <div class="card-body" style="padding:0;">
+        <table class="ads-table">
+          <thead>
+            <tr>
+              <th>Lead</th>
+              <th>Source</th>
+              <th>Location</th>
+              <th>AI score</th>
+              <th>Stage</th>
+              <th>Owner</th>
+              <th>Age</th>
+              <th>Both?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Sasol Mining HR</strong><div class="row-sub">600-employee occupational health enquiry</div></td>
+              <td>Web form</td>
+              <td>Elandsfontein</td>
+              <td><span class="pill green">94</span></td>
+              <td>Qualified</td>
+              <td>Linda Du Plessis</td>
+              <td>3h</td>
+              <td><span class="pill green">GHL ✓ · Studio ✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Engen Petroleum</strong><div class="row-sub">Annual screening for 240 forecourt staff</div></td>
+              <td>LinkedIn ad</td>
+              <td>Cape Town</td>
+              <td><span class="pill green">88</span></td>
+              <td>Contacted</td>
+              <td>Linda Du Plessis</td>
+              <td>1d</td>
+              <td><span class="pill green">GHL ✓ · Studio ✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Goedehoop Builders cc</strong><div class="row-sub">Construction · OH compliance audit</div></td>
+              <td>Google ad</td>
+              <td>Gqeberha</td>
+              <td><span class="pill amber">71</span></td>
+              <td>New</td>
+              <td>Unassigned</td>
+              <td>4h</td>
+              <td><span class="pill green">GHL ✓ · Studio ✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Midrand Container Terminal</strong><div class="row-sub">Hearing conservation programme</div></td>
+              <td>GBP enquiry</td>
+              <td>Midrand</td>
+              <td><span class="pill amber">68</span></td>
+              <td>New</td>
+              <td>Unassigned</td>
+              <td>6h</td>
+              <td><span class="pill green">GHL ✓ · Studio ✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Bonitas Medical Scheme</strong><div class="row-sub">Wellness day for 90 staff</div></td>
+              <td>Newsletter click</td>
+              <td>Gqeberha</td>
+              <td><span class="pill amber">62</span></td>
+              <td>New</td>
+              <td>Unassigned</td>
+              <td>11h</td>
+              <td><span class="pill green">GHL ✓ · Studio ✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tip-off enquiry</strong><div class="row-sub">No company name supplied</div></td>
+              <td>Web form</td>
+              <td>Unknown</td>
+              <td><span class="pill red">22</span></td>
+              <td>Triage</td>
+              <td>Unassigned</td>
+              <td>2d</td>
+              <td><span class="pill amber">GHL ✓ · Studio ✗ (rejected)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ============ AI SCORE BREAKDOWN ============ -->
+    <div class="card" style="margin-top:20px;">
+      <div class="card-head"><h3>AI lead scorer · how the score is built</h3><div class="meta">Plain English so the sales team trusts the number</div></div>
+      <div class="card-body">
+        <div class="strat-grid">
+          <div class="strat-card">
+            <div class="strat-tag" style="color:#001489;">SIGNAL 1 · COMPANY SIZE</div>
+            <div class="strat-name">Headcount and industry fit</div>
+            <p class="strat-desc">Bigger employers in construction, mining, logistics, retail score higher. Solo traders and family businesses score lower because the unit economics rarely work out for either side.</p>
+          </div>
+          <div class="strat-card">
+            <div class="strat-tag" style="color:#ED1B24;">SIGNAL 2 · INTENT</div>
+            <div class="strat-name">What they actually asked for</div>
+            <p class="strat-desc">Named regulation, named outcome, or a date in the message bumps the score. Generic questions like &ldquo;what do you do&rdquo; score lower until the first reply turns up a real budget.</p>
+          </div>
+          <div class="strat-card">
+            <div class="strat-tag" style="color:#007703;">SIGNAL 3 · SOURCE QUALITY</div>
+            <div class="strat-name">Where they came from</div>
+            <p class="strat-desc">Cold web traffic ranks below an LinkedIn ad click which ranks below a newsletter click which ranks below a referral. The model learns from closed-won outcomes every 30 days.</p>
+          </div>
+        </div>
+
+        <div style="margin-top:18px; background:#FAFAFA; border-left:3px solid var(--red); padding:12px 16px; border-radius:6px;">
+          <strong>Honest disclosure:</strong> the AI scorer is a recommendation, not a verdict. Linda or Barteldt overrides any score where the human read of the customer matters more than the data. Overrides feed the model. Six months of overrides is when we trust it on its own.
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SOFT-LAUNCH QA CHECKLIST ============ -->
+    <div class="card" style="margin-top:20px; border-color:rgba(255,184,28,0.4);">
+      <div class="card-head"><h3>Soft-launch QA · what must pass before this goes production</h3><div class="meta">Target close-out: 30 June 2026</div></div>
+      <div class="card-body" style="padding:0;">
+        <div class="audit-row">
+          <div class="sev med">!</div>
+          <div class="body">
+            <div class="title">14 days of parallel double-loop running with zero data drift between GHL and Studio</div>
+            <div class="desc">Daily reconciliation cron compares lead counts, owners, and stage transitions. Drift over 2% blocks go-live.</div>
+          </div>
+          <span class="role-tag">CRITICAL</span>
+        </div>
+        <div class="audit-row">
+          <div class="sev med">!</div>
+          <div class="body">
+            <div class="title">AI scorer agreement with sales rep judgement &gt; 70%</div>
+            <div class="desc">Linda manually rescores 100 random leads. The model's score must agree within 15 points on 70+ of them.</div>
+          </div>
+          <span class="role-tag">CRITICAL</span>
+        </div>
+        <div class="audit-row">
+          <div class="sev med">!</div>
+          <div class="body">
+            <div class="title">Owner-assignment latency &lt; 30 minutes during work hours</div>
+            <div class="desc">Test by submitting 20 synthetic leads at random times. 18 of 20 must reach an owner inside 30 minutes.</div>
+          </div>
+          <span class="role-tag">CRITICAL</span>
+        </div>
+        <div class="audit-row">
+          <div class="sev low">~</div>
+          <div class="body">
+            <div class="title">Sales team uses the Studio at least 3 times a day for 10 working days</div>
+            <div class="desc">Adoption check. If the team keeps falling back to GHL only, the Studio is not earning its keep.</div>
+          </div>
+          <span class="role-tag">ADOPTION</span>
+        </div>
+        <div class="audit-row">
+          <div class="sev low">~</div>
+          <div class="body">
+            <div class="title">Director sign-off from Barteldt and Tanya Nel on the go-live PDF</div>
+            <div class="desc">Final magic-link approval based on the QA report. Until both signatures land, GHL remains the source of truth.</div>
+          </div>
+          <span class="role-tag">SIGN-OFF</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ NEXT STEPS ============ -->
+    <div class="card" style="margin-top:20px;">
+      <div class="card-head"><h3>Next steps · today's MVP build</h3><div class="meta">Barteldt Bakker · 04 June 2026</div></div>
+      <div class="card-body">
+        <ul class="strat-list" style="font-size:13px; line-height:1.7;">
+          <li>Stand up the lead router as a Supabase Edge Function. Endpoint <code>/api/leads/intake</code>. Validates the payload, writes a lead row, fires two webhooks.</li>
+          <li>Point the four lead sources at the router. Web form, Meta lead form, LinkedIn lead form, Google lead form. GBP and newsletter follow once those settle.</li>
+          <li>Wire the GHL webhook on the receiving side with the existing API key. The Studio writes to its own <code>lead</code> table.</li>
+          <li>Build the AI lead scorer as agent number 19 in the kernel catalogue. Anthropic Sonnet 4.6 primary, rand ceiling R 0.20 per call.</li>
+          <li>Run the 14-day reconciliation cron. Daily comparison between GHL count and Studio count. Drift report to Barteldt + Tanya Nel.</li>
+          <li>Close the soft-launch window on 30 June. Two-Director sign-off. Sales Dashboard becomes a first-class Studio page, soft-launch chip removed.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="brand-band">I&nbsp;AM&nbsp;BECAUSE&nbsp;WE&nbsp;ARE.</div>
+  </main>
+</div>
+
+<script src="_icons.js"></script>
+<script src="_layout.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.icon-slot').forEach(el => {
+      el.outerHTML = icon(el.dataset.icon, parseInt(el.dataset.size, 10));
+    });
+  });
+</script>
+</body>
+</html>

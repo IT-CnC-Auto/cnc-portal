@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<title>Tasks · Asana · CNC Studio</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&family=Caveat:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="tasks">
+
+<div class="shell">
+  <div data-include="nav"></div>
+
+  <main>
+    <div class="page-head">
+      <div>
+        <h1 class="title">Tasks · Smart plan</h1>
+        <p class="sub">Bi-directional with Asana. The agent proposes tasks from the publishing calendar each Monday at 08:00 SAST; you approve, reject, or reassign. Your daily worklist is the first column.</p>
+      </div>
+      <div class="actions">
+        <button class="btn"><span class="icon-slot" data-icon="refresh" data-size="14"></span> Resync Asana</button>
+        <button class="btn primary"><span class="icon-slot" data-icon="plus" data-size="14"></span> New task</button>
+      </div>
+    </div>
+
+    <div class="tile-grid" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="tile accent"><div class="label">Today · my list</div><div class="value">6</div><div class="delta down">2 due before EOD</div></div>
+      <div class="tile"><div class="label">This week</div><div class="value">22</div><div class="delta">8 in flight</div></div>
+      <div class="tile"><div class="label">Awaiting approval</div><div class="value">5</div><div class="delta flat">Director queue</div></div>
+      <div class="tile"><div class="label">Completed last 7 days</div><div class="value">31</div><div class="delta">+6 vs prior</div></div>
+    </div>
+
+    <div class="tabs">
+      <span class="tab active">Kanban</span>
+      <span class="tab">List</span>
+      <span class="tab">Calendar</span>
+      <span class="tab">My tasks</span>
+      <span style="flex:1;"></span>
+      <span class="tab">All assignees</span>
+      <span class="tab">Filter</span>
+    </div>
+
+    <div class="kanban">
+      <!-- TODAY -->
+      <div class="column">
+        <div class="col-head">
+          <span class="name">Today</span>
+          <span class="count">6</span>
+        </div>
+        <div class="task-card">
+          <div class="title">Brief Sipho on Mining safety photoshoot</div>
+          <div class="meta">
+            <span class="due">Today · 14:00</span>
+            <span class="dot">·</span>
+            <span>Mining</span>
+            <div class="assigned">MB</div>
+          </div>
+        </div>
+        <div class="task-card">
+          <div class="title">Approve Director queue (5 items)</div>
+          <div class="meta">
+            <span class="due">Today</span>
+            <div class="assigned">MB</div>
+          </div>
+        </div>
+        <div class="task-card">
+          <div class="title">Sign off Mens Health post citations</div>
+          <div class="meta">
+            <span class="due">Today · 16:00</span>
+            <span class="dot">·</span>
+            <span>OMP</span>
+            <div class="assigned">MB</div>
+          </div>
+        </div>
+        <div class="task-card">
+          <div class="title">Review Vehicle wrap mockups</div>
+          <div class="meta">
+            <span class="due future">Tomorrow</span>
+            <div class="assigned">MB</div>
+          </div>
+        </div>
+        <div class="task-card">
+          <div class="title">Weekly cron audit (auto-task)</div>
+          <div class="meta">
+            <span class="due future">Mon 09 Jun</span>
+            <span class="dot">·</span>
+            <span>Recurring</span>
+          </div>
+        </div>
+        <div class="task-card">
+          <div class="title">Send GHL test sequence</div>
+          <div class="meta">
+            <span class="due future">Wed 10 Jun</span>
+            <div class="assigned">MB</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IN PROGRESS -->
+      <div class="column">
+        <div class="col-head">
+          <span class="name">In progress</span>
+          <span class="count">5</span>
+        </div>
+        <div class="task-card">
+          <div class="title">Draft Construction · Article 24</div>
+          <div class="meta">
+            <span class="due">Today</span>
+            <span class="dot">·</span>
+            <span>Helena</span>
+            <div class="assigned" style="background:var(--blue);">HH</div>
+          </div>
+        </div>
+        <div class="task-card">
+          <div class="title">Shoot 12 Clinic Photos · West Coast site</div>
+          <div class="meta">
+            <span class="due future">Fri</span>
+            <div class="assigned" style="background:var(--green);">SP</div>
+          </div>
+        </div>
+        <div class="task-card">
+          <div class="title">Generate explainer · Heat exhaustion 60s</div>
+          <div class="meta">
+            <span class="due future">Fri</span>
+            <span class="dot">·</span>
+            <span>HeyGen</span>
+            <div class="assigned" style="background:var(--green);">SP</div>
+          </div>
+        </div>
+        <div class="task-card">
+          <div class="title">Redraft Birthday template (Q3)</div>
+          <div class="meta">
+            <span class="due future">Mon</span>
+            <div class="assigned" style="background:var(--amber);">JN</div>
+          </div>
+        </div>
+        <div class="task-card">
+          <div class="title">Mining Industry Newsletter · Silicosis</div>
+          <div class="meta">
+            <span class="due future">Next Wed</span>
+            <div class="assigned" style="background:var(--blue);">HH</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AWAITING APPROVAL -->
+      <div class="column">
+        <div class="col-head">
+          <span class="name">Awaiting approval</span>
+          <span class="count">5</span>
+        </div>
+        <div class="task-card">
+          <div class="title">Construction · Article 24 → Director</div>
+          <div class="meta">
+            <span class="due">4h overdue</span>
+            <span class="dot">·</span>
+            <span>Director</span>
+          </div>
+        </div>
+        <div class="task-card">
+          <div class="title">Mens Health blood-pressure → OMP</div>
+          <div class="meta">
+            <span class="due future">Today</span>
+            <span class="dot">·</span>
+            <span>OMP</span>
+          </div>
+        </div>
+        <div class="task-card">
+          <div class="title">Mining Newsletter → OHNP</div>
+          <div class="meta">
+            <span class="due future">Tomorrow</span>
+            <span class="dot">·</span>
+            <span>OHNP</span>
+          </div>
+        </div>
+        <div class="task-card">
+          <div class="title">Vehicle wrap → Director</div>
+          <div class="meta">
+            <span class="due future">Fri</span>
+            <span class="dot">·</span>
+            <span>Director</span>
+          </div>
+        </div>
+        <div class="task-card">
+          <div class="title">POPIA explainer video → Director</div>
+          <div class="meta">
+            <span class="due future">Fri</span>
+            <span class="dot">·</span>
+            <span>Director</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DONE -->
+      <div class="column">
+        <div class="col-head">
+          <span class="name">Done · this week</span>
+          <span class="count">12</span>
+        </div>
+        <div class="task-card">
+          <div class="title">Think Tank Ep. 18 distributed</div>
+          <div class="meta"><span style="color:var(--green); font-weight:600;">Approved</span><span class="dot">·</span><span>2h ago</span></div>
+        </div>
+        <div class="task-card">
+          <div class="title">14 Canva designs imported</div>
+          <div class="meta"><span style="color:var(--green); font-weight:600;">Approved</span><span class="dot">·</span><span>5h ago</span></div>
+        </div>
+        <div class="task-card">
+          <div class="title">Mens Health pack uploaded · 12 assets</div>
+          <div class="meta"><span style="color:var(--green); font-weight:600;">Approved</span><span class="dot">·</span><span>Yesterday</span></div>
+        </div>
+        <div class="task-card">
+          <div class="title">Weekly Lighthouse audit</div>
+          <div class="meta"><span style="color:var(--green); font-weight:600;">Done</span><span class="dot">·</span><span>Yesterday</span></div>
+        </div>
+        <div class="task-card">
+          <div class="title">Manufacturing · Article 18 published</div>
+          <div class="meta"><span style="color:var(--green); font-weight:600;">Approved</span><span class="dot">·</span><span>Mon</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-band">I&nbsp;AM&nbsp;BECAUSE&nbsp;WE&nbsp;ARE.</div>
+  </main>
+</div>
+
+<script src="_icons.js"></script>
+<script src="_layout.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.icon-slot').forEach(el => {
+      el.outerHTML = icon(el.dataset.icon, parseInt(el.dataset.size, 10));
+    });
+  });
+</script>
+</body>
+</html>

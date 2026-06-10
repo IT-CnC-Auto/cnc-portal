@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<title>Specs library · CNC Studio</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&family=Caveat:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .sp-uniform { background: linear-gradient(135deg, #ED1B24 0%, #B7141A 100%); }
+  .sp-vehicle { background: linear-gradient(135deg, #1F2937 0%, #ED1B24 100%); }
+  .sp-clinic  { background: linear-gradient(135deg, #FAFAFA 0%, #ED1B24 30%, #B7141A 100%); }
+  .sp-mobile  { background: linear-gradient(135deg, #1F2937 0%, #6B7280 60%, #ED1B24 100%); }
+  .sp-poster  { background: linear-gradient(135deg, #ED1B24 0%, #FDECEE 100%); }
+  .sp-canvas  { background: linear-gradient(45deg, #ED1B24 25%, #FFF 25%, #FFF 50%, #ED1B24 50%, #ED1B24 75%, #FFF 75%); background-size: 28px 28px; }
+  .preview-watermark {
+    position: absolute;
+    bottom: 10px; right: 12px;
+    font-size: 9px;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+</style>
+</head>
+<body data-page="specs">
+
+<div class="shell">
+  <div data-include="nav"></div>
+
+  <main>
+    <div class="page-head">
+      <div>
+        <h1 class="title">Specs library</h1>
+        <p class="sub">The physical-world counterpart to the digital library. Uniforms, vehicle wraps, clinic layouts, and printed canvas designs. Every spec lives here, versioned, with manufacturing notes.</p>
+      </div>
+      <div class="actions">
+        <button class="btn"><span class="icon-slot" data-icon="download" data-size="14"></span> Download all specs</button>
+        <button class="btn primary"><span class="icon-slot" data-icon="upload" data-size="14"></span> New spec</button>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <span class="tab active">All <strong style="margin-left:6px;">38</strong></span>
+      <span class="tab">Uniforms & PPE <strong style="margin-left:6px; color:var(--muted-2);">12</strong></span>
+      <span class="tab">Vehicle Branding <strong style="margin-left:6px; color:var(--muted-2);">8</strong></span>
+      <span class="tab">Clinic Layouts <strong style="margin-left:6px; color:var(--muted-2);">6</strong></span>
+      <span class="tab">Mobile Clinic <strong style="margin-left:6px; color:var(--muted-2);">5</strong></span>
+      <span class="tab">Poster Designs <strong style="margin-left:6px; color:var(--muted-2);">4</strong></span>
+      <span class="tab">Canvas Designs <strong style="margin-left:6px; color:var(--muted-2);">3</strong></span>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <div class="preview sp-uniform">
+          <span class="icon-slot" data-icon="uniform" data-size="48"></span>
+          <span class="preview-watermark">v3 · 2026</span>
+        </div>
+        <div class="body">
+          <h4>Clinical scrubs · Nursing</h4>
+          <p>Pantone 1795C (CNC red) sleeve band, white body, pulse line printed cuff. Approved supplier: Lynne's Linen. MOQ 25.</p>
+          <div style="display:flex; gap:8px;">
+            <button class="btn" style="font-size:11px; padding:4px 10px;">Specs PDF</button>
+            <button class="btn" style="font-size:11px; padding:4px 10px;">Reorder form</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-card">
+        <div class="preview sp-uniform">
+          <span class="icon-slot" data-icon="uniform" data-size="48"></span>
+          <span class="preview-watermark">v2 · 2026</span>
+        </div>
+        <div class="body">
+          <h4>Hi-vis vest · Site visits</h4>
+          <p>EN ISO 20471 class 2 hi-vis with CNC logo embroidery left chest, full back panel red bar. For OHMP site audits.</p>
+          <div style="display:flex; gap:8px;">
+            <button class="btn" style="font-size:11px; padding:4px 10px;">Specs PDF</button>
+            <button class="btn" style="font-size:11px; padding:4px 10px;">Reorder form</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-card">
+        <div class="preview sp-vehicle">
+          <span class="icon-slot" data-icon="vehicle" data-size="48"></span>
+          <span class="preview-watermark">v4 · current</span>
+        </div>
+        <div class="body">
+          <h4>Vehicle wrap · Toyota Hilux</h4>
+          <p>Door panels, bonnet, tailgate. Pulse line running door-to-door, pattern band lower 200mm, contact strip in white.</p>
+          <div style="display:flex; gap:8px;">
+            <button class="btn" style="font-size:11px; padding:4px 10px;">CutContour AI</button>
+            <button class="btn" style="font-size:11px; padding:4px 10px;">Install guide</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-card">
+        <div class="preview sp-mobile">
+          <span class="icon-slot" data-icon="mobileClinic" data-size="48"></span>
+          <span class="preview-watermark">v1 · draft</span>
+        </div>
+        <div class="body">
+          <h4>Mobile clinic · Toyota Quantum</h4>
+          <p>Rear-panel pulse, side-door pattern band, top-strip Care | Net wordmark in white. Interior signage spec separate.</p>
+          <div style="display:flex; gap:8px;">
+            <button class="btn" style="font-size:11px; padding:4px 10px;">Mockup PDF</button>
+            <button class="btn primary" style="font-size:11px; padding:4px 10px;">Send to Director</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-card">
+        <div class="preview sp-clinic">
+          <span class="icon-slot" data-icon="clinic" data-size="48"></span>
+          <span class="preview-watermark">v2 · 2026</span>
+        </div>
+        <div class="body">
+          <h4>Clinic floor plan · On-site standard</h4>
+          <p>Reception, two consulting rooms, screening bay, biohazard. Dimensions, wall colour codes, lighting Kelvin.</p>
+          <div style="display:flex; gap:8px;">
+            <button class="btn" style="font-size:11px; padding:4px 10px;">DWG</button>
+            <button class="btn" style="font-size:11px; padding:4px 10px;">PDF</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-card">
+        <div class="preview sp-clinic">
+          <span class="icon-slot" data-icon="clinic" data-size="48"></span>
+          <span class="preview-watermark">v1 · current</span>
+        </div>
+        <div class="body">
+          <h4>Clinic signage · Wall-mounted</h4>
+          <p>Reception, consulting, screening, biohazard. Brushed aluminium with red engraved infill. ISO 7010 conformant.</p>
+          <div style="display:flex; gap:8px;">
+            <button class="btn" style="font-size:11px; padding:4px 10px;">Cut files</button>
+            <button class="btn" style="font-size:11px; padding:4px 10px;">Supplier</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-card">
+        <div class="preview sp-poster">
+          <span class="icon-slot" data-icon="poster" data-size="48"></span>
+          <span class="preview-watermark">v3 · 2026</span>
+        </div>
+        <div class="body">
+          <h4>Clinic poster · Hand-hygiene reminder</h4>
+          <p>A2 portrait, four-step illustrated handwash, SA English + isiZulu, CNC red header band.</p>
+          <div style="display:flex; gap:8px;">
+            <button class="btn" style="font-size:11px; padding:4px 10px;">Print-ready PDF</button>
+            <button class="btn" style="font-size:11px; padding:4px 10px;">Order print</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-card">
+        <div class="preview sp-canvas">
+          <span class="preview-watermark">v1 · 2026</span>
+        </div>
+        <div class="body">
+          <h4>Clinic canvas · Reception backdrop</h4>
+          <p>2400 × 1600 mm framed canvas. Pattern panel left, pulse line crossing centre, brand wordmark right.</p>
+          <div style="display:flex; gap:8px;">
+            <button class="btn" style="font-size:11px; padding:4px 10px;">Print files</button>
+            <button class="btn" style="font-size:11px; padding:4px 10px;">Supplier brief</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-band">I&nbsp;AM&nbsp;BECAUSE&nbsp;WE&nbsp;ARE.</div>
+  </main>
+</div>
+
+<script src="_icons.js"></script>
+<script src="_layout.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.icon-slot').forEach(el => {
+      el.outerHTML = icon(el.dataset.icon, parseInt(el.dataset.size, 10));
+    });
+  });
+</script>
+</body>
+</html>

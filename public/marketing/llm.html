@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<title>LLM router · CNC Studio</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&family=Caveat:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .spark { width:100%; height:32px; }
+</style>
+</head>
+<body data-page="llm">
+
+<div class="shell">
+  <div data-include="nav"></div>
+
+  <main>
+    <div class="page-head">
+      <div>
+        <h1 class="title">LLM router</h1>
+        <p class="sub">Every AI call goes through the router. It picks the cheapest model that meets the task's requirements,
+          falls back if the primary fails, and logs every call so you can see exactly what each workflow costs.</p>
+      </div>
+    </div>
+
+    <div class="tile-grid" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="tile accent">
+        <div class="label">7-day spend</div>
+        <div class="value">$3.74</div>
+        <div class="delta">+$0.41 vs prior week</div>
+      </div>
+      <div class="tile">
+        <div class="label">Calls today</div>
+        <div class="value">218</div>
+        <div class="delta">94% on primary</div>
+      </div>
+      <div class="tile">
+        <div class="label">Avg cost / call</div>
+        <div class="value">$0.0017</div>
+        <div class="delta">Within all caps</div>
+      </div>
+      <div class="tile">
+        <div class="label">Fallback rate</div>
+        <div class="value">6%</div>
+        <div class="delta">12 in last 24h</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:18px;">
+      <div class="card-head"><h3>Active routes</h3><div class="meta">12 routes · 13 models · 4 providers</div></div>
+      <div class="card-body" style="padding:0;">
+        <table class="t" style="border:none; border-radius:0;">
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Primary → fallbacks</th>
+              <th style="width:80px;">Cap</th>
+              <th style="width:120px;">7d spend</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <code class="k">asset.describe</code>
+                <div style="font-size:11px; color:var(--muted); margin-top:3px;">Vision description for uploaded images and video thumbnails</div>
+              </td>
+              <td>
+                <span class="model-pill primary">gpt-4o-mini</span><span class="model-pill"><span class="arrow">→</span></span>
+                <span class="model-pill">gemini-2.5-flash</span>
+                <span class="model-pill"><span class="arrow">→</span></span>
+                <span class="model-pill">claude-haiku-3-5</span>
+              </td>
+              <td><code class="k">5¢</code></td>
+              <td style="color:var(--ink); font-weight:600;">$0.31</td>
+            </tr>
+            <tr>
+              <td>
+                <code class="k">newsletter.draft</code>
+                <div style="font-size:11px; color:var(--muted); margin-top:3px;">Helena-voiced newsletter with Vancouver citations</div>
+              </td>
+              <td>
+                <span class="model-pill primary">claude-sonnet-4</span>
+                <span class="model-pill"><span class="arrow">→</span></span>
+                <span class="model-pill">claude-opus-4</span>
+                <span class="model-pill"><span class="arrow">→</span></span>
+                <span class="model-pill">gpt-4o</span>
+              </td>
+              <td><code class="k">30¢</code></td>
+              <td style="color:var(--ink); font-weight:600;">$1.42</td>
+            </tr>
+            <tr>
+              <td>
+                <code class="k">newsletter.critique</code>
+                <div style="font-size:11px; color:var(--muted); margin-top:3px;">PIF voice check, em-dash audit, Helena rules</div>
+              </td>
+              <td>
+                <span class="model-pill primary">claude-opus-4</span>
+                <span class="model-pill"><span class="arrow">→</span></span>
+                <span class="model-pill">claude-sonnet-4</span>
+              </td>
+              <td><code class="k">20¢</code></td>
+              <td style="color:var(--ink); font-weight:600;">$0.86</td>
+            </tr>
+            <tr>
+              <td>
+                <code class="k">content.research</code>
+                <div style="font-size:11px; color:var(--muted); margin-top:3px;">Triple-source health research with citation candidates</div>
+              </td>
+              <td>
+                <span class="model-pill primary">sonar-deep-research</span>
+                <span class="model-pill"><span class="arrow">→</span></span>
+                <span class="model-pill">sonar-reasoning-pro</span>
+              </td>
+              <td><code class="k">50¢</code></td>
+              <td style="color:var(--ink); font-weight:600;">$0.64</td>
+            </tr>
+            <tr>
+              <td>
+                <code class="k">research.citations</code>
+                <div style="font-size:11px; color:var(--muted); margin-top:3px;">Five-plus peer-reviewed sources, Vancouver format</div>
+              </td>
+              <td>
+                <span class="model-pill primary">sonar-deep-research</span>
+                <span class="model-pill"><span class="arrow">→</span></span>
+                <span class="model-pill">sonar-pro</span>
+              </td>
+              <td><code class="k">40¢</code></td>
+              <td style="color:var(--ink); font-weight:600;">$0.28</td>
+            </tr>
+            <tr>
+              <td>
+                <code class="k">research.verify-claim</code>
+                <div style="font-size:11px; color:var(--muted); margin-top:3px;">Single health claim against peer-reviewed sources</div>
+              </td>
+              <td>
+                <span class="model-pill primary">sonar-reasoning-pro</span>
+                <span class="model-pill"><span class="arrow">→</span></span>
+                <span class="model-pill">sonar-pro</span>
+                <span class="model-pill"><span class="arrow">→</span></span>
+                <span class="model-pill">sonar</span>
+              </td>
+              <td><code class="k">15¢</code></td>
+              <td style="color:var(--ink); font-weight:600;">$0.12</td>
+            </tr>
+            <tr>
+              <td>
+                <code class="k">podcast.transcript</code>
+                <div style="font-size:11px; color:var(--muted); margin-top:3px;">Full-episode transcript cleanup (1M context window)</div>
+              </td>
+              <td>
+                <span class="model-pill primary">gemini-2.5-flash</span>
+                <span class="model-pill"><span class="arrow">→</span></span>
+                <span class="model-pill">gemini-2.5-pro</span>
+              </td>
+              <td><code class="k">30¢</code></td>
+              <td style="color:var(--ink); font-weight:600;">$0.08</td>
+            </tr>
+            <tr>
+              <td>
+                <code class="k">batch.metatag</code>
+                <div style="font-size:11px; color:var(--muted); margin-top:3px;">High-volume meta-tag refresh across the asset library</div>
+              </td>
+              <td>
+                <span class="model-pill primary">gemini-2.5-flash</span>
+                <span class="model-pill"><span class="arrow">→</span></span>
+                <span class="model-pill">claude-haiku-3-5</span>
+              </td>
+              <td><code class="k">2¢</code></td>
+              <td style="color:var(--ink); font-weight:600;">$0.03</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h3>Recent calls</h3><div class="meta">Last 6 of 218 today</div></div>
+      <div class="card-body" style="padding:0;">
+        <table class="t" style="border:none; border-radius:0;">
+          <thead>
+            <tr>
+              <th>When</th><th>Task</th><th>Model</th><th>Status</th><th>Cost</th><th>Latency</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:var(--muted-2);">2 min ago</td>
+              <td><code class="k">asset.describe</code></td>
+              <td>gpt-4o-mini</td>
+              <td><span class="pill ok">ok</span></td>
+              <td>$0.00082</td>
+              <td>684 ms</td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted-2);">8 min ago</td>
+              <td><code class="k">newsletter.draft</code></td>
+              <td>claude-sonnet-4</td>
+              <td><span class="pill ok">ok</span></td>
+              <td>$0.04210</td>
+              <td>4.2 s</td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted-2);">14 min ago</td>
+              <td><code class="k">research.citations</code></td>
+              <td>sonar-deep-research</td>
+              <td><span class="pill ok">ok</span></td>
+              <td>$0.03864</td>
+              <td>22.1 s</td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted-2);">31 min ago</td>
+              <td><code class="k">asset.describe</code></td>
+              <td>gemini-2.5-flash</td>
+              <td><span class="pill fallback">fallback</span></td>
+              <td>$0.00041</td>
+              <td>912 ms</td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted-2);">42 min ago</td>
+              <td><code class="k">newsletter.critique</code></td>
+              <td>claude-opus-4</td>
+              <td><span class="pill ok">ok</span></td>
+              <td>$0.08624</td>
+              <td>3.8 s</td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted-2);">1h ago</td>
+              <td><code class="k">batch.metatag</code></td>
+              <td>gemini-2.5-flash</td>
+              <td><span class="pill ok">ok</span></td>
+              <td>$0.00018</td>
+              <td>421 ms</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="brand-band">I&nbsp;AM&nbsp;BECAUSE&nbsp;WE&nbsp;ARE.</div>
+  </main>
+</div>
+
+<script src="_icons.js"></script>
+<script src="_layout.js"></script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<title>My profile · CNC Studio</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&family=Caveat:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="profile">
+
+<div class="shell">
+  <div data-include="nav"></div>
+
+  <main>
+    <div class="page-head">
+      <div>
+        <h1 class="title">My profile</h1>
+        <p class="sub">Your CNC Studio account. Permissions, two-factor authentication, single sign-on, and audit log.</p>
+      </div>
+    </div>
+
+    <div class="profile-grid">
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-head"><h3>Account</h3><div class="meta">CNC SSO</div></div>
+          <div class="card-body">
+            <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
+              <div style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg, var(--red), #8a0d12); display:grid; place-items:center; color:#FFF; font-weight:700; font-size:18px;">MB</div>
+              <div>
+                <div style="font-size:15px; font-weight:700;">Mr Bee</div>
+                <div style="font-size:12px; color:var(--muted);">mr.bee@carenetconsultants.co.za</div>
+                <div style="font-size:10px; color:var(--red); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-top:2px;">Owner</div>
+              </div>
+            </div>
+            <div class="kv-row"><span class="key">Display name</span><span class="val">Mr Bee</span></div>
+            <div class="kv-row"><span class="key">Role</span><span class="val">Owner</span></div>
+            <div class="kv-row"><span class="key">Default landing page</span><span class="val">Overview</span></div>
+            <div class="kv-row"><span class="key">Language</span><span class="val">English (SA)</span></div>
+            <div class="kv-row"><span class="key">Timezone</span><span class="val">Africa/Elandsfontein · UTC+2</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>Permissions on folders</h3><div class="meta">Owners have full access</div></div>
+          <div class="card-body" style="padding:0;">
+            <table class="t" style="border:none; border-radius:0;">
+              <thead><tr><th>Folder</th><th>Granted</th><th>Source</th></tr></thead>
+              <tbody>
+                <tr><td>Library / Brand</td><td style="font-weight:600;">Manage</td><td style="color:var(--muted-2);">Role · Owner</td></tr>
+                <tr><td>Library / Patient-centric</td><td style="font-weight:600;">Manage</td><td style="color:var(--muted-2);">Role · Owner</td></tr>
+                <tr><td>Library / Employee-centric</td><td style="font-weight:600;">Manage</td><td style="color:var(--muted-2);">Role · Owner</td></tr>
+                <tr><td>Specs / Vehicle Branding</td><td style="font-weight:600;">Manage</td><td style="color:var(--muted-2);">Explicit grant · 2026-05</td></tr>
+                <tr><td>Newsletters / Industry</td><td style="font-weight:600;">Manage</td><td style="color:var(--muted-2);">Role · Owner</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-head"><h3>Security</h3><div class="meta">Last reviewed 28 May 2026</div></div>
+          <div class="card-body">
+            <div class="kv-row"><span class="key">Google SSO</span><span class="val">Connected · @carenetconsultants.co.za<span style="margin-left:8px; color:var(--green); font-weight:700;">✓</span></span></div>
+            <div class="kv-row">
+              <span class="key">Two-factor authentication</span>
+              <span class="val" style="display:flex; align-items:center; gap:8px;">
+                Authenticator app
+                <span class="switch on"></span>
+              </span>
+            </div>
+            <div class="kv-row">
+              <span class="key">Hardware security key</span>
+              <span class="val" style="display:flex; align-items:center; gap:8px;">
+                Not configured
+                <span class="switch"></span>
+              </span>
+            </div>
+            <div class="kv-row">
+              <span class="key">Trusted devices</span>
+              <span class="val">2 active · <a href="#" style="color:var(--red);">Manage</a></span>
+            </div>
+            <div class="kv-row">
+              <span class="key">Session timeout</span>
+              <span class="val">12 hours</span>
+            </div>
+            <div class="kv-row">
+              <span class="key">Login audit log</span>
+              <span class="val"><a href="#" style="color:var(--red);">View 30 days</a></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-head"><h3>Linked creative accounts</h3><div class="meta">SSO from this profile</div></div>
+          <div class="card-body" style="padding:0;">
+            <div style="padding:12px 18px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--line-soft);">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div class="logo-pill" style="background:#7B61FF; width:26px; height:26px;">CV</div>
+                <span>Canva for Teams</span>
+              </div>
+              <span class="status-pill connected">Linked</span>
+            </div>
+            <div style="padding:12px 18px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--line-soft);">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div class="logo-pill" style="background:#000; width:26px; height:26px;">HG</div>
+                <span>HeyGen</span>
+              </div>
+              <span class="status-pill connected">Linked</span>
+            </div>
+            <div style="padding:12px 18px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--line-soft);">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div class="logo-pill" style="background:#F44336; width:26px; height:26px;">SS</div>
+                <span>Shutterstock</span>
+              </div>
+              <span class="status-pill connected">Linked</span>
+            </div>
+            <div style="padding:12px 18px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--line-soft);">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div class="logo-pill" style="background:#FF6F61; width:26px; height:26px;">GHL</div>
+                <span>GHL Social Calendar</span>
+              </div>
+              <span class="status-pill connected">Linked</span>
+            </div>
+            <div style="padding:12px 18px; display:flex; justify-content:space-between; align-items:center;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div class="logo-pill" style="background:#F06A6A; width:26px; height:26px;">A</div>
+                <span>Asana</span>
+              </div>
+              <span class="status-pill connected">Linked</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>Notifications</h3><div class="meta">In-app + email</div></div>
+          <div class="card-body">
+            <div class="kv-row"><span class="key">Asset prompts (assigned to me)</span><span class="switch on"></span></div>
+            <div class="kv-row"><span class="key">Approval queue · Director</span><span class="switch on"></span></div>
+            <div class="kv-row"><span class="key">Weekly audit summary</span><span class="switch on"></span></div>
+            <div class="kv-row"><span class="key">LLM router · cap breaches</span><span class="switch on"></span></div>
+            <div class="kv-row"><span class="key">Marketing daily brief</span><span class="switch"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-band">I&nbsp;AM&nbsp;BECAUSE&nbsp;WE&nbsp;ARE.</div>
+  </main>
+</div>
+
+<script src="_icons.js"></script>
+<script src="_layout.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.icon-slot').forEach(el => {
+      el.outerHTML = icon(el.dataset.icon, parseInt(el.dataset.size, 10));
+    });
+  });
+</script>
+</body>
+</html>

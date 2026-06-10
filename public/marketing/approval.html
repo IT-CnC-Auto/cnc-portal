@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<title>Approval queue · CNC Studio</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&family=Caveat:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .ta1 { background: linear-gradient(135deg, #ED1B24 0%, #FF6B6B 100%); }
+  .ta2 { background: linear-gradient(135deg, #2C5F8F 0%, #7AB8E5 100%); }
+  .ta3 { background: linear-gradient(135deg, #4A7C30 0%, #C8E68F 100%); }
+  .ta4 { background: linear-gradient(135deg, #C58B16 0%, #FBE08A 100%); }
+  .ta5 { background: linear-gradient(135deg, #1F2937 0%, #6B7280 100%); }
+</style>
+</head>
+<body data-page="approval">
+
+<div class="shell">
+  <div data-include="nav"></div>
+
+  <main>
+    <div class="page-head">
+      <div>
+        <h1 class="title">Approval queue</h1>
+        <p class="sub">Everything an agent produces lands here. The Studio routes each item to the right approver: OHNP for nursing-led content, OMP for clinical readings, Directors for digital assets and brand decisions.</p>
+      </div>
+      <div class="actions">
+        <button class="btn"><span class="icon-slot" data-icon="refresh" data-size="14"></span> Refresh</button>
+      </div>
+    </div>
+
+    <div class="tile-grid" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="tile accent"><div class="label">In queue</div><div class="value">14</div><div class="delta down">3 urgent</div></div>
+      <div class="tile"><div class="label">Approved today</div><div class="value">9</div><div class="delta">+2 vs avg</div></div>
+      <div class="tile"><div class="label">Avg time to decision</div><div class="value">42m</div><div class="delta">faster</div></div>
+      <div class="tile"><div class="label">Sent back for revision</div><div class="value">2</div><div class="delta flat">1.2% of throughput</div></div>
+    </div>
+
+    <div class="tabs">
+      <span class="tab active">All <strong style="margin-left:6px;">14</strong></span>
+      <span class="tab">Director <strong style="margin-left:6px; color:var(--muted-2);">6</strong></span>
+      <span class="tab">OHNP <strong style="margin-left:6px; color:var(--muted-2);">3</strong></span>
+      <span class="tab">OMP <strong style="margin-left:6px; color:var(--muted-2);">2</strong></span>
+      <span class="tab">Auto-routed <strong style="margin-left:6px; color:var(--muted-2);">3</strong></span>
+      <span style="flex:1;"></span>
+      <span class="tab">Urgent only</span>
+    </div>
+
+    <!-- queue items -->
+    <div class="approval-card">
+      <div class="thumb ta1"></div>
+      <div class="info">
+        <div class="title">Construction · Article 24 · Heatstroke prevention in summer</div>
+        <div class="meta">
+          <span class="pill urgent">Urgent · 4h</span>
+          <span>Newsletter · External</span>
+          <span class="dot">·</span>
+          <span>Helena drafted · 5 sources verified</span>
+          <span class="dot">·</span>
+          <span>Pre-publish</span>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px; align-items:flex-end;">
+        <div class="approver director"><span class="dot"></span> Director · Digital</div>
+        <div style="display:flex; gap:6px;">
+          <button class="btn danger" style="padding:4px 10px; font-size:11px;">Reject</button>
+          <button class="btn primary" style="padding:4px 10px; font-size:11px;">Approve</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="approval-card">
+      <div class="thumb ta2"></div>
+      <div class="info">
+        <div class="title">Mens Health · Blood-pressure threshold post</div>
+        <div class="meta">
+          <span class="pill review">In review</span>
+          <span>Newsletter · External</span>
+          <span class="dot">·</span>
+          <span>Clinical claim flagged by Compliance Watcher</span>
+          <span class="dot">·</span>
+          <span>5 Vancouver citations</span>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px; align-items:flex-end;">
+        <div class="approver omp"><span class="dot"></span> OMP · Medical reading</div>
+        <div style="display:flex; gap:6px;">
+          <button class="btn danger" style="padding:4px 10px; font-size:11px;">Reject</button>
+          <button class="btn primary" style="padding:4px 10px; font-size:11px;">Approve</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="approval-card">
+      <div class="thumb ta3"></div>
+      <div class="info">
+        <div class="title">Mining Industry Newsletter · Silicosis prevention update</div>
+        <div class="meta">
+          <span class="pill proposed">Awaiting nursing review</span>
+          <span>Newsletter · Industry</span>
+          <span class="dot">·</span>
+          <span>References MOSH 2024 guidelines</span>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px; align-items:flex-end;">
+        <div class="approver ohnp"><span class="dot"></span> OHNP · Nursing</div>
+        <div style="display:flex; gap:6px;">
+          <button class="btn danger" style="padding:4px 10px; font-size:11px;">Reject</button>
+          <button class="btn primary" style="padding:4px 10px; font-size:11px;">Approve</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="approval-card">
+      <div class="thumb ta4"></div>
+      <div class="info">
+        <div class="title">Vehicle wrap · Mobile clinic Quantum refresh</div>
+        <div class="meta">
+          <span class="pill review">Design review</span>
+          <span>Specs · Vehicle Branding</span>
+          <span class="dot">·</span>
+          <span>3 mockup variations</span>
+          <span class="dot">·</span>
+          <span>by Sipho</span>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px; align-items:flex-end;">
+        <div class="approver director"><span class="dot"></span> Director · Digital</div>
+        <div style="display:flex; gap:6px;">
+          <button class="btn" style="padding:4px 10px; font-size:11px;">Send back</button>
+          <button class="btn primary" style="padding:4px 10px; font-size:11px;">Approve</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="approval-card">
+      <div class="thumb ta5"></div>
+      <div class="info">
+        <div class="title">HeyGen explainer · POPIA in 90 seconds</div>
+        <div class="meta">
+          <span class="pill review">In review</span>
+          <span>Training video · External</span>
+          <span class="dot">·</span>
+          <span>Auto-pushed to Vimeo</span>
+          <span class="dot">·</span>
+          <span>1:32</span>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px; align-items:flex-end;">
+        <div class="approver director"><span class="dot"></span> Director · Digital</div>
+        <div style="display:flex; gap:6px;">
+          <button class="btn" style="padding:4px 10px; font-size:11px;">Send back</button>
+          <button class="btn primary" style="padding:4px 10px; font-size:11px;">Approve</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="approval-card">
+      <div class="thumb ta1"></div>
+      <div class="info">
+        <div class="title">Birthday card · Annemarie Janse van Rensburg</div>
+        <div class="meta">
+          <span class="pill approved">Auto-approved</span>
+          <span>Employee-centric · Birthdays</span>
+          <span class="dot">·</span>
+          <span>Within brand template rules</span>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px; align-items:flex-end;">
+        <div class="approver" style="background:var(--green-tint); color:var(--green);"><span class="dot"></span> Auto · template-safe</div>
+        <div style="display:flex; gap:6px;">
+          <button class="btn" style="padding:4px 10px; font-size:11px;">Override</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-band">I&nbsp;AM&nbsp;BECAUSE&nbsp;WE&nbsp;ARE.</div>
+  </main>
+</div>
+
+<script src="_icons.js"></script>
+<script src="_layout.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.icon-slot').forEach(el => {
+      el.outerHTML = icon(el.dataset.icon, parseInt(el.dataset.size, 10));
+    });
+  });
+</script>
+</body>
+</html>

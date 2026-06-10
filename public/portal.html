@@ -460,7 +460,7 @@ function buildHome(){
       <h3 class="bebas">${d.label}</h3>
       <p>${d.desc}</p>
       <span class="status ${live?'st-live':'st-soon'}"><span class="dot"></span>${live?'Live':'Coming soon'}</span>`;
-    if(live) card.onclick=()=> d.id==='marketing' ? location.href='/marketing/' : openDept(d.id);
+    if(live) card.onclick=()=> d.id==='marketing' ? location.href='/marketing/index.html' : openDept(d.id);
     else card.onclick=()=>{};
     grid.appendChild(card);
 
@@ -468,7 +468,7 @@ function buildHome(){
     ni.className='nav-item'+(live?'':' locked');
     ni.dataset.nav=d.id;
     ni.innerHTML=`<span class="ico">${svgIcon(d.id,17)}</span><span>${d.label}</span>`+(live?'':'<span class="lock">'+lockSvg()+'</span>');
-    if(live) ni.onclick=()=> d.id==='marketing' ? location.href='/marketing/' : openDept(d.id);
+    if(live) ni.onclick=()=> d.id==='marketing' ? location.href='/marketing/index.html' : openDept(d.id);
     nav.appendChild(ni);
   });
 }

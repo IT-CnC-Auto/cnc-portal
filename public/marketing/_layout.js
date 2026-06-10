@@ -96,7 +96,7 @@ const DEMO_LINKS = [
 function renderDemoBar() {
   return `
     <div class="demo-bar">
-      <a href="/portal.html" class="back-to-portal">&larr; Back to Portal</a>
+      <a href="/portal" class="back-to-portal">&larr; Back to Portal</a>
       ${DEMO_LINKS.map(([href, key, label]) =>
         `<a href="${href}" data-demo="${key}">${label}</a>`).join('')}
       <span class="right">CNC Digital Marketing Studio</span>

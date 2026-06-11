@@ -81,7 +81,20 @@ button { font-family: inherit; cursor: pointer; }
 .shell {
   display: grid;
   grid-template-columns: 240px 1fr;
+  grid-template-rows: auto 1fr;
   min-height: 100vh;
+}
+aside.nav {
+  grid-column: 1;
+  grid-row: 1 / 3;
+}
+.mkt-pattern {
+  grid-column: 2;
+  grid-row: 1;
+}
+.shell > main {
+  grid-column: 2;
+  grid-row: 2;
 }
 
 aside.nav {
@@ -738,9 +751,6 @@ code.k {
 /* ============================== MARKETING PORTAL TOP BAR ============================== */
 
 .mkt-topbar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
   height: 62px;
   background: #FFFFFF;
   border-bottom: 1px solid #D2D2D2;
@@ -773,15 +783,11 @@ code.k {
   line-height: 1;
 }
 .mkt-pattern {
-  position: fixed;
-  top: 62px; left: 240px; right: 0;
-  z-index: 99;
   height: 50px;
   background: url('https://pub-05e130c201dd463a8accbcd12eb02d77.r2.dev/wp-content/uploads/2025/05/CNC-Website-Page-break-Africa-Pattern-faded-2000x100px-1.1.png') repeat-x center/auto 100%;
   border-bottom: 1px solid var(--line);
   opacity: 0.95;
 }
-.with-mkt-topbar { padding-top: 112px; }
 
 
 /* ============================== AI COMMAND CENTRE ============================== */

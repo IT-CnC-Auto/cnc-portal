@@ -74,15 +74,16 @@ function renderDemoBar() {
       </a>
       <span class="mkt-title">MARKETING PORTAL</span>
     </div>
-    <div class="mkt-pattern"></div>
   `;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  document.body.insertAdjacentHTML('afterbegin', renderDemoBar());
   const slot = document.querySelector('[data-include="nav"]');
   if (slot) slot.outerHTML = renderNav();
-  document.body.insertAdjacentHTML('afterbegin', renderDemoBar());
-  document.body.classList.add('with-mkt-topbar');
+
+  const main = document.querySelector('main');
+  if (main) main.insertAdjacentHTML('beforebegin', '<div class="mkt-pattern"></div>');
 
   const page = document.body.dataset.page;
   if (page) {

@@ -1,73 +1,82 @@
-// lib/auth/roles.ts
-// Server-side role helpers. Use in API routes, layouts, and server components.
-// These read from the authenticated user's session via cookies.
+// types/roles.ts
+// Mirrors the enums and tables defined in the Supabase migrations
 
-import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
-import type { AppRole, AppDepartment } from '@/types/roles'
+export type AppRole = 'owner' | 'administrator' | 'department_member'
 
-// Creates a server-side Supabase client scoped to the current request cookies
-function getServerClient() {
-  const cookieStore = cookies()
-  return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return cookieStore.get(name)?.value
-        },
-      },
-    }
-  )
+export type AppDepartment =
+  | 'directors'
+  | 'operations'
+  | 'finance'
+  | 'sales'
+  | 'corporate_governance'
+  | 'hr_and_people'
+  | 'it_and_ai'
+  | 'marketing'
+
+// Display labels for use in UI dropdowns and tables
+export const DEPARTMENT_LABELS: Record<AppDepartment, string> = {
+  directors: 'Directors',
+  operations: 'Operations',
+  finance: 'Finance',
+  sales: 'Sales',
+  corporate_governance: 'Corporate Governance',
+  hr_and_people: 'HR & People',
+  it_and_ai: 'IT & AI',
+  marketing: 'Marketing',
 }
 
-// Returns the authenticated user's ID, or null if not logged in
-export async function getAuthUserId(): Promise<string | null> {
-  const supabase = getServerClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  return user?.id ?? null
+export const ROLE_LABELS: Record<AppRole, string> = {
+  owner: 'Owner',
+  administrator: 'Administrator',
+  department_member: 'Department Member',
 }
 
-// Returns the role of the authenticated user
-export async function getCurrentUserRole(): Promise<AppRole | null> {
-  const userId = await getAuthUserId()
-  if (!userId) return null
-
-  const supabase = getServerClient()
-  const { data } = await supabase
-    .from('user_roles')
-    .select('role')
-    .eq('user_id', userId)
-    .single()
-
-  return (data?.role as AppRole) ?? null
+export interface UserProfile {
+  id: string
+  full_name: string
+  email: string
+  photo_path: string | null
+  personal_details: Record<string, unknown>
+  is_active: boolean
+  invited_by: string | null
+  created_at: string
+  updated_at: string
 }
 
-// Returns the department of the authenticated user
-export async function getCurrentUserDepartment(): Promise<AppDepartment | null> {
-  const userId = await getAuthUserId()
-  if (!userId) return null
-
-  const supabase = getServerClient()
-  const { data } = await supabase
-    .from('user_roles')
-    .select('department')
-    .eq('user_id', userId)
-    .single()
-
-  return (data?.department as AppDepartment) ?? null
+export interface UserRole {
+  id: string
+  user_id: string
+  role: AppRole
+  department: AppDepartment | null
+  assigned_by: string | null
+  assigned_at: string
+  updated_at: string
 }
 
-// True if the authenticated user is owner or administrator
-export async function isAdminOrOwner(): Promise<boolean> {
-  const role = await getCurrentUserRole()
-  return role === 'owner' || role === 'administrator'
+// Joined type used in the admin member list
+export interface MemberRecord {
+  id: string
+  full_name: string
+  email: string
+  photo_path: string | null
+  is_active: boolean
+  role: AppRole
+  department: AppDepartment | null
+  created_at: string
 }
 
-// True if the authenticated user is the owner
-export async function isOwner(): Promise<boolean> {
-  const role = await getCurrentUserRole()
-  return role === 'owner'
+// Payload for the invite API route
+export interface InviteMemberPayload {
+  email: string
+  full_name: string
+  role: AppRole
+  department: AppDepartment | null
 }
 
+// Payload for the update member API route
+export interface UpdateMemberPayload {
+  full_name?: string
+  role?: AppRole
+  department?: AppDepartment | null
+  is_active?: boolean
+}

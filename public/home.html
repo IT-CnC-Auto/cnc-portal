@@ -208,75 +208,96 @@
 </head>
 <body>
 
-<!-- ============ SCREEN 1 · LOGIN ============ -->
-<section id="login" class="screen active">
-  <div class="login-left">
-    <div class="redbar"></div>
-    <img src="https://pub-d5b31319f7724cca83d8b708f94830b0.r2.dev/Individual%20Patterns/1.svg" alt="" class="pattern">
-    <div class="login-hero">
-      <h1 class="bebas">One front door.<br><span class="accent">Every department.</span></h1>
-      <p>The Care Net Consultants internal portal. Sign in once to reach your team's tools, dashboards, and resources in one place.</p>
+<!-- ============ SCREEN 2 · APP (home + dept) ============ -->
+<div id="app" class="app active">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-brand">
+      <img src="https://pub-d5b31319f7724cca83d8b708f94830b0.r2.dev/CNC%20-%20Logo%20Re-working%20-%20red%20-%20with%20tag%20line%20-%20transparent%20-%201.1.png" alt="Care Net Consultants">
     </div>
-    <div class="login-foot">
-      Care Net Consultants (Pty) Ltd · Since 2012<br>
-      Your Partner in Workplace Health · <em>I am because we are.</em>
+    <div class="sb-section">Workspace</div>
+    <div class="nav-item active" data-nav="home" onclick="goHome()"><span class="ico" id="icoHome"></span><span>Home</span></div>
+    <div class="sb-section">Departments</div>
+    <div id="navDepts"></div>
+    <div class="sb-spacer"></div>
+    <div class="sb-profile" id="sbProfile">
+      <div class="nav-item profile-toggle" onclick="toggleProfile()">
+        <span class="ico" id="icoProfile"></span><span>My profile</span>
+        <span class="chev" id="profChev">▸</span>
+      </div>
+      <div class="profile-panel" id="profilePanel">
+        <div class="sb-section">Settings</div>
+        <div class="sb-theme">
+          <span class="sb-theme-label">Appearance</span>
+          <div class="theme-toggle" id="themeToggle">
+            <button data-mode="light" title="Light" onclick="setTheme('light')">☀</button>
+            <button data-mode="dark" title="Dark" onclick="setTheme('dark')">☾</button>
+            <button data-mode="auto" title="Auto (follow device)" onclick="setTheme('auto')">⊙</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-item" onclick="signOut()"><span class="ico" id="icoOut"></span><span>Sign out</span></div>
+    <div class="sb-user">
+      <div class="av" id="sbAv">CK</div>
+      <div><div class="nm" id="sbName">Cassandra Kruger</div><div class="rl">Admin · Directors</div></div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="pgtitle bebas" id="pgTitle">Internal Portal</div>
+      <div class="right">
+        <div class="action-bar">
+          <button class="actbtn" id="actMail" title="Email — Microsoft" onclick="alert('Email — placeholder (Microsoft email link to be added)')"></button>
+          <button class="actbtn" id="actMco" title="My Clinic Online" onclick="alert('MCO — placeholder (My Clinic Online login to be added)')"></button>
+          <button class="actbtn" id="actBell" title="Asana — open your tasks" onclick="window.open('https://app.asana.com','_blank')"></button>
+          <button class="actbtn" id="actWa" title="WhatsApp" onclick="alert('WhatsApp — placeholder (opens WhatsApp app)')"></button>
+          <button class="actbtn" id="actMore" title="Open in a second window" onclick="window.open(window.location.href,'_blank','width=1400,height=900')"></button>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="pattern-strip"></div>
+      <div class="content-inner">
+
+      <!-- HOME -->
+      <div id="home" class="screen active">
+        <div class="greet-banner">
+          <div class="greet-pattern"></div>
+          <div class="greet">
+            <div class="hello" id="greetHello">Good morning</div>
+            <h1 class="bebas">Welcome back, <span id="firstName">Cassandra</span>.</h1>
+            <p>Pick a department to open its workspace. Live rooms are ready now; others are on the way.</p>
+          </div>
+          <div class="welcome-date">
+            <span id="dateDay">--</span>
+            <span id="dateStr"></span>
+          </div>
+        </div>
+        <div class="dept-grid" id="deptGrid"></div>
+      </div>
+
+      <!-- DEPARTMENT -->
+      <div id="dept" class="screen">
+        <span class="back-link" onclick="goHome()">← Back to home</span>
+        <div class="dept-hero">
+          <div class="pattern"></div>
+          <div class="photo-ph">PHOTO<br>(wire later)</div>
+          <div class="who">
+            <div class="r" id="dHeroRole">Department</div>
+            <h2 class="bebas" id="dHeroTitle">Department</h2>
+            <p id="dHeroDesc">Description</p>
+          </div>
+        </div>
+        <div id="deptBody"></div>
+      </div>
+
+      </div>
     </div>
   </div>
-  <div class="login-right">
-    <img src="https://pub-d5b31319f7724cca83d8b708f94830b0.r2.dev/CNC%20-%20Logo%20Re-working%20-%20red%20-%20with%20tag%20line%20-%20transparent%20-%201.1.png" alt="Care Net Consultants" class="corner-logo">
-    <!-- STEP A: credentials -->
-    <div class="login-card" id="loginStep">
-      <div class="eyebrow">Internal Portal</div>
-      <h2 class="bebas">Welcome back</h2>
-      <div class="sub">Sign in with your Care Net account.</div>
-
-      <button class="btn-sso" onclick="ssoSignIn()">
-        <span class="ms-glyph"><i></i><i></i><i></i><i></i></span>
-        Sign in with Microsoft
-      </button>
-
-      <div class="divider"><span>or use your email</span></div>
-
-      <div class="field">
-        <label>Email address</label>
-        <input id="email" type="email" placeholder="you@carenetconsultants.co.za" value="cassandra@carenetconsultants.co.za">
-      </div>
-      <div class="field">
-        <label>Password</label>
-        <input type="password" placeholder="••••••••••" value="demo">
-      </div>
-      <button class="btn" onclick="goTo2FA()">Continue</button>
-      <div class="login-meta">
-        <span>Forgot password?</span>
-        <a>Reset</a>
-      </div>
-
-      <div class="popia">
-        <span class="lock-ico">🔒</span>
-        <span>This is a private system for authorised Care Net Consultants staff. Access is logged and monitored. Personal information is processed in line with POPIA. <a href="#" onclick="return false">View privacy policy</a>.</span>
-      </div>
-    </div>
-
-    <!-- STEP B: 2FA -->
-    <div class="login-card" id="twofaStep" style="display:none">
-      <div class="eyebrow">Two-step verification</div>
-      <h2 class="bebas">Confirm it's you</h2>
-      <div class="sub">Enter the 6-digit code from your authenticator app.</div>
-      <div class="code-row">
-        <input maxlength="1" class="code-box" value=""><input maxlength="1" class="code-box"><input maxlength="1" class="code-box"><input maxlength="1" class="code-box"><input maxlength="1" class="code-box"><input maxlength="1" class="code-box">
-      </div>
-      <button class="btn" onclick="signIn()">Verify and sign in</button>
-      <div class="login-meta">
-        <a onclick="backToLogin()">← Back</a>
-        <span>Resend code</span>
-      </div>
-      <div class="popia">
-        <span class="lock-ico">🔒</span>
-        <span>Two-step verification protects your account and the personal information held in this portal, as required under POPIA.</span>
-      </div>
-    </div>
-  </div>
-</section>
+</div>
 
 <script>
 
@@ -334,15 +355,18 @@ function ssoSignIn(){
   signIn();
 }
 function signIn(){
-  // Front-end flow: remember the email, then go to the real /home URL.
-  var email=(document.getElementById('email')||{}).value||'';
-  try{ sessionStorage.setItem('cnc_email', email.trim()); }catch(e){}
-  window.location.href='/home';
+  const email=document.getElementById('email').value.trim();
+  const name=email.split('@')[0].replace(/\./g,' ').replace(/\b\w/g,c=>c.toUpperCase())||'there';
+  const first=name.split(' ')[0];
+  document.getElementById('firstName').textContent=first;
+  document.getElementById('sbName').textContent=name;
+  document.getElementById('sbAv').textContent=name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  document.getElementById('login').classList.remove('active');
+  document.getElementById('app').classList.add('active');
+  goHome();
 }
 function signOut(){
-  document.getElementById('app').classList.remove('active');
-  document.getElementById('login').classList.add('active');
-  backToLogin();
+  window.location.href='/';
 }
 /* auto-advance 2FA code boxes */
 document.addEventListener('input',e=>{
@@ -512,6 +536,21 @@ buildHome();
 injectStaticIcons();
 renderDate();
 setTheme('light');
+
+
+/* ---- HOME PAGE BOOT: populate identity from sign-in, render home ---- */
+(function(){
+  try{
+    var email=sessionStorage.getItem('cnc_email')||'';
+    if(email){
+      var name=email.split('@')[0].replace(/\./g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();});
+      var first=name.split(' ')[0]||'there';
+      var fn=document.getElementById('firstName'); if(fn) fn.textContent=first;
+      var sb=document.getElementById('sbName'); if(sb) sb.textContent=name;
+      var av=document.getElementById('sbAv'); if(av) av.textContent=name.split(' ').map(function(w){return w[0];}).join('').slice(0,2).toUpperCase();
+    }
+  }catch(e){}
+})();
 
 </script>
 </body>

@@ -70,4 +70,3 @@ export async function isOwner(): Promise<boolean> {
   const role = await getCurrentUserRole()
   return role === 'owner'
 }
-

@@ -37,12 +37,6 @@ const NAV_ITEMS = [
 function renderNav() {
   let html = `
     <aside class="nav">
-      <div class="nav-brand">
-        <div class="logo-plate">
-          <img src="brand/cnc-logo-transparent.png" alt="Care Net Consultants" class="nav-logo">
-        </div>
-        <div class="nav-tag">DIGITAL MARKETING STUDIO</div>
-      </div>
   `;
   for (const item of NAV_ITEMS) {
     if (item.section) {
@@ -72,34 +66,13 @@ function renderNav() {
   return html;
 }
 
-const DEMO_LINKS = [
-  ['index.html',      'overview',     'Overview'],
-  ['brand.html',      'brand',        'Brand Guidelines'],
-  ['library.html',    'library',      'Library'],
-  ['upload.html',     'upload',       'Upload'],
-  ['ai.html',         'ai',           'AI Centre'],
-  ['tasks.html',      'tasks',        'Tasks'],
-  ['approval.html',   'approval',     'Approvals'],
-  ['audits.html',     'audits',       'Audits'],
-  ['logins.html',     'logins',       'Logins'],
-  ['specs.html',      'specs',        'Specs'],
-  ['analytics.html',  'analytics',    'Analytics'],
-  ['ads.html',        'ads',          'Ads'],
-  ['website.html',    'website',      'Website engine'],
-  ['gbp.html',        'gbp',          'GBP optimiser'],
-  ['sales.html',      'sales',        'Sales · soft launch'],
-  ['consoles.html',   'consoles',     'Consoles'],
-  ['llm.html',        'llm',          'LLM router'],
-  ['profile.html',    'profile',      'Profile'],
-];
-
 function renderDemoBar() {
   return `
-    <div class="demo-bar">
-      <a href="/portal" class="back-to-portal">&larr; Back to Portal</a>
-      ${DEMO_LINKS.map(([href, key, label]) =>
-        `<a href="${href}" data-demo="${key}">${label}</a>`).join('')}
-      <span class="right">CNC Digital Marketing Studio</span>
+    <div class="mkt-topbar">
+      <a href="/portal" class="mkt-brand" title="Back to Internal Portal">
+        <img src="https://pub-d5b31319f7724cca83d8b708f94830b0.r2.dev/CNC%20-%20Logo%20Re-working%20-%20red%20-%20with%20tag%20line%20-%20transparent%20-%201.1.png" alt="Care Net Consultants">
+      </a>
+      <span class="mkt-title">MARKETING PORTAL</span>
     </div>
   `;
 }
@@ -108,15 +81,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const slot = document.querySelector('[data-include="nav"]');
   if (slot) slot.outerHTML = renderNav();
   document.body.insertAdjacentHTML('afterbegin', renderDemoBar());
-  document.body.classList.add('with-demo-bar');
+  document.body.classList.add('with-mkt-topbar');
 
   const page = document.body.dataset.page;
   if (page) {
     document.querySelectorAll('.nav-item').forEach((el) => {
       if (el.dataset.page === page) el.classList.add('active');
-    });
-    document.querySelectorAll('.demo-bar a').forEach((el) => {
-      if (el.dataset.demo === page) el.classList.add('active');
     });
   }
 });

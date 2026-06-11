@@ -735,42 +735,44 @@ code.k {
 }
 .tab:hover:not(.active) { background: var(--surface-2); }
 
-/* ============================== DEMO BAR ============================== */
+/* ============================== MARKETING PORTAL TOP BAR ============================== */
 
-.demo-bar {
+.mkt-topbar {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  background: #0F0F0F;
-  border-bottom: 1px solid #1F1F1F;
-  padding: 6px 14px;
+  height: 62px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #D2D2D2;
+  padding: 0 30px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  color: #888;
-  overflow-x: auto;
-  white-space: nowrap;
+  gap: 22px;
 }
-.demo-bar .label {
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-size: 10px;
-  color: #FFF;
+.mkt-brand {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 8px 0;
+  flex: none;
+  cursor: pointer;
 }
-.demo-bar a {
-  padding: 4px 10px;
-  border-radius: 4px;
-  color: #BBB;
+.mkt-brand img {
+  height: 42px;
+  width: auto;
+  max-width: 200px;
+  object-fit: contain;
+  display: block;
 }
-.demo-bar a.active { background: var(--red); color: #FFF; font-weight: 600; }
-.demo-bar a:hover:not(.active) { background: #1F1F1F; color: #FFF; }
-.demo-bar a.back-to-portal { background: var(--red); color: #FFF; font-weight: 600; margin-right: 6px; }
-.demo-bar a.back-to-portal:hover { background: #C8161D; color: #FFF; }
-.demo-bar .right { margin-left: auto; color: #555; }
-.with-demo-bar { padding-top: 36px; }
-.with-demo-bar aside.nav { padding-top: 56px; }
+.mkt-title {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.03em;
+  font-size: 26px;
+  color: #000;
+  line-height: 1;
+}
+.with-mkt-topbar { padding-top: 62px; }
+
 
 /* ============================== AI COMMAND CENTRE ============================== */
 

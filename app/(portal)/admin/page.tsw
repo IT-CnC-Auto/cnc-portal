@@ -1,0 +1,8 @@
+// app/(portal)/admin/page.tsx
+// /admin has no content of its own — redirect straight to member management.
+
+import { redirect } from 'next/navigation'
+
+export default function AdminPage() {
+  redirect('/admin/members')
+}

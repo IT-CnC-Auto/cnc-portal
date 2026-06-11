@@ -1,7 +1,8 @@
 'use client'
 
 // app/(portal)/admin/members/[id]/page.tsx
-// Edit an individual member's name, role, department, and active status.
+// Force dynamic — this page fetches live member data and cannot be statically generated.
+export const dynamic = 'force-dynamic'
 
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
@@ -118,7 +119,6 @@ export default function EditMemberPage() {
       </div>
 
       <form onSubmit={handleSave} className="space-y-4">
-        {/* Full name */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Full name
@@ -132,7 +132,6 @@ export default function EditMemberPage() {
           />
         </div>
 
-        {/* Role */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Role
@@ -149,7 +148,6 @@ export default function EditMemberPage() {
           </select>
         </div>
 
-        {/* Department */}
         {form.role === 'department_member' && (
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -169,7 +167,6 @@ export default function EditMemberPage() {
           </div>
         )}
 
-        {/* Active status */}
         <div className="flex items-center gap-2">
           <input
             id="is_active"
@@ -213,4 +210,3 @@ export default function EditMemberPage() {
     </div>
   )
 }
-

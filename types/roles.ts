@@ -1,4 +1,5 @@
 // types/roles.ts
+// Mirrors the enums and tables defined in the Supabase migrations
 
 export type AppRole = 'owner' | 'administrator' | 'department_member'
 
@@ -12,6 +13,7 @@ export type AppDepartment =
   | 'it_and_ai'
   | 'marketing'
 
+// Display labels for use in UI dropdowns and tables
 export const DEPARTMENT_LABELS: Record<AppDepartment, string> = {
   directors: 'Directors',
   operations: 'Operations',
@@ -51,6 +53,7 @@ export interface UserRole {
   updated_at: string
 }
 
+// Joined type used in the admin member list
 export interface MemberRecord {
   id: string
   full_name: string
@@ -62,6 +65,7 @@ export interface MemberRecord {
   created_at: string
 }
 
+// Payload for the invite API route
 export interface InviteMemberPayload {
   email: string
   full_name: string
@@ -69,6 +73,7 @@ export interface InviteMemberPayload {
   department: AppDepartment | null
 }
 
+// Payload for the update member API route
 export interface UpdateMemberPayload {
   full_name?: string
   role?: AppRole

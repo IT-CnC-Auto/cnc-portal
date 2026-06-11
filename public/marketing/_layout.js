@@ -69,8 +69,8 @@ function renderNav() {
 function renderDemoBar() {
   return `
     <div class="mkt-topbar">
-      <a href="/portal" class="mkt-brand" title="Back to Internal Portal">
-        <img src="https://pub-d5b31319f7724cca83d8b708f94830b0.r2.dev/CNC%20-%20Logo%20Re-working%20-%20red%20-%20with%20tag%20line%20-%20transparent%20-%201.1.png" alt="Care Net Consultants">
+      <a href="/home" class="mkt-brand" title="Back to Internal Portal">
+        <img src="https://pub-d5b31319f7724cca83d8b708f94830b0.r2.dev/CNC%20-%20Logo%20Re-working%20-%20red%20-%20with%20tag%20line%20-%20transparent%20-%201.1.png" alt="Care Net Consultants — back to portal">
       </a>
       <span class="mkt-title">MARKETING PORTAL</span>
     </div>

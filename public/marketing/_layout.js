@@ -74,6 +74,7 @@ function renderDemoBar() {
       </a>
       <span class="mkt-title">MARKETING PORTAL</span>
     </div>
+    <div class="mkt-pattern"></div>
   `;
 }
 

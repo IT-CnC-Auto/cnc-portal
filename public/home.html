@@ -416,6 +416,7 @@ function toggleProfile(){
 
 /* ---------- DEPARTMENT PAGE ---------- */
 function openDept(id){
+  if(id==='marketing'){ window.location.href='/marketing/'; return; }
   const d=DEPTS.find(x=>x.id===id);
   show('dept'); setActive(id);
   document.getElementById('pgTitle').textContent=d.label;

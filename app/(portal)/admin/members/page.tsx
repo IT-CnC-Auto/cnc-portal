@@ -58,7 +58,7 @@ export default async function MembersPage() {
   const supabase = createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect('/auth/login')
+  if (!user) redirect('/login')
 
   // Gate: must be owner or administrator
   const { data: roleData } = await supabase

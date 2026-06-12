@@ -1,3 +1,11 @@
+'use client'
+// src/app/auth/mfa/verify/_components/MFAVerifyContent.tsx
+
+import { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
+
+export default function MFAVerifyContent() {
 import { Suspense } from 'react'
 import MFAVerifyContent from './_components/MFAVerifyContent'
 

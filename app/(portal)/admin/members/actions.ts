@@ -11,7 +11,7 @@ import type { InviteMemberInput, UpdateRoleInput } from '@/types/members'
 // ── Guard helper ──────────────────────────────────────────────
 
 async function assertAdminOrOwner(): Promise<string> {
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error('Not authenticated.')
 

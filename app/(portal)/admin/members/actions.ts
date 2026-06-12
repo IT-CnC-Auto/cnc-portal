@@ -37,7 +37,7 @@ export async function inviteMember(input: InviteMemberInput) {
     // Supabase sends the invite email automatically
     const { data: inviteData, error: inviteErr } =
       await supabaseAdmin.auth.admin.inviteUserByEmail(input.email, {
-        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?next=/auth/accept-invite`,
+        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/callback?next=/accept-invite`,
         data: { full_name: input.full_name },
       })
 
@@ -88,7 +88,7 @@ export async function resendInvite(email: string) {
     await assertAdminOrOwner()
 
     const { error } = await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
-      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?next=/auth/accept-invite`,
+      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/callback?next=/accept-invite`,
     })
 
     if (error) return { error: error.message }

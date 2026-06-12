@@ -1,29 +1,73 @@
 'use client'
-// src/app/auth/mfa/enroll/page.tsx
-// First-time TOTP setup for Owner and Administrator accounts.
-// Supabase returns a QR code as an SVG data-URL — no external QR library needed.
 
-import { useState, useEffect } from 'react'
-import { useRouter }            from 'next/navigation'
-import { createClient }         from '@/lib/supabase/client'
+import { useState, useEffect, useRef } from 'react'
+import { useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
+
+function OTPInput({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const refs = useRef<(HTMLInputElement | null)[]>([])
+
+  function handleChange(i: number, e: React.ChangeEvent<HTMLInputElement>) {
+    const char = e.target.value.replace(/\D/g, '').slice(-1)
+    const next = value.split('').concat(Array(6).fill('')).slice(0, 6)
+    next[i] = char
+    onChange(next.join(''))
+    if (char && i < 5) refs.current[i + 1]?.focus()
+  }
+
+  function handleKeyDown(i: number, e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Backspace') {
+      const next = value.split('').concat(Array(6).fill('')).slice(0, 6)
+      if (!value[i] && i > 0) { next[i - 1] = ''; onChange(next.join('')); refs.current[i - 1]?.focus() }
+      else { next[i] = ''; onChange(next.join('')) }
+    }
+  }
+
+  function handlePaste(e: React.ClipboardEvent) {
+    const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6)
+    if (pasted) { onChange(pasted.padEnd(6, '').slice(0, 6)); refs.current[Math.min(pasted.length, 5)]?.focus() }
+    e.preventDefault()
+  }
+
+  return (
+    <div className="flex gap-2 justify-center my-6">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <input
+          key={i}
+          ref={el => { refs.current[i] = el }}
+          type="text"
+          inputMode="numeric"
+          maxLength={1}
+          value={value[i] ?? ''}
+          onChange={e => handleChange(i, e)}
+          onKeyDown={e => handleKeyDown(i, e)}
+          onPaste={handlePaste}
+          className="w-11 h-14 text-center text-xl font-bold font-heading border border-cnc-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cnc-red focus:border-transparent text-cnc-black"
+        />
+      ))}
+    </div>
+  )
+}
 
 export default function MFAEnrollPage() {
   const router   = useRouter()
   const supabase = createClient()
 
-  const [qrCode,    setQrCode]    = useState('')
-  const [secret,    setSecret]    = useState('')
-  const [factorId,  setFactorId]  = useState('')
-  const [code,      setCode]      = useState('')
-  const [error,     setError]     = useState('')
-  const [loading,   setLoading]   = useState(false)
-  const [enrolling, setEnrolling] = useState(true)
+  const [step,       setStep]       = useState<'setup' | 'confirm'>('setup')
+  const [qrCode,     setQrCode]     = useState('')
+  const [secret,     setSecret]     = useState('')
+  const [factorId,   setFactorId]   = useState('')
+  const [code,       setCode]       = useState('')
+  const [error,      setError]      = useState('')
+  const [loading,    setLoading]    = useState(false)
+  const [enrolling,  setEnrolling]  = useState(true)
+  const [showSecret, setShowSecret] = useState(false)
+  const [copied,     setCopied]     = useState(false)
 
   useEffect(() => {
     async function enroll() {
       const { data, error } = await supabase.auth.mfa.enroll({
-        factorType:   'totp',
-        friendlyName: 'Care Net Portal',
+        factorType: 'totp', friendlyName: 'Care Net Portal',
       })
       if (error || !data) { setError(error?.message ?? 'Could not start setup.'); return }
       setQrCode(data.totp.qr_code)
@@ -36,96 +80,156 @@ export default function MFAEnrollPage() {
 
   async function handleVerify(e: React.FormEvent) {
     e.preventDefault()
-    if (code.length !== 6) { setError('Enter the 6-digit code from your authenticator.'); return }
-    setError('')
-    setLoading(true)
+    if (code.length !== 6) { setError('Enter all 6 digits.'); return }
+    setError(''); setLoading(true)
 
-    // Challenge then verify in one step
     const { error: challengeError, data: challengeData } =
       await supabase.auth.mfa.challenge({ factorId })
     if (challengeError) { setError(challengeError.message); setLoading(false); return }
 
     const { error: verifyError } = await supabase.auth.mfa.verify({
-      factorId,
-      challengeId: challengeData.id,
-      code,
+      factorId, challengeId: challengeData.id, code,
     })
-    if (verifyError) { setError('Incorrect code. Try again.'); setLoading(false); return }
+    if (verifyError) { setError('Incorrect code. Try again.'); setCode(''); setLoading(false); return }
 
-    // Mark enrolled in profile
     const { data: { user } } = await supabase.auth.getUser()
-    if (user) {
-      await supabase.from('user_profiles').update({ mfa_enrolled: true }).eq('id', user.id)
-    }
+    if (user) await supabase.from('user_profiles').update({ mfa_enrolled: true }).eq('id', user.id)
 
     router.push('/')
   }
 
-  return (
-    <div style={pageWrap}>
-      <div style={card}>
-        <div style={{ width: '32px', height: '4px', backgroundColor: '#ED1B24', marginBottom: '24px' }} />
-        <h1 style={heading}>Set up two-factor authentication</h1>
-        <p style={subtext}>
-          Scan the QR code with Google Authenticator, Authy, or any TOTP app,
-          then enter the 6-digit code to confirm.
-        </p>
+  function copySecret() {
+    navigator.clipboard.writeText(secret)
+    setCopied(true); setTimeout(() => setCopied(false), 2000)
+  }
 
-        {enrolling && <p style={subtext}>Generating setup code…</p>}
+  const popia = (
+    <div className="border-t border-cnc-gray-100 mt-6 pt-4">
+      <p className="text-xs text-cnc-gray-400 flex gap-2 leading-relaxed">
+        <span>🔒</span>
+        <span>Two-step verification protects your account and the personal information held in this portal, as required under POPIA.</span>
+      </p>
+    </div>
+  )
 
-        {!enrolling && (
-          <>
-            {/* QR code — Supabase returns an SVG data URL */}
-            <div style={{ margin: '24px 0', textAlign: 'center' }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={qrCode} alt="TOTP QR code" width={180} height={180} style={{ border: '1px solid #e5e7eb', borderRadius: '8px' }} />
+  // ── Step 1: Scan QR ───────────────────────────────────────
+  if (step === 'setup') return (
+    <div className="min-h-screen flex items-center justify-center bg-cnc-gray-50 px-4">
+      <div className="w-full max-w-sm">
+        <div className="bg-white rounded-2xl shadow-cnc-md border border-cnc-gray-100 p-8">
+
+          <p className="text-xs font-semibold tracking-widest text-cnc-gray-400 uppercase mb-3">
+            Two-step verification
+          </p>
+          <h1 className="text-3xl font-heading font-black text-cnc-black uppercase mb-2">
+            Set up your app
+          </h1>
+          <p className="text-sm text-cnc-gray-500 mb-6">
+            Scan the QR code with <strong>Google Authenticator</strong>, <strong>Authy</strong>,
+            or any TOTP authenticator app.
+          </p>
+
+          {enrolling ? (
+            <div className="flex justify-center py-10">
+              <p className="text-cnc-gray-400 text-sm">Generating QR code…</p>
             </div>
+          ) : (
+            <>
+              <div className="flex justify-center mb-6">
+                <div className="p-3 border border-cnc-gray-100 rounded-xl bg-white">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={qrCode} alt="TOTP QR code" width={160} height={160} />
+                </div>
+              </div>
 
-            {/* Manual entry fallback */}
-            <details style={{ marginBottom: '24px' }}>
-              <summary style={{ fontFamily: 'Arial, sans-serif', fontSize: '13px', color: '#6b7280', cursor: 'pointer' }}>
-                Can't scan? Enter key manually
-              </summary>
-              <code style={{ display: 'block', marginTop: '8px', padding: '8px', backgroundColor: '#f3f4f6', borderRadius: '4px', fontSize: '13px', wordBreak: 'break-all', fontFamily: 'monospace' }}>
-                {secret}
-              </code>
-            </details>
+              <div className="mb-6">
+                <button
+                  type="button"
+                  onClick={() => setShowSecret(s => !s)}
+                  className="text-sm text-cnc-red font-medium hover:underline"
+                >
+                  {showSecret ? '↑ Hide manual key' : "Can't scan? Enter key manually"}
+                </button>
+                {showSecret && (
+                  <div className="mt-3 p-3 bg-cnc-gray-50 rounded-lg border border-cnc-gray-100">
+                    <p className="text-xs text-cnc-gray-400 mb-1 font-semibold uppercase tracking-wide">
+                      Setup key
+                    </p>
+                    <code className="text-xs font-mono break-all text-cnc-black block mb-2">
+                      {secret}
+                    </code>
+                    <button
+                      type="button"
+                      onClick={copySecret}
+                      className="text-xs text-cnc-red font-medium hover:underline"
+                    >
+                      {copied ? '✓ Copied' : 'Copy key'}
+                    </button>
+                  </div>
+                )}
+              </div>
 
-            <form onSubmit={handleVerify}>
-              <label style={labelStyle}>Authenticator code</label>
-              <input
-                type="text"
-                inputMode="numeric"
-                pattern="[0-9]{6}"
-                maxLength={6}
-                value={code}
-                onChange={e => setCode(e.target.value.replace(/\D/g, ''))}
-                placeholder="000000"
-                autoFocus
-                style={{ ...inputStyle, letterSpacing: '0.25em', textAlign: 'center', fontSize: '20px' }}
-              />
+              {error && <p className="text-sm text-red-600 font-medium text-center mb-4">{error}</p>}
 
-              {error && <p style={errorStyle}>{error}</p>}
-
-              <button type="submit" disabled={loading} style={{ ...btnStyle, marginTop: '16px' }}>
-                {loading ? 'Verifying…' : 'Confirm and continue'}
+              <button
+                type="button"
+                onClick={() => { setStep('confirm'); setError('') }}
+                className="w-full py-3 bg-cnc-red hover:bg-cnc-red-dark text-white font-heading font-semibold text-sm rounded-lg shadow-cnc-red transition-colors duration-200"
+              >
+                I've scanned the code →
               </button>
-            </form>
-          </>
-        )}
+            </>
+          )}
 
-        {error && enrolling && <p style={errorStyle}>{error}</p>}
+          {popia}
+        </div>
+      </div>
+    </div>
+  )
+
+  // ── Step 2: Confirm code ──────────────────────────────────
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-cnc-gray-50 px-4">
+      <div className="w-full max-w-sm">
+        <div className="bg-white rounded-2xl shadow-cnc-md border border-cnc-gray-100 p-8">
+
+          <p className="text-xs font-semibold tracking-widest text-cnc-gray-400 uppercase mb-3">
+            Two-step verification
+          </p>
+          <h1 className="text-3xl font-heading font-black text-cnc-black uppercase mb-2">
+            Confirm it's you
+          </h1>
+          <p className="text-sm text-cnc-gray-500">
+            Enter the 6-digit code from your authenticator app to confirm setup.
+          </p>
+
+          <form onSubmit={handleVerify}>
+            <OTPInput value={code} onChange={setCode} />
+
+            {error && <p className="text-sm text-red-600 font-medium text-center mb-4">{error}</p>}
+
+            <button
+              type="submit"
+              disabled={loading || code.length !== 6}
+              className="w-full py-3 bg-cnc-red hover:bg-cnc-red-dark text-white font-heading font-semibold text-sm rounded-lg shadow-cnc-red transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {loading ? 'Verifying…' : 'Confirm and continue'}
+            </button>
+          </form>
+
+          <div className="flex items-center mt-5">
+            <button
+              type="button"
+              onClick={() => { setStep('setup'); setCode(''); setError('') }}
+              className="text-sm text-cnc-red font-medium hover:underline"
+            >
+              ← Back
+            </button>
+          </div>
+
+          {popia}
+        </div>
       </div>
     </div>
   )
 }
-
-const pageWrap: React.CSSProperties = { minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f9fafb' }
-const card: React.CSSProperties     = { background: 'white', borderRadius: '8px', padding: '48px', width: '100%', maxWidth: '420px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }
-const heading: React.CSSProperties  = { fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '20px', color: '#111827', margin: '0 0 8px' }
-const subtext: React.CSSProperties  = { fontFamily: 'Arial, sans-serif', color: '#6b7280', fontSize: '14px', margin: '0 0 8px', lineHeight: '1.5' }
-const labelStyle: React.CSSProperties = { display: 'block', fontFamily: 'Arial, sans-serif', fontSize: '14px', fontWeight: 500, color: '#374151', marginBottom: '6px' }
-const inputStyle: React.CSSProperties = { display: 'block', width: '100%', padding: '10px 12px', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '14px', fontFamily: 'Arial, sans-serif', boxSizing: 'border-box' }
-const errorStyle: React.CSSProperties = { color: '#dc2626', fontSize: '13px', fontFamily: 'Arial, sans-serif', marginTop: '8px' }
-const btnStyle: React.CSSProperties   = { width: '100%', padding: '10px', backgroundColor: '#ED1B24', color: 'white', border: 'none', borderRadius: '6px', fontSize: '14px', fontWeight: 600, fontFamily: 'Arial, sans-serif', cursor: 'pointer' }
-

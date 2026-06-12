@@ -13,7 +13,7 @@ export const metadata = { title: 'Team — Care Net Portal' }
 // ── Data fetching ─────────────────────────────────────────────
 
 async function getTeamMembers(): Promise<TeamMember[]> {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   // Profiles joined with roles — only accessible to admin/owner via RLS
   const { data: profiles, error } = await supabase
@@ -55,7 +55,7 @@ async function getTeamMembers(): Promise<TeamMember[]> {
 // ── Page ──────────────────────────────────────────────────────
 
 export default async function MembersPage() {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')

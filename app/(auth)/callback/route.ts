@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
   }
 
   return NextResponse.redirect(
-    `${origin}/auth/error?message=auth_callback_failed`
+    `${origin}/error?message=auth_callback_failed`
   )
 }
 

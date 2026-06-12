@@ -1,4 +1,5 @@
 'use client'
+export const dynamic = 'force-dynamic'
 // src/app/auth/mfa/verify/page.tsx
 // Presented to Owner/Administrator users after password login.
 // Upgrades the session from AAL1 → AAL2 using the TOTP factor.
@@ -24,7 +25,7 @@ export default function MFAVerifyPage() {
       const { data, error } = await supabase.auth.mfa.listFactors()
       if (error || !data?.totp?.length) {
         // No factor enrolled — go set one up
-        router.replace('/auth/mfa/enroll')
+        router.replace('/mfa/enroll')
         return
       }
       setFactorId(data.totp[0].id)

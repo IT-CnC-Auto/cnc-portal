@@ -2,8 +2,8 @@
 // Runs on every request (except static assets).
 //
 // Rules:
-//  1. Unauthenticated user hitting a protected route → /auth/login
-//  2. Authenticated user hitting /auth/login → /
+//  1. Unauthenticated user hitting a protected route → /login
+//  2. Authenticated user hitting /login → /
 //  3. Authenticated admin/owner hitting the portal without AAL2 → MFA flow
 //     (checked only on /admin/* to keep DB queries minimal)
 
@@ -12,12 +12,12 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 // Routes where an unauthenticated user is allowed
 const PUBLIC_PATHS = [
-  '/auth/login',
-  '/auth/callback',
-  '/auth/error',
-  '/auth/accept-invite',
-  '/auth/mfa/enroll',
-  '/auth/mfa/verify',
+  '/login',
+  '/callback',
+  '/error',
+  '/accept-invite',
+  '/mfa/enroll',
+  '/mfa/verify',
 ]
 
 export async function middleware(request: NextRequest) {
@@ -50,13 +50,13 @@ export async function middleware(request: NextRequest) {
 
   // ── 1. Not authenticated ──────────────────────────────────
   if (!user && !isPublic) {
-    const loginUrl = new URL('/auth/login', request.url)
+    const loginUrl = new URL('/login', request.url)
     loginUrl.searchParams.set('next', pathname)
     return NextResponse.redirect(loginUrl)
   }
 
   // ── 2. Authenticated on login page ───────────────────────
-  if (user && pathname === '/auth/login') {
+  if (user && pathname === '/login') {
     return NextResponse.redirect(new URL('/', request.url))
   }
 
@@ -76,8 +76,8 @@ export async function middleware(request: NextRequest) {
       if (aalData?.currentLevel !== 'aal2') {
         // Decide enroll vs verify based on next level
         const mfaPath = aalData?.nextLevel === 'aal2'
-          ? `/auth/mfa/verify?next=${pathname}`
-          : `/auth/mfa/enroll`
+          ? `/mfa/verify?next=${pathname}`
+          : `/mfa/enroll`
         return NextResponse.redirect(new URL(mfaPath, request.url))
       }
     }

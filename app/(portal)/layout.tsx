@@ -1,3 +1,11 @@
+// MFA enforcement for Owner + Administrator
+const { data: roleData } = await supabase.from('user_roles').select('role').eq('user_id', user.id).single()
+if (roleData && ['owner', 'administrator'].includes(roleData.role)) {
+  const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel()
+  if (aal?.currentLevel !== 'aal2') {
+    redirect(aal?.nextLevel === 'aal2' ? `/auth/mfa/verify?next=${pathname}` : '/auth/mfa/enroll')
+  }
+}
 import { Sidebar } from '@/components/layout/Sidebar'
 import { Header } from '@/components/layout/Header'
 

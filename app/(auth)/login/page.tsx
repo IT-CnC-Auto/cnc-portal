@@ -15,17 +15,9 @@ export default function LoginPage() {
     e.preventDefault()
     setError('')
     setLoading(true)
-
     const supabase = createClient()
     const { error: authError } = await supabase.auth.signInWithPassword({ email, password })
-
-    if (authError) {
-      setError(authError.message)
-      setLoading(false)
-      return
-    }
-
-    // Honour the ?next= param the middleware set, default to /dashboard
+    if (authError) { setError(authError.message); setLoading(false); return }
     const next = new URLSearchParams(window.location.search).get('next') ?? '/dashboard'
     router.push(next)
     router.refresh()
@@ -56,6 +48,7 @@ export default function LoginPage() {
             <input
               type="email"
               id="email"
+              name="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
@@ -77,6 +70,7 @@ export default function LoginPage() {
             <input
               type="password"
               id="password"
+              name="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
               required
@@ -84,6 +78,13 @@ export default function LoginPage() {
               className="w-full px-4 py-2.5 rounded-lg border border-cnc-gray-300 text-cnc-black placeholder-cnc-gray-400 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-cnc-red focus:border-transparent"
               placeholder="••••••••"
             />
+          </div>
+
+          <div className="flex items-center gap-2">
+            <input type="checkbox" id="remember" className="w-4 h-4 rounded border-cnc-gray-300 accent-cnc-red" />
+            <label htmlFor="remember" className="text-sm text-cnc-gray-600 cursor-pointer">
+              Keep me signed in
+            </label>
           </div>
 
           {error && (
@@ -99,6 +100,7 @@ export default function LoginPage() {
           </button>
         </form>
 
+        {/* Divider */}
         <div className="relative my-6">
           <div className="absolute inset-0 flex items-center">
             <div className="w-full border-t border-cnc-gray-100" />
@@ -116,12 +118,13 @@ export default function LoginPage() {
         </p>
       </div>
 
+      {/* POPIA Notice */}
       <p className="text-center text-xs text-cnc-gray-400 mt-6 leading-relaxed px-4">
         This system is protected under POPIA Act 4 of 2013.
         <br />
         All access is logged and audited. Unauthorised access is a criminal offence.
-        <br /><br />
-        © {new Date().getFullYear()} Care Net Consultants (Pty) Ltd
+        <br />
+        <br />© {new Date().getFullYear()} Care Net Consultants (Pty) Ltd
       </p>
     </div>
   )

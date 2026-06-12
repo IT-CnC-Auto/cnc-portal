@@ -6,4 +6,17 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 
 export default function MFAVerifyContent() {
-  // ... everything else identical to current page.tsx from here down
+import { Suspense } from 'react'
+import MFAVerifyContent from './_components/MFAVerifyContent'
+
+export default function MFAVerifyPage() {
+  return (
+    <Suspense fallback={
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f9fafb' }}>
+        <p style={{ fontFamily: 'Arial, sans-serif', color: '#6b7280' }}>Loading…</p>
+      </div>
+    }>
+      <MFAVerifyContent />
+    </Suspense>
+  )
+}

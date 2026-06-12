@@ -2,7 +2,6 @@
 // Service-role client.  NEVER import this in Client Components or expose to
 // the browser.  The 'server-only' package will throw a build error if you do.
 
-import 'server-only'
 import { createClient } from '@supabase/supabase-js'
 
 export const supabaseAdmin = createClient(

@@ -52,11 +52,12 @@ export async function POST(req: NextRequest) {
     )
   }
 
+  const supabaseAdmin = getSupabaseAdmin()
+
   // Send Supabase invite email
-  // This creates the auth.users record and sends a magic link / set-password email
   const { data: inviteData, error: inviteError } =
     await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
-      data: { full_name },           // stored in auth.users raw_user_meta_data
+      data: { full_name },
     })
 
   if (inviteError) {
@@ -81,7 +82,6 @@ export async function POST(req: NextRequest) {
 
   if (profileError) {
     console.error('Profile insert error:', profileError)
-    // Clean up the auth user if profile creation fails
     await supabaseAdmin.auth.admin.deleteUser(userId)
     return NextResponse.json(
       { error: 'Failed to create user profile' },
@@ -113,7 +113,7 @@ export async function POST(req: NextRequest) {
   )
 }
 
-// Helper used above — import from roles.ts would cause circular issue so inline
+// Helper — inline to avoid circular import with roles.ts
 async function isOwner(): Promise<boolean> {
   const { isOwner: checkOwner } = await import('@/lib/auth/roles')
   return checkOwner()

@@ -4,7 +4,7 @@
 
 import { redirect }      from 'next/navigation'
 import { createClient }  from '@/lib/supabase/server'
-import { supabaseAdmin } from '@/lib/supabase/admin'
+import { getSupabaseAdmin } from '@/lib/supabase/admin'
 import type { TeamMember } from '@/types/members'
 import MembersClient       from './_components/MembersClient'
 
@@ -29,7 +29,7 @@ async function getTeamMembers(): Promise<TeamMember[]> {
 
   // Auth metadata (last_sign_in_at, email_confirmed_at) — requires admin API
   const { data: { users: authUsers } } =
-    await supabaseAdmin.auth.admin.listUsers({ page: 1, perPage: 1000 })
+    await getSupabaseAdmin().auth.admin.listUsers({ page: 1, perPage: 1000 })
 
   return (profiles ?? []).map((p: any) => {
     const authUser = authUsers.find(u => u.id === p.id)

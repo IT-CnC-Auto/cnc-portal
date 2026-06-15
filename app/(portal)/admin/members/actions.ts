@@ -3,9 +3,9 @@
 // All mutations for the team management page.
 // Every action re-verifies the caller is admin/owner server-side.
 
-import { revalidatePath } from 'next/cache'
-import { createClient }   from '@/lib/supabase/server'
-import { supabaseAdmin }  from '@/lib/supabase/admin'
+import { revalidatePath }   from 'next/cache'
+import { createClient }     from '@/lib/supabase/server'
+import { getSupabaseAdmin } from '@/lib/supabase/admin'
 import type { InviteMemberInput, UpdateRoleInput } from '@/types/members'
 
 // ── Guard helper ──────────────────────────────────────────────
@@ -34,9 +34,8 @@ export async function inviteMember(input: InviteMemberInput) {
   try {
     const callerId = await assertAdminOrOwner()
 
-    // Supabase sends the invite email automatically
     const { data: inviteData, error: inviteErr } =
-      await supabaseAdmin.auth.admin.inviteUserByEmail(input.email, {
+      await getSupabaseAdmin().auth.admin.inviteUserByEmail(input.email, {
         redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/callback?next=/accept-invite`,
         data: { full_name: input.full_name },
       })
@@ -45,8 +44,7 @@ export async function inviteMember(input: InviteMemberInput) {
 
     const newId = inviteData.user.id
 
-    // Create profile
-    const { error: profileErr } = await supabaseAdmin
+    const { error: profileErr } = await getSupabaseAdmin()
       .from('user_profiles')
       .insert({
         id:         newId,
@@ -59,8 +57,7 @@ export async function inviteMember(input: InviteMemberInput) {
 
     if (profileErr) return { error: profileErr.message }
 
-    // Assign role
-    const { error: roleErr } = await supabaseAdmin
+    const { error: roleErr } = await getSupabaseAdmin()
       .from('user_roles')
       .insert({
         user_id:     newId,
@@ -81,13 +78,12 @@ export async function inviteMember(input: InviteMemberInput) {
 
 
 // ── Resend invite email ───────────────────────────────────────
-// Supabase re-sends an invite email if the user hasn't confirmed yet.
 
 export async function resendInvite(email: string) {
   try {
     await assertAdminOrOwner()
 
-    const { error } = await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
+    const { error } = await getSupabaseAdmin().auth.admin.inviteUserByEmail(email, {
       redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/callback?next=/accept-invite`,
     })
 
@@ -106,7 +102,7 @@ export async function updateMemberRole(input: UpdateRoleInput) {
   try {
     const callerId = await assertAdminOrOwner()
 
-    const { error } = await supabaseAdmin
+    const { error } = await getSupabaseAdmin()
       .from('user_roles')
       .update({
         role:        input.role,
@@ -136,8 +132,7 @@ export async function setMemberActive(userId: string, isActive: boolean) {
       return { error: 'You cannot deactivate your own account.' }
     }
 
-    // Prevent deactivating the owner
-    const { data: targetRole } = await supabaseAdmin
+    const { data: targetRole } = await getSupabaseAdmin()
       .from('user_roles')
       .select('role')
       .eq('user_id', userId)
@@ -147,7 +142,7 @@ export async function setMemberActive(userId: string, isActive: boolean) {
       return { error: 'The owner account cannot be deactivated.' }
     }
 
-    const { error } = await supabaseAdmin
+    const { error } = await getSupabaseAdmin()
       .from('user_profiles')
       .update({ is_active: isActive })
       .eq('id', userId)
@@ -161,4 +156,3 @@ export async function setMemberActive(userId: string, isActive: boolean) {
     return { error: e instanceof Error ? e.message : 'Something went wrong.' }
   }
 }
-

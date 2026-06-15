@@ -12,6 +12,9 @@ export async function GET(request: NextRequest) {
   const code = searchParams.get('code')
   const next = searchParams.get('next') ?? '/'
 
+  // Guard against open redirect — only allow relative paths on this origin
+  const safePath = next.startsWith('/') && !next.startsWith('//') ? next : '/'
+
   if (code) {
     const cookieStore = await cookies()
 
@@ -33,7 +36,7 @@ export async function GET(request: NextRequest) {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
 
     if (!error) {
-      return NextResponse.redirect(`${origin}${next}`)
+      return NextResponse.redirect(`${origin}${safePath}`)
     }
   }
 
@@ -41,4 +44,3 @@ export async function GET(request: NextRequest) {
     `${origin}/error?message=auth_callback_failed`
   )
 }
-

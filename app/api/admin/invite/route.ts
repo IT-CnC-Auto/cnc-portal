@@ -5,7 +5,7 @@
 // Restricted to administrator and owner roles only.
 
 import { NextRequest, NextResponse } from 'next/server'
-import { supabaseAdmin } from '@/lib/supabase/admin'
+import { getSupabaseAdmin } from '@/lib/supabase/admin'
 import { isAdminOrOwner, getAuthUserId } from '@/lib/auth/roles'
 import type { InviteMemberPayload } from '@/types/roles'
 

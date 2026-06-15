@@ -1,16 +1,16 @@
-// src/lib/supabase/admin.ts
-// Service-role client.  NEVER import this in Client Components or expose to
-// the browser.  The 'server-only' package will throw a build error if you do.
-
 import { createClient } from '@supabase/supabase-js'
+import type { SupabaseClient } from '@supabase/supabase-js'
 
-export const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  {
-    auth: {
-      autoRefreshToken: false,
-      persistSession:   false,
-    },
+let _admin: SupabaseClient | null = null
+
+export function getSupabaseAdmin(): SupabaseClient {
+  if (!_admin) {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY
+    if (!url || !key) throw new Error('Missing Supabase admin env vars.')
+    _admin = createClient(url, key, {
+      auth: { autoRefreshToken: false, persistSession: false },
+    })
   }
-)
+  return _admin
+}

@@ -32,7 +32,7 @@ export default async function PortalLayout({
       {/* Fixed black sidebar (264px wide) */}
       <Sidebar />
       <div className="pl-64 min-h-screen flex flex-col">
-        <Header title="Dashboard" />
+        <Header title="Internal Portal" />
         <main className="flex-1 p-6">{children}</main>
       </div>
     </div>

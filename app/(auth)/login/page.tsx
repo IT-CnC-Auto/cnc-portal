@@ -33,7 +33,6 @@ export default function LoginPage() {
       <div className="hidden lg:flex bg-cnc-black text-white relative overflow-hidden flex-col justify-between p-12">
         <div className="absolute top-0 left-0 w-1.5 h-full bg-cnc-red" />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        
         <img src={PATTERN} alt="" className="absolute top-8 left-8 w-28 opacity-90 z-10 pointer-events-none" />
         <div className="relative z-10">
           <h1 className="font-heading font-black uppercase leading-none text-[58px] mb-4">
@@ -57,7 +56,7 @@ export default function LoginPage() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={CNC_LOGO} alt="Care Net Consultants"
           className="absolute top-8 right-8 h-12 w-auto max-w-[220px] object-contain hidden lg:block" />
-         {/* eslint-disable-next-line @next/next/no-img-element */}
+
         <div className="w-full max-w-[360px]">
           <p className="text-[11px] font-bold tracking-[0.16em] uppercase text-cnc-gray-400 mb-2">
             Internal Portal

@@ -25,15 +25,16 @@ export default function LoginPage() {
 
   return (
     <div className="w-full max-w-md">
-      {/* Logo */}
-      <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-cnc-red rounded-2xl mb-4 shadow-cnc-red">
-          <span className="text-white font-heading font-bold text-2xl tracking-tight">CN</span>
-        </div>
-        <h1 className="text-2xl font-heading font-bold text-cnc-black">Care Net Portal</h1>
-        <p className="text-cnc-gray-500 text-sm mt-1">Care Net Consultants (Pty) Ltd</p>
-      </div>
-
+     {/* Logo */}
+<div className="text-center mb-8">
+  {/* eslint-disable-next-line @next/next/no-img-element */}
+  <img
+    src="/care-net-logo.png"
+    alt="Care Net Consultants"
+    className="h-16 w-auto mx-auto mb-4"
+  />
+  <p className="text-cnc-gray-500 text-sm mt-1">Care Net Consultants (Pty) Ltd</p>
+</div>
       {/* Card */}
       <div className="bg-white rounded-2xl shadow-cnc-md border border-cnc-gray-100 p-8">
         <h2 className="text-lg font-heading font-semibold text-cnc-black mb-6">

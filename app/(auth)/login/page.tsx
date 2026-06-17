@@ -29,17 +29,13 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen grid lg:grid-cols-[1.1fr_0.9fr]">
 
-      {/* ── Left panel (hidden on mobile) ───────────────────── */}
+      {/* ── Left panel ───────────────────────────────────────── */}
       <div className="hidden lg:flex bg-cnc-black text-white relative overflow-hidden flex-col justify-between p-12">
-        {/* Red left bar */}
         <div className="absolute top-0 left-0 w-1.5 h-full bg-cnc-red" />
-        {/* African pattern */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={PATTERN} alt="" className="absolute top-8 left-8 w-28 opacity-90 z-10 pointer-events-none" />
-        {/* Logo */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={CNC_LOGO} alt="Care Net Consultants" className="h-12 w-auto max-w-[260px] object-contain relative z-10" />
-        {/* Hero */}
         <div className="relative z-10">
           <h1 className="font-heading font-black uppercase leading-none text-[58px] mb-4">
             One front door.<br />
@@ -50,7 +46,6 @@ export default function LoginPage() {
             team&apos;s tools, dashboards, and resources in one place.
           </p>
         </div>
-        {/* Footer */}
         <p className="relative z-10 text-xs text-white/30 leading-relaxed">
           Care Net Consultants (Pty) Ltd · Since 2012<br />
           Your Partner in Workplace Health ·{' '}
@@ -58,9 +53,8 @@ export default function LoginPage() {
         </p>
       </div>
 
-      {/* ── Right panel ─────────────────────────────────────── */}
+      {/* ── Right panel ──────────────────────────────────────── */}
       <div className="flex items-center justify-center bg-white p-10 relative min-h-screen lg:min-h-0">
-        {/* Corner logo */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={CNC_LOGO} alt="Care Net Consultants"
           className="absolute top-8 right-8 h-12 w-auto max-w-[220px] object-contain hidden lg:block" />
@@ -76,6 +70,30 @@ export default function LoginPage() {
             Sign in with your Care Net account.
           </p>
 
+          {/* Microsoft SSO button */}
+          <button
+            type="button"
+            onClick={() => alert('Microsoft SSO — to be configured with Microsoft Entra')}
+            className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-cnc-gray-200 rounded-lg bg-white text-cnc-black text-sm font-semibold hover:border-cnc-gray-400 hover:shadow-sm transition-all"
+          >
+            {/* Microsoft colour glyph */}
+            <span className="grid grid-cols-2 gap-[2px] w-5">
+              <span className="w-[9px] h-[9px] bg-[#F25022] block" />
+              <span className="w-[9px] h-[9px] bg-[#7FBA00] block" />
+              <span className="w-[9px] h-[9px] bg-[#00A4EF] block" />
+              <span className="w-[9px] h-[9px] bg-[#FFB900] block" />
+            </span>
+            Sign in with Microsoft
+          </button>
+
+          {/* Divider */}
+          <div className="flex items-center gap-3 my-5 text-xs text-cnc-gray-400">
+            <span className="flex-1 h-px bg-cnc-gray-100" />
+            <span>or use your email</span>
+            <span className="flex-1 h-px bg-cnc-gray-100" />
+          </div>
+
+          {/* Email / password form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-xs font-semibold text-cnc-black mb-1.5">
@@ -90,12 +108,9 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="text-xs font-semibold text-cnc-black">Password</label>
-                <a href="/forgot-password" className="text-xs font-semibold text-cnc-red hover:underline">
-                  Forgot password?
-                </a>
-              </div>
+              <label className="block text-xs font-semibold text-cnc-black mb-1.5">
+                Password
+              </label>
               <input
                 type="password" value={password} onChange={e => setPassword(e.target.value)}
                 required autoComplete="current-password"
@@ -110,9 +125,17 @@ export default function LoginPage() {
               type="submit" disabled={loading}
               className="w-full py-3.5 bg-cnc-red hover:bg-cnc-red-dark disabled:opacity-60 disabled:cursor-not-allowed text-white font-heading font-bold text-sm tracking-wide rounded-lg transition-colors shadow-cnc-red"
             >
-              {loading ? 'Signing in…' : 'Sign In'}
+              {loading ? 'Signing in…' : 'Continue'}
             </button>
           </form>
+
+          {/* Forgot password row */}
+          <div className="flex items-center justify-between mt-5 text-xs text-cnc-gray-400">
+            <span>Forgot password?</span>
+            <a href="/forgot-password" className="font-semibold text-cnc-red hover:underline">
+              Reset
+            </a>
+          </div>
 
           {/* POPIA */}
           <div className="mt-6 pt-5 border-t border-cnc-gray-100 flex gap-2.5 text-[11.5px] leading-relaxed text-cnc-gray-400">

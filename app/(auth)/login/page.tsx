@@ -35,7 +35,6 @@ export default function LoginPage() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={PATTERN} alt="" className="absolute top-8 left-8 w-28 opacity-90 z-10 pointer-events-none" />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={CNC_LOGO} alt="Care Net Consultants" className="h-12 w-auto max-w-[260px] object-contain relative z-10" />
         <div className="relative z-10">
           <h1 className="font-heading font-black uppercase leading-none text-[58px] mb-4">
             One front door.<br />

@@ -18,6 +18,8 @@ const PUBLIC_PATHS = [
   '/accept-invite',
   '/mfa/enroll',
   '/mfa/verify',
+  '/forgot-password',
+  '/reset-password',
 ]
 
 export async function middleware(request: NextRequest) {

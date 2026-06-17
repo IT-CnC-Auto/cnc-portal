@@ -57,8 +57,7 @@ export default function LoginPage() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={CNC_LOGO} alt="Care Net Consultants"
           className="absolute top-8 right-8 h-12 w-auto max-w-[220px] object-contain hidden lg:block" />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={CNC_LOGO} alt="Care Net Consultants" className="h-12 w-auto max-w-[260px] object-contain relative z-10" />
+         {/* eslint-disable-next-line @next/next/no-img-element */}
         <div className="w-full max-w-[360px]">
           <p className="text-[11px] font-bold tracking-[0.16em] uppercase text-cnc-gray-400 mb-2">
             Internal Portal

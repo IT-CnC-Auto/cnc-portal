@@ -1,8 +1,10 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
+import { createClient } from '@/lib/supabase/client'
 import {
   LayoutDashboard,
   Users,
@@ -69,6 +71,13 @@ export function Sidebar() {
   const pathname = usePathname()
   const [profileOpen, setProfileOpen] = useState(false)
   const [theme, setTheme] = useState<ThemeMode>('light')
+  const router = useRouter()
+  const supabase = createClient()
+
+async function handleSignOut() {
+  await supabase.auth.signOut()
+  router.push('/login')
+}
 
   const themeButtons: { mode: ThemeMode; label: string; Icon: typeof Sun }[] = [
     { mode: 'light', label: 'Light', Icon: Sun },
@@ -176,7 +185,7 @@ export function Sidebar() {
             <p className="text-white/30 text-[11px] truncate">carenetconsultants.co.za</p>
           </div>
         </div>
-        <button className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm text-white/40 hover:text-white hover:bg-white/[0.06] transition-all w-full group">
+        <button onClick={handleSignOut} className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm text-white/40 hover:text-white hover:bg-white/[0.06] transition-all w-full group">
           <LogOut className="w-4 h-4 flex-shrink-0 group-hover:text-cnc-red transition-colors" />
           Sign Out
         </button>

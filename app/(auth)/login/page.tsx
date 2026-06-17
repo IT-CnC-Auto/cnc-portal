@@ -4,6 +4,9 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 
+const CNC_LOGO = 'https://pub-d5b31319f7724cca83d8b708f94830b0.r2.dev/CNC%20-%20Logo%20Re-working%20-%20red%20-%20with%20tag%20line%20-%20transparent%20-%201.1.png'
+const PATTERN  = 'https://pub-d5b31319f7724cca83d8b708f94830b0.r2.dev/Individual%20Patterns/1.svg'
+
 export default function LoginPage() {
   const router = useRouter()
   const [email,    setEmail]    = useState('')
@@ -24,109 +27,114 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="w-full max-w-md">
-     {/* Logo */}
-<div className="text-center mb-8">
-  {/* eslint-disable-next-line @next/next/no-img-element */}
-  <img
-    src="/care-net-logo.png"
-    alt="Care Net Consultants"
-    className="h-16 w-auto mx-auto mb-4"
-  />
-  <p className="text-cnc-gray-500 text-sm mt-1">Care Net Consultants (Pty) Ltd</p>
-</div>
-      {/* Card */}
-      <div className="bg-white rounded-2xl shadow-cnc-md border border-cnc-gray-100 p-8">
-        <h2 className="text-lg font-heading font-semibold text-cnc-black mb-6">
-          Sign in to your account
-        </h2>
+    <div className="min-h-screen grid lg:grid-cols-[1.1fr_0.9fr]">
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-cnc-gray-700 mb-1.5">
-              Email address
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              required
-              autoComplete="email"
-              className="w-full px-4 py-2.5 rounded-lg border border-cnc-gray-300 text-cnc-black placeholder-cnc-gray-400 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-cnc-red focus:border-transparent"
-              placeholder="you@carenetconsultants.co.za"
-            />
-          </div>
-
-          <div>
-            <div className="flex items-center justify-between mb-1.5">
-              <label htmlFor="password" className="block text-sm font-medium text-cnc-gray-700">
-                Password
-              </label>
-              <a href="#" className="text-xs text-cnc-red hover:text-cnc-red-dark font-medium transition-colors">
-                Forgot password?
-              </a>
-            </div>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              required
-              autoComplete="current-password"
-              className="w-full px-4 py-2.5 rounded-lg border border-cnc-gray-300 text-cnc-black placeholder-cnc-gray-400 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-cnc-red focus:border-transparent"
-              placeholder="••••••••"
-            />
-          </div>
-
-          <div className="flex items-center gap-2">
-            <input type="checkbox" id="remember" className="w-4 h-4 rounded border-cnc-gray-300 accent-cnc-red" />
-            <label htmlFor="remember" className="text-sm text-cnc-gray-600 cursor-pointer">
-              Keep me signed in
-            </label>
-          </div>
-
-          {error && (
-            <p className="text-sm text-red-600 font-medium">{error}</p>
-          )}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-2.5 px-4 bg-cnc-red hover:bg-cnc-red-dark text-white font-heading font-semibold text-sm rounded-lg shadow-cnc-red transition-colors duration-200 mt-1 disabled:opacity-60 disabled:cursor-not-allowed"
-          >
-            {loading ? 'Signing in…' : 'Sign In'}
-          </button>
-        </form>
-
-        {/* Divider */}
-        <div className="relative my-6">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-cnc-gray-100" />
-          </div>
-          <div className="relative flex justify-center text-xs text-cnc-gray-400 bg-white px-3">
-            Authorised personnel only
-          </div>
+      {/* ── Left panel (hidden on mobile) ───────────────────── */}
+      <div className="hidden lg:flex bg-cnc-black text-white relative overflow-hidden flex-col justify-between p-12">
+        {/* Red left bar */}
+        <div className="absolute top-0 left-0 w-1.5 h-full bg-cnc-red" />
+        {/* African pattern */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={PATTERN} alt="" className="absolute top-8 left-8 w-28 opacity-90 z-10 pointer-events-none" />
+        {/* Logo */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={CNC_LOGO} alt="Care Net Consultants" className="h-12 w-auto max-w-[260px] object-contain relative z-10" />
+        {/* Hero */}
+        <div className="relative z-10">
+          <h1 className="font-heading font-black uppercase leading-none text-[58px] mb-4">
+            One front door.<br />
+            <span className="text-cnc-red">Every department.</span>
+          </h1>
+          <p className="text-sm text-white/60 max-w-sm leading-relaxed">
+            The Care Net Consultants internal portal. Sign in once to reach your
+            team&apos;s tools, dashboards, and resources in one place.
+          </p>
         </div>
-
-        <p className="text-xs text-cnc-gray-400 text-center">
-          Need access?{' '}
-          <a href="mailto:it@carenetconsultants.co.za" className="text-cnc-red hover:underline">
-            Contact IT
-          </a>
+        {/* Footer */}
+        <p className="relative z-10 text-xs text-white/30 leading-relaxed">
+          Care Net Consultants (Pty) Ltd · Since 2012<br />
+          Your Partner in Workplace Health ·{' '}
+          <span className="text-cnc-red">I am because we are.</span>
         </p>
       </div>
 
-      {/* POPIA Notice */}
-      <p className="text-center text-xs text-cnc-gray-400 mt-6 leading-relaxed px-4">
-        This system is protected under POPIA Act 4 of 2013.
-        <br />
-        All access is logged and audited. Unauthorised access is a criminal offence.
-        <br />
-        <br />© {new Date().getFullYear()} Care Net Consultants (Pty) Ltd
-      </p>
+      {/* ── Right panel ─────────────────────────────────────── */}
+      <div className="flex items-center justify-center bg-white p-10 relative min-h-screen lg:min-h-0">
+        {/* Corner logo */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={CNC_LOGO} alt="Care Net Consultants"
+          className="absolute top-8 right-8 h-12 w-auto max-w-[220px] object-contain hidden lg:block" />
+
+        <div className="w-full max-w-[360px]">
+          <p className="text-[11px] font-bold tracking-[0.16em] uppercase text-cnc-gray-400 mb-2">
+            Internal Portal
+          </p>
+          <h2 className="font-heading font-black uppercase text-[38px] leading-tight text-cnc-black mb-1">
+            Welcome back
+          </h2>
+          <p className="text-sm text-cnc-gray-500 mb-7">
+            Sign in with your Care Net account.
+          </p>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-xs font-semibold text-cnc-black mb-1.5">
+                Email address
+              </label>
+              <input
+                type="email" value={email} onChange={e => setEmail(e.target.value)}
+                required autoComplete="email"
+                placeholder="you@carenetconsultants.co.za"
+                className="w-full px-3.5 py-3 border border-cnc-gray-200 rounded-lg text-sm font-sans text-cnc-black placeholder-cnc-gray-300 focus:outline-none focus:border-cnc-red focus:ring-2 focus:ring-cnc-red/20 transition-colors"
+              />
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="text-xs font-semibold text-cnc-black">Password</label>
+                <a href="#" className="text-xs font-semibold text-cnc-red hover:underline">
+                  Forgot password?
+                </a>
+              </div>
+              <input
+                type="password" value={password} onChange={e => setPassword(e.target.value)}
+                required autoComplete="current-password"
+                placeholder="••••••••"
+                className="w-full px-3.5 py-3 border border-cnc-gray-200 rounded-lg text-sm font-sans text-cnc-black placeholder-cnc-gray-300 focus:outline-none focus:border-cnc-red focus:ring-2 focus:ring-cnc-red/20 transition-colors"
+              />
+            </div>
+
+            {error && <p className="text-sm text-red-600 font-medium">{error}</p>}
+
+            <button
+              type="submit" disabled={loading}
+              className="w-full py-3.5 bg-cnc-red hover:bg-cnc-red-dark disabled:opacity-60 disabled:cursor-not-allowed text-white font-heading font-bold text-sm tracking-wide rounded-lg transition-colors shadow-cnc-red"
+            >
+              {loading ? 'Signing in…' : 'Sign In'}
+            </button>
+          </form>
+
+          {/* POPIA */}
+          <div className="mt-6 pt-5 border-t border-cnc-gray-100 flex gap-2.5 text-[11.5px] leading-relaxed text-cnc-gray-400">
+            <span className="flex-shrink-0">🔒</span>
+            <span>
+              This is a private system for authorised Care Net Consultants staff.
+              Access is logged and monitored. Personal information is processed in
+              line with POPIA.{' '}
+              <a href="#" className="text-cnc-red font-semibold hover:underline">
+                View privacy policy
+              </a>.
+            </span>
+          </div>
+
+          <p className="text-center text-xs text-cnc-gray-400 mt-4">
+            Need access?{' '}
+            <a href="mailto:it@carenetconsultants.co.za" className="text-cnc-red font-semibold hover:underline">
+              Contact IT
+            </a>
+          </p>
+        </div>
+      </div>
     </div>
   )
 }

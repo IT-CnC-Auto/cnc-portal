@@ -121,10 +121,21 @@ export default function AdminPage() {
           </div>
 
           <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
-            <div className="px-5 pt-5 pb-4 border-b border-gray-100 flex items-center gap-3">
-              <div className="w-1 h-5 rounded-full" style={{ background:CNC_RED }} />
-              <h2 className="text-sm font-black uppercase tracking-widest text-gray-700">PORTAL USERS</h2>
+            <div className="px-5 pt-5 pb-4 border-b border-gray-100 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-1 h-5 rounded-full" style={{ background:CNC_RED }} />
+                <h2 className="text-sm font-black uppercase tracking-widest text-gray-700">PORTAL
+USERS</h2>
             </div>
+            <a
+              href="/admin/members"
+              className="text-xs font-bold px-3 py-1.5 rounded border"
+              style={{ color: CNC_RED, borderColor: CNC_RED }}
+            >
+              Manage Members & 2FA →
+            </a>
+          </div> 
+               
             <div className="divide-y divide-gray-50">
               {users.map((u,i) => (
                 <div key={i} className="px-5 py-3">

@@ -1,216 +1,168 @@
-"use client";
+'use client'
 
-const CNC_RED = "#ED1B24";
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { createClient } from '@/lib/supabase/client'
 
-const AfricanDivider = () => (
-  <div className="w-full overflow-hidden" style={{ height: 14 }}>
-    <svg viewBox="0 0 800 14" className="w-full h-full" preserveAspectRatio="none">
-      {[...Array(40)].map((_, i) => (
-        <polygon
-          key={i}
-          points={`${i * 20 + 10},0 ${i * 20 + 20},14 ${i * 20},14`}
-          fill={
-            i % 5 === 0 ? CNC_RED :
-            i % 5 === 1 ? "#1a1a1a" :
-            i % 5 === 2 ? "#c8a850" :
-            i % 5 === 3 ? "#2a6496" : "#4a9e4a"
-          }
-        />
-      ))}
-    </svg>
-  </div>
-);
+const PATTERN_STRIP =
+  'https://pub-05e130c201dd463a8accbcd12eb02d77.r2.dev/wp-content/uploads/2025/05/CNC-Website-Page-break-Africa-Pattern-faded-2000x100px-1.1.png'
 
-const SectionLabel = ({ children }: { children: React.ReactNode }) => (
-  <div className="flex items-center gap-3 mb-5">
-    <div className="w-1 h-5 rounded-full" style={{ background: CNC_RED }} />
-    <h2 className="text-xs font-black uppercase tracking-widest text-gray-500">{children}</h2>
-  </div>
-);
+const DEPTS = [
+  { id: 'directors',  label: 'Directors',           color: '#001489', desc: 'Executive overview, board packs, sign-off queue.',   href: '/directors',  live: false },
+  { id: 'operations', label: 'Operations',           color: '#007703', desc: 'Clinics, mobile units, scheduling, equipment.',      href: '/operations', live: true  },
+  { id: 'finance',    label: 'Finance',              color: '#007703', desc: 'Revenue, invoices, VAT201, cash position.',          href: '/finance',    live: true  },
+  { id: 'sales',      label: 'Sales',                color: '#ED1B24', desc: 'Pipeline, opportunities, win rate, targets.',        href: '/sales',      live: true  },
+  { id: 'governance', label: 'Corporate Governance', color: '#787878', desc: 'POPIA, FICA, compliance calendar, risk.',            href: '/governance', live: false },
+  { id: 'hr',         label: 'HR & People',          color: '#ED1B24', desc: 'Recruitment, headcount, leave, training.',          href: '/staff',      live: true  },
+  { id: 'it',         label: 'IT & AI',              color: '#001489', desc: 'Systems, integrations, automations, agents.',       href: '/it',         live: false },
+  { id: 'marketing',  label: 'Marketing',            color: '#FFB81C', desc: 'CNC Studio — assets, channels, campaigns.',         href: '/marketing',  live: false },
+]
 
-interface MetricCardProps {
-  icon: string;
-  value: string;
-  label: string;
-  badge: string;
-  badgeColor: string;
+const ICON_PATHS: Record<string, string> = {
+  directors:  '<path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/>',
+  operations: '<path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/><path d="M19 12a7 7 0 00-.1-1.1l2-1.6-2-3.4-2.4 1a7 7 0 00-1.9-1.1L14.5 2h-5l-.3 2.7a7 7 0 00-1.9 1.1l-2.4-1-2 3.4 2 1.6A7 7 0 005 12a7 7 0 00.1 1.1l-2 1.6 2 3.4 2.4-1c.6.5 1.2.8 1.9 1.1L9.5 22h5l.3-2.7c.7-.3 1.3-.6 1.9-1.1l2.4 1 2-3.4-2-1.6c.1-.4.1-.7.1-1.1z"/>',
+  finance:    '<path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>',
+  sales:      '<path d="M3 17l6-6 4 4 8-8M21 7v6h-6"/>',
+  governance: '<path d="M12 3v18M5 7h14M7 7l-3 7a4 4 0 008 0L9 7M17 7l-3 7a4 4 0 008 0l-3-7"/>',
+  hr:         '<path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM22 21v-2a4 4 0 00-3-3.9M16 3.1a4 4 0 010 7.8"/>',
+  it:         '<path d="M9 3v2m6-2v2M9 19v2m6-2v2M3 9h2m-2 6h2m14-6h2m-2 6h2M7 7h10v10H7z"/>',
+  marketing:  '<path d="M3 11l18-5v12L3 14v-3zM3 11v3M11.6 16.8a3 3 0 11-5.8-1.6"/>',
 }
-const MetricCard = ({ icon, value, label, badge, badgeColor }: MetricCardProps) => (
-  <div
-    className="bg-white rounded-sm border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow"
-    style={{ borderTop: `4px solid ${CNC_RED}` }}
-  >
-    <div className="p-5">
-      <div className="flex items-start justify-between mb-3">
-        <div className="w-10 h-10 rounded-full flex items-center justify-center text-lg" style={{ background: "#fff5f5" }}>
-          {icon}
-        </div>
-        <span className="text-xs font-bold" style={{ color: badgeColor }}>{badge}</span>
-      </div>
-      <p className="text-2xl font-black text-gray-900 mb-1">{value}</p>
-      <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">{label}</p>
-    </div>
-  </div>
-);
 
-const QuickTile = ({ icon, label, href }: { icon: string; label: string; href: string }) => (
-  <a
-    href={href}
-    className="flex flex-col items-center justify-center gap-2 py-6 bg-white border border-gray-100 rounded-sm shadow-sm hover:border-red-200 hover:shadow-md transition-all group cursor-pointer"
-  >
-    <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl group-hover:scale-110 transition-transform" style={{ background: "#fff5f5" }}>
-      {icon}
-    </div>
-    <span className="text-xs font-bold uppercase tracking-widest text-gray-600 group-hover:text-red-600 transition-colors">
-      {label}
-    </span>
-  </a>
-);
+function hexRgba(hex: string, alpha: number) {
+  const n = hex.replace('#', '')
+  const r = parseInt(n.slice(0, 2), 16)
+  const g = parseInt(n.slice(2, 4), 16)
+  const b = parseInt(n.slice(4, 6), 16)
+  return `rgba(${r},${g},${b},${alpha})`
+}
 
-type ActivityStatus = "completed" | "pending" | "urgent";
-interface ActivityRow { action: string; module: string; time: string; status: ActivityStatus; }
-
-const statusStyle: Record<ActivityStatus, string> = {
-  completed: "bg-green-50 text-green-700",
-  pending:   "bg-yellow-50 text-yellow-700",
-  urgent:    "bg-red-50 text-red-700",
-};
-
-const metrics: MetricCardProps[] = [
-  { icon: "🩺", value: "5,842",   label: "Medical Tests This Month",  badge: "+8.2%",         badgeColor: "#16a34a" },
-  { icon: "🏢", value: "124",     label: "Active Clients",            badge: "+3 new",         badgeColor: "#16a34a" },
-  { icon: "💰", value: "R 1.23M", label: "Monthly Revenue",           badge: "+12.4%",         badgeColor: "#16a34a" },
-  { icon: "📈", value: "R 380K",  label: "Open Sales Pipeline",       badge: "−4 deals",       badgeColor: CNC_RED   },
-  { icon: "👥", value: "47",      label: "Staff Headcount",           badge: "+2 this month",  badgeColor: "#16a34a" },
-  { icon: "📋", value: "12",      label: "Pending Approvals",         badge: "3 urgent",       badgeColor: CNC_RED   },
-];
-
-const quickLinks = [
-  { icon: "👤", label: "Staff & HR",  href: "/staff"      },
-  { icon: "💵", label: "Finance",     href: "/finance"    },
-  { icon: "📊", label: "Sales & CRM", href: "/sales"      },
-  { icon: "⚙️",  label: "Operations", href: "/operations" },
-  { icon: "🔧", label: "Admin",       href: "/admin"      },
-];
-
-const activity: ActivityRow[] = [
-  { action: "Invoice #INV-2094 issued to Harmony Mining",    module: "Finance",    time: "2 min ago",  status: "completed" },
-  { action: "New client onboarded: Impala Platinum Holdings",module: "Sales",      time: "18 min ago", status: "completed" },
-  { action: "Spirometry batch completed – Elandsfontein",    module: "Operations", time: "34 min ago", status: "completed" },
-  { action: "Leave request submitted – T. Mthembu",          module: "HR",         time: "1 hr ago",   status: "pending"   },
-  { action: "SLA breach risk flagged – Glencore site",       module: "Operations", time: "2 hr ago",   status: "urgent"    },
-  { action: "EMP201 submission reminder",                    module: "Finance",    time: "3 hr ago",   status: "pending"   },
-];
+function nameFromEmail(email: string) {
+  return email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+}
 
 export default function DashboardPage() {
-  const today = new Date().toLocaleDateString("en-ZA", {
-    weekday: "long", day: "numeric", month: "long", year: "numeric",
-  });
+  const [firstName, setFirstName] = useState('')
+  const [greeting,  setGreeting]  = useState('Good morning')
+  const [dateDay,   setDateDay]   = useState('')
+  const [dateStr,   setDateStr]   = useState('')
+
+  useEffect(() => {
+    const now  = new Date()
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
+    const h    = now.getHours()
+    setGreeting(h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening')
+    setDateDay(days[now.getDay()])
+    const dd = String(now.getDate()).padStart(2, '0')
+    const mm = String(now.getMonth() + 1).padStart(2, '0')
+    setDateStr(`${dd}/${mm}/${now.getFullYear()}`)
+
+    const supabase = createClient()
+    supabase.auth.getUser().then(({ data }) => {
+      if (data.user) {
+        const full = data.user.user_metadata?.full_name ?? nameFromEmail(data.user.email ?? '')
+        setFirstName(full.split(' ')[0] || 'there')
+      }
+    })
+  }, [])
 
   return (
-    <div className="max-w-screen-xl mx-auto">
+    <>
+      {/* African pattern strip — breaks out of layout's p-6 to go full-width */}
+      <div
+        className="-mx-6 -mt-6 mb-7 h-[50px] border-b border-[#E2E2E2]"
+        style={{
+          backgroundImage:    `url('${PATTERN_STRIP}')`,
+          backgroundRepeat:   'repeat-x',
+          backgroundPosition: 'center',
+          backgroundSize:     'auto 100%',
+          opacity:             0.95,
+        }}
+      />
 
-      {/* Page heading */}
-      <div className="mb-8 flex items-end justify-between">
-        <div>
-          <div className="flex items-center gap-3 mb-1">
-            <div className="w-1 h-7 rounded-full" style={{ background: CNC_RED }} />
-            <h1 className="text-2xl font-black uppercase tracking-wide text-gray-900">DASHBOARD</h1>
-          </div>
-          <p className="text-sm text-gray-400 ml-4">{today}</p>
+      {/* Greeting banner */}
+      <div className="relative bg-black rounded-xl px-8 py-7 mb-7 flex items-center justify-between gap-5 overflow-hidden">
+        <div className="relative z-10">
+          <p className="text-[12px] font-bold tracking-[0.16em] uppercase text-[#ED1B24] mb-2">
+            {greeting}
+          </p>
+          <h1 className="font-heading font-black text-white leading-none mb-3 text-[46px]">
+            Welcome back, {firstName || '…'}.
+          </h1>
+          <p className="text-[14px] text-[#bbbbbb] max-w-[440px]">
+            Pick a department to open its workspace. Live rooms are ready now; others are on the way.
+          </p>
         </div>
-        <button className="relative p-2 rounded-full bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-          <span className="text-lg">🔔</span>
-          <span
-            className="absolute top-0.5 right-0.5 w-4 h-4 rounded-full text-white text-xs flex items-center justify-center font-black"
-            style={{ background: CNC_RED, fontSize: 9 }}
-          >3</span>
-        </button>
-      </div>
 
-      {/* Welcome banner */}
-      <div className="rounded-sm mb-8 overflow-hidden relative" style={{ background: CNC_RED }}>
-        <div className="px-8 py-6 relative z-10">
-          <p className="text-red-200 text-xs font-bold uppercase tracking-widest mb-1">WELCOME BACK</p>
-          <h2 className="text-white text-2xl font-black mb-1">Care Net Consultants Portal</h2>
-          <p className="text-red-100 text-sm">4 fixed clinics · National mobile units · 5,000+ medical tests/month</p>
+        <div className="relative z-10 text-right flex-none">
+          <span className="block font-heading font-black text-[30px] tracking-wide text-white/90 leading-tight">
+            {dateDay}
+          </span>
+          <span className="block font-heading text-[18px] tracking-[0.1em] text-white/50 mt-0.5">
+            {dateStr}
+          </span>
         </div>
-        <div className="absolute right-8 top-1/2 -translate-y-1/2 opacity-10">
-          <svg viewBox="0 0 500 80" className="w-64 h-16">
-            <polyline points="0,40 80,40 110,10 140,70 170,10 200,40 300,40 330,20 360,60 390,40 500,40" fill="none" stroke="white" strokeWidth="4" />
-          </svg>
-        </div>
-        <div className="absolute right-32 top-1/2 -translate-y-1/2 opacity-10 text-8xl">🫀</div>
       </div>
 
-      {/* Alert banner */}
-      <div className="mb-8 bg-yellow-50 border border-yellow-200 rounded-sm px-5 py-3 flex items-center gap-3">
-        <span className="text-yellow-500 text-base">⚠️</span>
-        <p className="text-sm text-yellow-800">
-          <span className="font-black">3 items need attention: </span>
-          Leave approval pending ·{" "}
-          <span className="underline cursor-pointer">VAT201 due in 8 days</span> ·{" "}
-          <span className="underline cursor-pointer">1 SLA breach risk (Glencore site)</span>
-        </p>
+      {/* Department grid */}
+      <div
+        className="grid gap-[18px]"
+        style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(232px, 1fr))' }}
+      >
+        {DEPTS.map((dept) => {
+          const inner = (
+            <>
+              {/* Icon wrap */}
+              <div
+                className="relative w-12 h-12 rounded-[11px] flex items-center justify-center mb-4 overflow-hidden"
+                style={{ background: hexRgba(dept.color, 0.12), color: dept.color }}
+              >
+                <svg
+                  width="22" height="22" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor"
+                  strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"
+                  className="relative z-10"
+                >
+                  <g dangerouslySetInnerHTML={{ __html: ICON_PATHS[dept.id] }} />
+                </svg>
+                {/* Diagonal corner accent */}
+                <span
+                  className="absolute right-[-6px] bottom-[-6px] w-[26px] h-[26px] opacity-[0.18]"
+                  style={{ backgroundImage: 'linear-gradient(135deg, transparent 50%, currentColor 50%)' }}
+                />
+              </div>
+
+              <h3 className="font-heading font-black text-[21px] tracking-[0.04em] mb-1.5 text-black">
+                {dept.label}
+              </h3>
+              <p className="text-[12.5px] text-[#555555] leading-relaxed min-h-[38px]">
+                {dept.desc}
+              </p>
+
+              <div className={`mt-3.5 inline-flex items-center gap-1.5 text-[11px] font-bold tracking-[0.04em] uppercase ${dept.live ? 'text-[#007703]' : 'text-[#787878]'}`}>
+                <span className={`w-[7px] h-[7px] rounded-full flex-none ${dept.live ? 'bg-[#007703]' : 'bg-[#FFB81C]'}`} />
+                {dept.live ? 'Live' : 'Coming soon'}
+              </div>
+            </>
+          )
+
+          if (!dept.live) {
+            return (
+              <div key={dept.id}
+                className="bg-white border border-[#E2E2E2] rounded-xl p-[22px] opacity-55 cursor-not-allowed relative overflow-hidden">
+                {inner}
+              </div>
+            )
+          }
+
+          return (
+            <Link key={dept.id} href={dept.href}
+              className="bg-white border border-[#E2E2E2] rounded-xl p-[22px] relative overflow-hidden block transition-all duration-150 hover:-translate-y-[3px] hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] hover:border-transparent">
+              {inner}
+            </Link>
+          )
+        })}
       </div>
-
-      {/* Key metrics */}
-      <SectionLabel>KEY METRICS</SectionLabel>
-      <div className="grid grid-cols-3 gap-4 mb-10">
-        {metrics.map((m, i) => <MetricCard key={i} {...m} />)}
-      </div>
-
-      {/* Quick access */}
-      <SectionLabel>QUICK ACCESS</SectionLabel>
-      <div className="grid grid-cols-5 gap-4 mb-10">
-        {quickLinks.map((q) => <QuickTile key={q.label} {...q} />)}
-      </div>
-
-      {/* Recent activity */}
-      <SectionLabel>RECENT ACTIVITY</SectionLabel>
-      <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden mb-8">
-        <table className="w-full">
-          <thead>
-            <tr className="bg-gray-50 border-b border-gray-100">
-              {["Action", "Module", "Time", "Status"].map((h) => (
-                <th key={h} className="px-6 py-3 text-left text-xs font-black uppercase tracking-widest text-gray-400">{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-50">
-            {activity.map((row, i) => (
-              <tr key={i} className="hover:bg-gray-50 cursor-pointer transition-colors">
-                <td className="px-6 py-3 text-sm text-gray-700">{row.action}</td>
-                <td className="px-6 py-3 text-xs text-gray-500">{row.module}</td>
-                <td className="px-6 py-3 text-xs text-gray-400">{row.time}</td>
-                <td className="px-6 py-3">
-                  <span className={`text-xs font-bold px-2 py-1 rounded-full ${statusStyle[row.status]}`}>
-                    {row.status}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Footer accent */}
-      <AfricanDivider />
-      <p className="text-center text-xs text-gray-400 mt-3 pb-6">
-        Care Net Consultants (Pty) Ltd · Internal Portal · POPIA Act 4 of 2013 · Confidential
-      </p>
-
-      {/* Sr Thandi floating button */}
-      <div className="fixed bottom-6 right-6 z-50">
-        <button
-          className="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg hover:scale-105 transition-transform"
-          style={{ background: CNC_RED }}
-          title="Chat with Sr Thandi"
-        >
-          <span className="text-xl">🎧</span>
-        </button>
-      </div>
-
-    </div>
-  );
+    </>
+  )
 }

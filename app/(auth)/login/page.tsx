@@ -34,7 +34,6 @@ export default function LoginPage() {
         <div className="absolute top-0 left-0 w-1.5 h-full bg-cnc-red" />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={PATTERN} alt="" className="absolute top-8 left-8 w-28 opacity-90 z-10 pointer-events-none" />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <div className="relative z-10">
           <h1 className="font-heading font-black uppercase leading-none text-[58px] mb-4">
             One front door.<br />

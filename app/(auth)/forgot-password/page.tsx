@@ -21,7 +21,7 @@ export default function ForgotPasswordPage() {
       redirectTo: `${window.location.origin}/callback?next=/reset-password`,
     })
     setLoading(false)
-    if (resetError) { setError(resetError.message); return }
+    if (resetError) { setError(resetError.message ?? 'Failed to send reset email. Please try again.'); return }
     setSent(true)
   }
 

@@ -82,8 +82,8 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={handleMicrosoftSSO}
-            disabled={ssoLoading ? 'Redirecting…' : 'Sign in with Microsoft'}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-cnc-gray-200 rounded-lg bg-white text-cnc-black text-sm font-semibold hover:border-cnc-gray-400 hover:shadow-sm transition-all"
+            disabled={ssoLoading}
+            className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-cnc-gray-200 rounded-lg bg-white text-cnc-black text-sm font-semibold hover:border-cnc-gray-400 hover:shadow-sm transition-all disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {/* Microsoft colour glyph */}
             <span className="grid grid-cols-2 gap-[2px] w-5">

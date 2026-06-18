@@ -15,6 +15,18 @@ export default function LoginPage() {
   const [loading,  setLoading]  = useState(false)
   const [ssoLoading, setSsoLoading] = useState(false)
 
+async function handleSubmit(e: React.FormEvent) {
+  e.preventDefault()
+  setError('')
+  setLoading(true)
+  const supabase = createClient()
+  const { error: authError } = await supabase.auth.signInWithPassword({ email, password })
+  if (authError) { setError(authError.message); setLoading(false); return }
+  const next = new URLSearchParams(window.location.search).get('next') ?? '/dashboard'
+  router.push(next)
+  router.refresh()
+}
+  
   async function handleMicrosoftSSO() {
   setError('')
   setSsoLoading(true)

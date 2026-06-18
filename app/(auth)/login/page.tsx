@@ -13,18 +13,24 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [error,    setError]    = useState('')
   const [loading,  setLoading]  = useState(false)
+  const [ssoLoading, setSsoLoading] = useState(false)
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
-    const supabase = createClient()
-    const { error: authError } = await supabase.auth.signInWithPassword({ email, password })
-    if (authError) { setError(authError.message); setLoading(false); return }
-    const next = new URLSearchParams(window.location.search).get('next') ?? '/dashboard'
-    router.push(next)
-    router.refresh()
+  async function handleMicrosoftSSO() {
+  setError('')
+  setSsoLoading(true)
+  const supabase = createClient()
+  const { error: authError } = await supabase.auth.signInWithOAuth({
+    provider: 'azure',
+    options: {
+      scopes: 'email profile',
+      redirectTo: `${window.location.origin}/callback`,
+    },
+  })
+  if (authError) {
+    setError(authError.message)
+    setSsoLoading(false)
   }
+}
 
   return (
     <div className="min-h-screen grid lg:grid-cols-[1.1fr_0.9fr]">
@@ -75,7 +81,8 @@ export default function LoginPage() {
           {/* Microsoft SSO button */}
           <button
             type="button"
-            onClick={() => alert('Microsoft SSO — to be configured with Microsoft Entra')}
+            onClick={handleMicrosoftSSO}
+            disabled={ssoLoading ? 'Redirecting…' : 'Sign in with Microsoft'}
             className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-cnc-gray-200 rounded-lg bg-white text-cnc-black text-sm font-semibold hover:border-cnc-gray-400 hover:shadow-sm transition-all"
           >
             {/* Microsoft colour glyph */}

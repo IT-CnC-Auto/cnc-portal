@@ -150,6 +150,13 @@ async function handleSubmit(e: React.FormEvent) {
             </button>
           </form>
 
+          <a
+              href="/forgot-password"
+              className="w-full mt-3 py-3.5 border border-cnc-gray-200 rounded-lg text-sm font-heading font-bold text-cnc-black hover:border-cnc-gray-400 hover:shadow-sm transition-all text-center block"
+          >
+            Forgot Password
+          </a>
+
           {/* POPIA */}
           <div className="mt-6 pt-5 border-t border-cnc-gray-100 flex gap-2.5 text-[11.5px] leading-relaxed text-cnc-gray-400">
             <span className="flex-shrink-0">🔒</span>

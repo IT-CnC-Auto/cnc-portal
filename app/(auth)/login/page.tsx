@@ -150,14 +150,6 @@ async function handleSubmit(e: React.FormEvent) {
             </button>
           </form>
 
-          {/* Forgot password row */}
-          <div className="flex items-center justify-between mt-5 text-xs text-cnc-gray-400">
-            <span>Forgot password?</span>
-            <a href="/forgot-password" className="font-semibold text-cnc-red hover:underline">
-              Reset
-            </a>
-          </div>
-
           {/* POPIA */}
           <div className="mt-6 pt-5 border-t border-cnc-gray-100 flex gap-2.5 text-[11.5px] leading-relaxed text-cnc-gray-400">
             <span className="flex-shrink-0">🔒</span>

@@ -51,6 +51,8 @@ export default function MFAEnrollPage() {
     })
     if (verifyError) { setError('Incorrect code. Try again.'); setCode(''); setLoading(false); return }
 
+    await supabase.auth.refreshSession()
+
     const { data: { user } } = await supabase.auth.getUser()
     if (user) await supabase.from('user_profiles').update({ mfa_enrolled: true }).eq('id', user.id)
 

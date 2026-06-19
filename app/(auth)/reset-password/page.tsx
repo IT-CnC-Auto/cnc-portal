@@ -15,17 +15,21 @@ export default function ResetPasswordPage() {
   const [loading,  setLoading]  = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    if (password !== confirm) { setError('Passwords do not match.'); return }
-    if (password.length < 8)  { setError('Password must be at least 8 characters.'); return }
-    setError('')
-    setLoading(true)
-    const supabase = createClient()
-    const { error: updateError } = await supabase.auth.updateUser({ password })
-    setLoading(false)
-    if (updateError) { setError(updateError.message); return }
-    router.push('/login')
-  }
+  e.preventDefault()
+  if (password !== confirm) { setError('Passwords do not match.'); return }
+  if (password.length < 8)  { setError('Password must be at least 8 characters.'); return }
+  setError('')
+  setLoading(true)
+  const res = await fetch('/api/auth/update-password', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ password }),
+  })
+  const data = await res.json()
+  setLoading(false)
+  if (!res.ok) { setError(data.error ?? 'Failed to update password.'); return }
+  router.push('/login')
+}
 
   return (
     <div className="min-h-screen grid lg:grid-cols-[1.1fr_0.9fr]">

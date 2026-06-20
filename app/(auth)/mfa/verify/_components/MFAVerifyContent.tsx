@@ -44,6 +44,7 @@ export default function MFAVerifyContent() {
       factorId, challengeId: challengeData.id, code,
     })
     if (verifyErr) { setError('Incorrect code. Check your authenticator and try again.'); setCode(''); setLoading(false); return }
+    router.refresh()
     router.push(next)
   }
 

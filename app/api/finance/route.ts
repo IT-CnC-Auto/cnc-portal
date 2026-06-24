@@ -4,7 +4,7 @@ const SUPABASE_URL  = process.env.NEXT_PUBLIC_SUPABASE_URL ?? ''
 const SUPABASE_KEY  = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''
 
 // GET /api/finance
-// Reads the cached finance_snapshot row written hourly by Make.com scenario #5479845
+// Reads the cached finance_snapshot row written hourly by Make.com scenario #5480740
 export async function GET() {
   if (!SUPABASE_URL || !SUPABASE_KEY) {
     return NextResponse.json({ error: 'Supabase not configured' }, { status: 500 })
@@ -29,7 +29,7 @@ export async function GET() {
   }
 
   const rows: {
-    invoices: unknown[]
+    invoices: { Invoices?: unknown[] } | null
     pl_report: unknown
     period_from: string
     period_to: string
@@ -37,14 +37,16 @@ export async function GET() {
   }[] = await res.json()
 
   if (!rows.length) {
-    // Snapshot not yet written — Make.com hasn't run yet
     return NextResponse.json({ empty: true }, { status: 200 })
   }
 
   const { invoices, pl_report, period_from, period_to, synced_at } = rows[0]
 
+  // invoices column stores the full Xero /2.0/Invoices response — extract the array
+  const invoiceArray = (invoices as { Invoices?: unknown[] } | null)?.Invoices ?? []
+
   return NextResponse.json(
-    { invoices, reports: [pl_report], from: period_from, to: period_to, synced_at },
+    { invoices: invoiceArray, reports: [pl_report], from: period_from, to: period_to, synced_at },
     { status: 200 }
   )
 }

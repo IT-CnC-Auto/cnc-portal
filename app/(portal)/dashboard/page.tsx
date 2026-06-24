@@ -8,14 +8,14 @@ const PATTERN_STRIP =
   'https://pub-05e130c201dd463a8accbcd12eb02d77.r2.dev/wp-content/uploads/2025/05/CNC-Website-Page-break-Africa-Pattern-faded-2000x100px-1.1.png'
 
 const DEPTS = [
-  { id: 'directors',  label: 'Directors',           color: '#001489', desc: 'Executive overview, board packs, sign-off queue.',   href: '/directors',  live: false },
-  { id: 'operations', label: 'Operations',           color: '#007703', desc: 'Clinics, mobile units, scheduling, equipment.',      href: '/operations', live: true  },
-  { id: 'finance',    label: 'Finance',              color: '#007703', desc: 'Revenue, invoices, VAT201, cash position.',          href: '/finance',    live: true  },
-  { id: 'sales',      label: 'Sales',                color: '#ED1B24', desc: 'Pipeline, opportunities, win rate, targets.',        href: '/sales',      live: true  },
-  { id: 'governance', label: 'Corporate Governance', color: '#787878', desc: 'POPIA, FICA, compliance calendar, risk.',            href: '/governance', live: false },
-  { id: 'hr',         label: 'HR & People',          color: '#ED1B24', desc: 'Recruitment, headcount, leave, training.',          href: '/staff',      live: true  },
-  { id: 'it',         label: 'IT & AI',              color: '#001489', desc: 'Systems, integrations, automations, agents.',       href: '/it',         live: false },
-  { id: 'marketing',  label: 'Marketing',            color: '#FFB81C', desc: 'CNC Studio — assets, channels, campaigns.',         href: '/marketing',  live: false },
+  { id: 'directors',  label: 'Directors',           color: '#001489', desc: 'Executive overview, board packs, sign-off queue.',   href: '/directors',  live: true },
+  { id: 'operations', label: 'Operations',           color: '#007703', desc: 'Clinics, mobile units, scheduling, equipment.',      href: '/operations', live: true },
+  { id: 'finance',    label: 'Finance',              color: '#007703', desc: 'Revenue, invoices, VAT201, cash position.',          href: '/finance',    live: true },
+  { id: 'sales',      label: 'Sales',                color: '#ED1B24', desc: 'Pipeline, opportunities, win rate, targets.',        href: '/sales',      live: true },
+  { id: 'governance', label: 'Corporate Governance', color: '#787878', desc: 'POPIA, FICA, compliance calendar, risk.',            href: '/governance', live: true },
+  { id: 'hr',         label: 'HR & People',          color: '#ED1B24', desc: 'Recruitment, headcount, leave, training.',          href: '/staff',      live: true },
+  { id: 'it',         label: 'IT & AI',              color: '#001489', desc: 'Systems, integrations, automations, agents.',       href: '/it',         live: true },
+  { id: 'marketing',  label: 'Marketing',            color: '#FFB81C', desc: 'CNC Studio — assets, channels, campaigns.',         href: '/marketing',  live: true },
 ]
 
 const ICON_PATHS: Record<string, string> = {

@@ -91,14 +91,14 @@ const WORKSPACE = [
 ]
 
 const DEPARTMENTS = [
-  { label: 'Directors',           icon: 'directors',   href: '/directors',   live: false },
-  { label: 'Operations',          icon: 'operations',  href: '/operations',  live: true  },
-  { label: 'Finance',             icon: 'finance',     href: '/finance',     live: true  },
-  { label: 'Sales',               icon: 'sales',       href: '/sales',       live: true  },
-  { label: 'Corporate Governance',icon: 'governance',  href: '/governance',  live: false },
-  { label: 'HR & People',         icon: 'hr',          href: '/staff',       live: true  },
-  { label: 'IT & AI',             icon: 'it',          href: '/it',          live: false },
-  { label: 'Marketing',           icon: 'marketing',   href: '/marketing',   live: false },
+  { label: 'Directors',           icon: 'directors',   href: '/directors',   live: true },
+  { label: 'Operations',          icon: 'operations',  href: '/operations',  live: true },
+  { label: 'Finance',             icon: 'finance',     href: '/finance',     live: true },
+  { label: 'Sales',               icon: 'sales',       href: '/sales',       live: true },
+  { label: 'Corporate Governance',icon: 'governance',  href: '/governance',  live: true },
+  { label: 'HR & People',         icon: 'hr',          href: '/staff',       live: true },
+  { label: 'IT & AI',             icon: 'it',          href: '/it',          live: true },
+  { label: 'Marketing',           icon: 'marketing',   href: '/marketing',   live: true },
 ]
 
 function getInitials(name: string) {

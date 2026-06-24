@@ -18,9 +18,7 @@ export async function GET() {
         apikey: SUPABASE_KEY,
         'Content-Type': 'application/json',
       },
-      // Revalidate every 5 minutes on the CDN edge — Supabase is the cache,
-      // Make.com writes to it hourly, so no need to hit Supabase on every request.
-      next: { revalidate: 300 },
+      cache: 'no-store',
     }
   )
 

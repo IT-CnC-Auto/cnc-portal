@@ -115,7 +115,10 @@ export default function FinancePage() {
         if (!r.ok) throw new Error(`API ${r.status}`)
         return r.json()
       })
-      .then(setData)
+      .then(d => {
+        if (d.empty) throw new Error('Snapshot not yet available — Make.com sync has not run yet. Please activate scenario #5479845 in Make.com and run it once manually.')
+        setData(d)
+      })
       .catch(e => setError(e.message))
       .finally(() => setLoading(false))
   }, [])

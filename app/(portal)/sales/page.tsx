@@ -11,9 +11,9 @@ export const metadata: Metadata = { title: 'Sales & CRM' }
 export const dynamic = 'force-dynamic'
 
 // Swap CRM_BASE to your AutoHive white-label domain if different
-const CRM_BASE = 'https://app.autohivetech.co.za/v2/location/z4TWGIAtg8ANLIbra7Yt'
-const PIPELINE_SALES  = 'ODVqF9PNkIltiRkwXShs'
-const PIPELINE_NEWBIZ = '4JiuAx2LUbKcIsHxyGXZ'
+const CRM_BASE = 'https://app.autohivetech.co.za/v2/location/z4TWGIAtg8ANLIbra7Yt/opportunities'
+const PIPELINE_SALES  = 'https://app.autohivetech.co.za/v2/location/z4TWGIAtg8ANLIbra7Yt/opportunities/pipeline'
+const PIPELINE_NEWBIZ = 'https://app.autohivetech.co.za/v2/location/z4TWGIAtg8ANLIbra7Yt/opportunities/pipeline'
 
 const STAGE_COLORS: Record<string, string> = {
   'Lead Captured':                        'bg-blue-50 text-blue-700',

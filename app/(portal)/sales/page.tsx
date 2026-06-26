@@ -12,8 +12,6 @@ export const dynamic = 'force-dynamic'
 
 // Swap CRM_BASE to your AutoHive white-label domain if different
 const CRM_BASE = 'https://app.autohivetech.co.za/v2/location/z4TWGIAtg8ANLIbra7Yt/opportunities'
-const PIPELINE_SALES  = 'pipeline'
-const PIPELINE_NEWBIZ = 'pipeline'
 
 const STAGE_COLORS: Record<string, string> = {
   'Lead Captured':                        'bg-blue-50 text-blue-700',

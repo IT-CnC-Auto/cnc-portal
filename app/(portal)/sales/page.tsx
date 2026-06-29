@@ -35,6 +35,16 @@ const STAGE_COLORS: Record<string, string> = {
   'Transaction Won':                      'bg-green-50 text-green-700',
 }
 
+// GHL user IDs → rep display names
+const OWNER_NAMES: Record<string, string> = {
+  'IgJ1euJjU8LoKrTEx1Uz': 'Gladys Mgitywa',
+  'BUmbSNmCrifMiDP5wgt1': 'Annemarie Lotter',
+  'j8ufOBqYgnfuNuwoZYHA': 'Maryna Ferreira',
+  'SGrLQugQabeTWb4wBe7Q': 'Celeste Bulpitt',
+  '52sed7BeubVEIoakOR61': 'Elsie Lubisi',
+  'U8pZMnuDQnJzghmcw54b': 'Sire van Zyl',
+}
+
 const ACTIONS = [
   {
     label: 'Sales Pipeline',
@@ -274,7 +284,7 @@ export default async function SalesPage() {
                         </span>
                       </td>
                       <td className="px-5 py-3 text-sm text-cnc-gray-500">
-                        {deal.autohive_assigned_to || '—'}
+                        {OWNER_NAMES[deal.autohive_assigned_to ?? ''] || deal.autohive_assigned_to || '—'}
                       </td>
                     </tr>
                   ))}

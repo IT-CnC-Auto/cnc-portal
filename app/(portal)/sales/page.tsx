@@ -12,6 +12,12 @@ export const dynamic = 'force-dynamic'
 
 // Swap CRM_BASE to your AutoHive white-label domain if different
 const CRM_BASE = 'https://app.autohivetech.co.za/v2/location/z4TWGIAtg8ANLIbra7Yt/opportunities'
+// Swap CRM_BASE to your AutoHive white-label domain if different
+const CRM_BASE = 'https://app.autohivetech.co.za/v2/location/z4TWGIAtg8ANLIbra7Yt/opportunities'
+
+// GHL pipeline IDs (location z4TWGIAtg8ANLIbra7Yt)
+const PIPELINE_SALES  = 'ODVqF9PNkIltiRkwXShs'  // "Sales Pipeline"
+const PIPELINE_NEWBIZ = '4JiuAx2LUbKcIsHxyGXZ'  // "New Business"
 
 const STAGE_COLORS: Record<string, string> = {
   'Lead Captured':                        'bg-blue-50 text-blue-700',

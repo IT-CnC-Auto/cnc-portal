@@ -5,7 +5,7 @@ import {
 } from 'lucide-react'
 import { Header } from '@/components/layout/Header'
 import { StatCard } from '@/components/ui/StatCard'
-import { getSupabaseAdmin } from '@/lib/supabase/admin'
+import { getCrmAdmin } from '@/lib/supabase/admin'
 
 export const metadata: Metadata = { title: 'Sales & CRM' }
 export const dynamic = 'force-dynamic'
@@ -82,13 +82,13 @@ const ACTIONS = [
 
 interface Deal {
   autohive_opportunity_id: string
-  name: string
-  stage: string
-  monetary_value: number
-  assigned_to: string
-  contact_name: string
-  company_name: string
-  source: string
+  canonical_name:       string | null
+  stage_name:           string | null
+  monetary_value:       number
+  autohive_assigned_to: string | null
+  contact_email:        string | null
+  company_name:         string | null
+  source:               string | null
 }
 
 function fmtZAR(n: number) {
@@ -98,14 +98,15 @@ function fmtZAR(n: number) {
 }
 
 async function getPipelineData() {
-  const sb = getSupabaseAdmin()
+  // integration_pipeline_opportunity lives in CNC Nexus, not the portal project.
+  const sb = getCrmAdmin()
   const now = new Date()
   const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString()
 
   const [{ data: openDeals, error: e1 }, { data: wonData, error: e2 }] = await Promise.all([
     sb
       .from('integration_pipeline_opportunity')
-      .select('autohive_opportunity_id, name, stage, monetary_value, assigned_to, contact_name, company_name, source')
+      .select('autohive_opportunity_id, canonical_name, stage_name, monetary_value, autohive_assigned_to, contact_email, company_name, source')
       .eq('status', 'open')
       .order('monetary_value', { ascending: false }),
     sb
@@ -253,10 +254,10 @@ export default async function SalesPage() {
                     >
                       <td className="px-5 py-3">
                         <p className="text-sm font-medium text-cnc-black">
-                          {deal.company_name || deal.name || '—'}
+                          {deal.company_name || deal.canonical_name || '—'}
                         </p>
-                        {deal.contact_name && (
-                          <p className="text-xs text-cnc-gray-400 mt-0.5">{deal.contact_name}</p>
+                        {deal.contact_email && (
+                          <p className="text-xs text-cnc-gray-400 mt-0.5">{deal.contact_email}</p>
                         )}
                       </td>
                       <td className="px-5 py-3 text-sm text-cnc-gray-500">{deal.source || '—'}</td>
@@ -266,14 +267,14 @@ export default async function SalesPage() {
                       <td className="px-5 py-3">
                         <span
                           className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-                            STAGE_COLORS[deal.stage] ?? 'bg-gray-50 text-gray-600'
+                            STAGE_COLORS[deal.stage_name ?? ''] ?? 'bg-gray-50 text-gray-600'
                           }`}
                         >
-                          {deal.stage || '—'}
+                          {deal.stage_name || '—'}
                         </span>
                       </td>
                       <td className="px-5 py-3 text-sm text-cnc-gray-500">
-                        {deal.assigned_to || '—'}
+                        {deal.autohive_assigned_to || '—'}
                       </td>
                     </tr>
                   ))}

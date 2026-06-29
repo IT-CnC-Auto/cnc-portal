@@ -99,12 +99,20 @@ interface Deal {
   contact_email:        string | null
   company_name:         string | null
   source:               string | null
+  autohive_created_at:  string | null
 }
 
 function fmtZAR(n: number) {
   if (n >= 1_000_000) return `R ${(n / 1_000_000).toFixed(2)}M`
   if (n >= 1_000)     return `R ${Math.round(n / 1_000)}K`
   return `R ${n.toLocaleString('en-ZA')}`
+}
+
+function fmtDate(iso: string | null) {
+  if (!iso) return '—'
+  return new Date(iso).toLocaleDateString('en-ZA', {
+    day: '2-digit', month: 'short', year: 'numeric',
+  })
 }
 
 async function getPipelineData() {
@@ -116,9 +124,9 @@ async function getPipelineData() {
   const [{ data: openDeals, error: e1 }, { data: wonData, error: e2 }] = await Promise.all([
     sb
       .from('integration_pipeline_opportunity')
-      .select('autohive_opportunity_id, canonical_name, stage_name, monetary_value, autohive_assigned_to, contact_email, company_name, source')
+      .select('autohive_opportunity_id, canonical_name, stage_name, monetary_value, autohive_assigned_to, contact_email, company_name, source, autohive_created_at')
       .eq('status', 'open')
-      .order('monetary_value', { ascending: false }),
+      .order('autohive_created_at', { ascending: false }),
     sb
       .from('integration_pipeline_opportunity')
       .select('autohive_opportunity_id, last_status_change_at')
@@ -246,7 +254,7 @@ export default async function SalesPage() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-cnc-gray-50">
-                    {['Company / Contact', 'Source', 'Value', 'Stage', 'Owner'].map((h) => (
+                    {['Company / Contact', 'Source', 'Value', 'Stage', 'Owner', 'Created'].map((h) => (
                       <th
                         key={h}
                         className="text-left px-5 py-3 text-xs font-semibold text-cnc-gray-400 uppercase tracking-wide"
@@ -286,11 +294,14 @@ export default async function SalesPage() {
                       <td className="px-5 py-3 text-sm text-cnc-gray-500">
                         {OWNER_NAMES[deal.autohive_assigned_to ?? ''] || deal.autohive_assigned_to || '—'}
                       </td>
+                      <td className="px-5 py-3 text-sm text-cnc-gray-500 whitespace-nowrap">
+                        {fmtDate(deal.autohive_created_at)}
+                      </td>
                     </tr>
                   ))}
                   {deals.length === 0 && (
                     <tr>
-                      <td colSpan={5} className="px-5 py-8 text-center text-sm text-cnc-gray-400">
+                      <td colSpan={6} className="px-5 py-8 text-center text-sm text-cnc-gray-400">
                         No open deals in Supabase. Run Make.com scenario 5276329 to sync.
                       </td>
                     </tr>

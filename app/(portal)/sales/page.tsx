@@ -126,7 +126,7 @@ async function getPipelineData() {
       .from('integration_pipeline_opportunity')
       .select('autohive_opportunity_id, canonical_name, stage_name, monetary_value, autohive_assigned_to, contact_email, company_name, source, autohive_created_at')
       .eq('status', 'open')
-      .order('atohive_created_at', { ascending: false }),
+      .order('autohive_created_at', { ascending: false }),
     sb
       .from('integration_pipeline_opportunity')
       .select('autohive_opportunity_id, last_status_change_at')

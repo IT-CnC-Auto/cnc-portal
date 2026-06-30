@@ -6,6 +6,7 @@ import {
 import { Header } from '@/components/layout/Header'
 import { StatCard } from '@/components/ui/StatCard'
 import { getCrmAdmin } from '@/lib/supabase/admin'
+import { STAGE_COLORS } from '@/lib/sales/stage-colors'
 
 export const metadata: Metadata = { title: 'Sales & CRM' }
 export const dynamic = 'force-dynamic'
@@ -16,24 +17,6 @@ const CRM_BASE = 'https://app.autohivetech.co.za/v2/location/z4TWGIAtg8ANLIbra7Y
 // GHL pipeline IDs (location z4TWGIAtg8ANLIbra7Yt)
 const PIPELINE_SALES  = 'ODVqF9PNkIltiRkwXShs'  // "Sales Pipeline"
 const PIPELINE_NEWBIZ = '4JiuAx2LUbKcIsHxyGXZ'  // "New Business"
-
-const STAGE_COLORS: Record<string, string> = {
-  'Lead Captured':                        'bg-blue-50 text-blue-700',
-  'Contacted – Awaiting Response':        'bg-orange-50 text-orange-700',
-  'Discovery Call Booked':                'bg-amber-50 text-amber-700',
-  'Needs Identified – Proposal Pending':  'bg-yellow-50 text-yellow-700',
-  'Quotation Sent':                       'bg-purple-50 text-purple-700',
-  'Negotiation / Follow-Up':              'bg-teal-50 text-teal-700',
-  'Booking Confirmed':                    'bg-indigo-50 text-indigo-700',
-  'Won – Active Client':                  'bg-green-50 text-green-700',
-  'New Business':                         'bg-blue-50 text-blue-700',
-  'New Business Client Contacted':        'bg-orange-50 text-orange-700',
-  'Care Net Services Send To New Client': 'bg-amber-50 text-amber-700',
-  'New Client Follow-up':                 'bg-yellow-50 text-yellow-700',
-  'Quotation Send to New Client':         'bg-purple-50 text-purple-700',
-  'Booking And Payment Received':         'bg-indigo-50 text-indigo-700',
-  'Transaction Won':                      'bg-green-50 text-green-700',
-}
 
 // GHL user IDs → rep display names
 const OWNER_NAMES: Record<string, string> = {
@@ -88,6 +71,14 @@ const ACTIONS = [
     desc: 'SK-123 · DISC-driven win-back sequences',
     href: `${CRM_BASE}/contacts/`,
   },
+]
+
+// Connected app launch widgets
+const apps = [
+  { name: 'AutoHive CRM', abbr: 'AH',  color: 'bg-orange-500',  href: 'https://app.autohivetech.co.za/',        desc: 'Pipeline, contacts & opportunities' },
+  { name: 'MCO Login',    abbr: 'MCO', color: 'bg-blue-600',    href: 'https://app.mycliniconline.co.za/login', desc: 'MyClinicOnline clinical system' },
+  { name: 'ApprovalMax',  abbr: 'AM',  color: 'bg-emerald-600', href: 'https://app.approvalmax.com/login',      desc: 'Purchase & invoice approvals' },
+  { name: 'Xero',         abbr: 'XR',  color: 'bg-sky-500',     href: 'https://login.xero.com/',                desc: 'Accounting, invoices & debtors' },
 ]
 
 interface Deal {
@@ -231,6 +222,35 @@ export default async function SalesPage() {
                   <p className="text-xs text-cnc-gray-400 mt-0.5">{desc}</p>
                 </div>
                 <ExternalLink className="w-3.5 h-3.5 text-cnc-gray-300 group-hover:text-cnc-red flex-shrink-0 transition-colors" />
+              </a>
+            ))}
+          </div>
+        </section>
+
+        {/* Connected Apps */}
+        <section>
+          <h3 className="text-xs font-heading font-semibold text-cnc-gray-400 uppercase tracking-widest mb-3">
+            Connected Apps
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            {apps.map(({ name, abbr, color, href, desc }) => (
+              <a
+                key={name}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 p-4 bg-white rounded-xl border border-cnc-gray-100 hover:border-cnc-red hover:shadow-cnc-sm transition-all group"
+              >
+                <div className={`w-10 h-10 rounded-xl ${color} flex items-center justify-center flex-shrink-0 text-white text-xs font-heading font-bold`}>
+                  {abbr}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-heading font-semibold text-cnc-black flex items-center gap-1.5">
+                    {name}
+                    <ExternalLink className="w-3.5 h-3.5 text-cnc-gray-300 group-hover:text-cnc-red transition-colors" />
+                  </p>
+                  <p className="text-xs text-cnc-gray-400 mt-0.5 truncate">{desc}</p>
+                </div>
               </a>
             ))}
           </div>

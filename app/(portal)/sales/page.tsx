@@ -21,6 +21,7 @@ interface Opportunity {
   monetary_value: number | null
   status: string | null
   autohive_assigned_to: string | null
+  autohive_created_at: string | null
   autohive_updated_at: string | null
   nexus_synced_at: string | null
 }
@@ -123,8 +124,9 @@ export default function SalesPage() {
     .sort((a, b) => a[0] - b[0])
     .map(([, v]) => v)
 
-  const topDeals = [...opps]
-    .sort((a, b) => (b.monetary_value ?? 0) - (a.monetary_value ?? 0))
+  // Newest opportunities first, by created date (nulls sink to the bottom)
+  const recent = [...opps]
+    .sort((a, b) => (b.autohive_created_at ?? '').localeCompare(a.autohive_created_at ?? ''))
     .slice(0, 25)
 
   const salesStats = [
@@ -186,18 +188,18 @@ export default function SalesPage() {
             </section>
 
             <section>
-              <h3 className={sectionTitle}>Active Pipeline — top {topDeals.length} by value</h3>
+              <h3 className={sectionTitle}>Active Pipeline — {recent.length} most recent</h3>
               <div className="bg-white rounded-xl border border-cnc-gray-100 overflow-x-auto">
-                <table className="w-full min-w-[720px]">
+                <table className="w-full min-w-[820px]">
                   <thead>
                     <tr className="border-b border-cnc-gray-50">
-                      {['Opportunity', 'Company', 'Value', 'Stage', 'Owner', 'Updated'].map((h) => (
+                      {['Opportunity', 'Company', 'Value', 'Stage', 'Owner', 'Created', 'Updated'].map((h) => (
                         <th key={h} className={thCls}>{h}</th>
                       ))}
                     </tr>
                   </thead>
                   <tbody>
-                    {topDeals.map((o) => (
+                    {recent.map((o) => (
                       <tr
                         key={o.autohive_opportunity_id}
                         className="border-b border-cnc-gray-50 last:border-0 hover:bg-cnc-gray-50/50 transition-colors"
@@ -222,6 +224,11 @@ export default function SalesPage() {
                         </td>
                         <td className="px-5 py-3 text-sm text-cnc-gray-500 whitespace-nowrap">
                           {ownerName(o.autohive_assigned_to)}
+                        </td>
+                        <td className="px-5 py-3 text-xs text-cnc-gray-400 whitespace-nowrap">
+                          {o.autohive_created_at
+                            ? new Date(o.autohive_created_at).toLocaleDateString('en-ZA')
+                            : '—'}
                         </td>
                         <td className="px-5 py-3 text-xs text-cnc-gray-400 whitespace-nowrap">
                           {o.autohive_updated_at

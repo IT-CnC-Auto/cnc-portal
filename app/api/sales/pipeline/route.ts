@@ -25,13 +25,14 @@ export async function GET() {
     'monetary_value',
     'status',
     'autohive_assigned_to',
+    'autohive_created_at',
     'autohive_updated_at',
     'last_stage_change_at',
     'nexus_synced_at',
   ].join(',')
 
   const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/sales_pipeline_opportunity?select=${select}&order=stage_position.desc,monetary_value.desc`,
+    `${SUPABASE_URL}/rest/v1/sales_pipeline_opportunity?select=${select}&order=autohive_created_at.desc.nullslast`,
     {
       headers: {
         Authorization: `Bearer ${SUPABASE_KEY}`,

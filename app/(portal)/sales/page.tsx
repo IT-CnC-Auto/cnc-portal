@@ -59,7 +59,7 @@ const REP_NAMES: Record<string, string> = {
   '52sed7BeubVEIoakOR61': 'Elsie Lubisi',
   IgJ1euJjU8LoKrTEx1Uz: 'Gladys Mgitywa',
   j8ufOBqYgnfuNuwoZYHA: 'Maryna Nel',
-  syk4HyLJqbD29NVeGmuV: 'Sire van Zyl',
+  U8pZMnuDQnJzghmcw54b: 'Sire van Zyl',
 }
 
 const ownerName = (id: string | null) =>

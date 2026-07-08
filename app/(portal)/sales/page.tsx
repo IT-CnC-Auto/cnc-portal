@@ -106,7 +106,9 @@ export default function SalesPage() {
     cur.value += o.monetary_value ?? 0
     stageMap.set(pos, cur)
   }
-  const stages = [...stageMap.entries()].sort((a, b) => a[0] - b[0]).map(([, v]) => v)
+  const stages = Array.from(stageMap.entries())
+    .sort((a, b) => a[0] - b[0])
+    .map(([, v]) => v)
 
   const topDeals = [...opps]
     .sort((a, b) => (b.monetary_value ?? 0) - (a.monetary_value ?? 0))

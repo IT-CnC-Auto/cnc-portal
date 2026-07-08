@@ -51,6 +51,19 @@ const stageColors: Record<string, string> = {
   'Won – Active Client': 'bg-green-50 text-green-700',
 }
 
+// AutoHive/GHL Sales Pipeline rep roster (assignedTo user id → display name)
+const REP_NAMES: Record<string, string> = {
+  BUmbSNmCrifMiDP5wgt1: 'Annemarie Lotter',
+  SGrLQugQabeTWb4wBe7Q: 'Celeste Bulpitt',
+  '52sed7BeubVEIoakOR61': 'Elsie Lubisi',
+  IgJ1euJjU8LoKrTEx1Uz: 'Gladys Mgitywa',
+  j8ufOBqYgnfuNuwoZYHA: 'Maryna Nel',
+  syk4HyLJqbD29NVeGmuV: 'Sire van Zyl',
+}
+
+const ownerName = (id: string | null) =>
+  id ? (REP_NAMES[id] ?? `${id.slice(0, 8)}…`) : 'Unassigned'
+
 const actions = [
   { label: 'Lead Qualification', icon: Target, desc: 'SK-040 · ICP scoring for OH prospects' },
   { label: 'Client Onboarding', icon: UserCheck, desc: 'SK-042 · Welcome sequences + system setup' },
@@ -208,7 +221,7 @@ export default function SalesPage() {
                           </span>
                         </td>
                         <td className="px-5 py-3 text-sm text-cnc-gray-500 whitespace-nowrap">
-                          {o.autohive_assigned_to ? o.autohive_assigned_to.slice(0, 8) : 'Unassigned'}
+                          {ownerName(o.autohive_assigned_to)}
                         </td>
                         <td className="px-5 py-3 text-xs text-cnc-gray-400 whitespace-nowrap">
                           {o.autohive_updated_at
@@ -220,9 +233,6 @@ export default function SalesPage() {
                   </tbody>
                 </table>
               </div>
-              <p className="text-[11px] text-cnc-gray-400 mt-2">
-                Owner shows the AutoHive user-ID prefix — friendly rep names pending the GHL user-map.
-              </p>
             </section>
           </>
         )}

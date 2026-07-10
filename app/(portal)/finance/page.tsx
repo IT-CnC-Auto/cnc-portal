@@ -61,9 +61,25 @@ function extractPlValue(rows: PlRow[], title: string): number {
   return 0
 }
 
+// Xero serialises dates as "/Date(1719705600000+0000)/" (ms since epoch); the raw
+// Date/DueDate fields are NOT parseable by `new Date()` and render as "Invalid Date".
+function parseXeroDate(v?: string): Date | null {
+  if (!v) return null
+  const ms = /\/Date\((\d+)/.exec(v)
+  const d = ms ? new Date(Number(ms[1])) : new Date(v)
+  return isNaN(d.getTime()) ? null : d
+}
+
+// Numeric portion of an invoice number (e.g. 'INV000236300' -> 236300) for sorting.
+function invoiceNo(inv: XeroInvoice): number {
+  const m = /(\d+)\s*$/.exec(inv.InvoiceNumber ?? '')
+  return m ? Number(m[1]) : -1
+}
+
 function invoiceStatus(inv: XeroInvoice): 'Paid' | 'Overdue' | 'Pending' {
   if (inv.Status === 'PAID') return 'Paid'
-  if (inv.AmountDue > 0 && new Date(inv.DueDate) < new Date()) return 'Overdue'
+  const due = parseXeroDate(inv.DueDate)
+  if (inv.AmountDue > 0 && due && due < new Date()) return 'Overdue'
   return 'Pending'
 }
 
@@ -220,7 +236,7 @@ export default function FinancePage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
-              {invoices.slice(0, 12).map((inv, i) => {
+              {[...invoices].sort((a, b) => invoiceNo(b) - invoiceNo(a)).slice(0, 12).map((inv, i) => {
                 const st = invoiceStatus(inv)
                 return (
                   <tr key={i} className="hover:bg-red-50 cursor-pointer transition-colors">
@@ -228,7 +244,7 @@ export default function FinancePage() {
                     <td className="px-5 py-3 text-sm text-gray-700 max-w-[160px] truncate">{inv.Contact?.Name ?? '—'}</td>
                     <td className="px-5 py-3 text-sm font-bold text-gray-900">{fmt(inv.Total)}</td>
                     <td className="px-5 py-3 text-sm text-gray-700">{fmt(inv.AmountDue)}</td>
-                    <td className="px-5 py-3 text-xs text-gray-400">{inv.DueDate ? new Date(inv.DueDate).toLocaleDateString('en-ZA') : '—'}</td>
+                    <td className="px-5 py-3 text-xs text-gray-400">{parseXeroDate(inv.DueDate)?.toLocaleDateString('en-ZA') ?? '—'}</td>
                     <td className="px-5 py-3">
                       <span className={`text-xs font-bold px-2 py-1 rounded-full ${statusStyle[st]}`}>{st}</span>
                     </td>

@@ -48,7 +48,9 @@ function fmtShort(n: number) {
 
 function extractPlValue(rows: PlRow[], title: string): number {
   for (const row of rows) {
-    if (row.RowType === 'SummaryRow' && row.Cells?.[0]?.Value === title) {
+    // Xero labels section totals as 'SummaryRow' but overall lines like
+    // 'Gross Profit' / 'Net Profit' as plain 'Row' — match both.
+    if ((row.RowType === 'SummaryRow' || row.RowType === 'Row') && row.Cells?.[0]?.Value === title) {
       return parseFloat(row.Cells?.[1]?.Value ?? '0') || 0
     }
     if (row.Rows) {

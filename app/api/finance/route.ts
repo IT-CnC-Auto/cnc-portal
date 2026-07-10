@@ -43,8 +43,12 @@ export async function GET() {
   // invoices column stores the full Xero /2.0/Invoices response — extract the array
   const invoiceArray = (invoices as { Invoices?: unknown[] } | null)?.Invoices ?? []
 
+  // pl_report stores the full Xero /2.0/Reports/ProfitAndLoss response; the report
+  // rows live at .Reports[0]. Unwrap so the client sees reports[0].Rows directly.
+  const plInner = (pl_report as { Reports?: unknown[] } | null)?.Reports?.[0] ?? pl_report
+
   return NextResponse.json(
-    { invoices: invoiceArray, reports: [pl_report], from: period_from, to: period_to, synced_at },
+    { invoices: invoiceArray, reports: [plInner], from: period_from, to: period_to, synced_at },
     { status: 200 }
   )
 }

@@ -238,7 +238,7 @@ export default function MembersClient({ members, currentUserId, currentUserRole 
       </div>
 
       {/* ── Table ────────────────────────────────────────────── */}
-      <div style={{ background: 'white', borderRadius: '8px', border: '1px solid #e5e7eb', overflow: 'hidden' }}>
+      <div style={{ background: 'white', borderRadius: '8px', border: '1px solid #e5e7eb', overflow: 'visible' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr style={{ borderBottom: '1px solid #e5e7eb', backgroundColor: '#f9fafb' }}>

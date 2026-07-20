@@ -242,8 +242,8 @@ export default function MembersClient({ members, currentUserId, currentUserRole 
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr style={{ borderBottom: '1px solid #e5e7eb', backgroundColor: '#f9fafb' }}>
-              {['Member', 'Job title', 'Role', 'Department', 'Status', 'Last sign-in', ''].map(h => (
-                <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontFamily: 'Arial, sans-serif', fontSize: '12px', fontWeight: 600, color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>
+                            {['Member', 'Job title', 'Role', 'Department', 'Status', 'Last sign-in', ''].map((h, i, arr) => (
+                <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontFamily: 'Arial, sans-serif', fontSize: '12px', fontWeight: 600, color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em', whiteSpace: 'nowrap', borderTopLeftRadius: i === 0 ? '8px' : undefined, borderTopRightRadius: i === arr.length - 1 ? '8px' : undefined }}>
                   {h}
                 </th>
               ))}

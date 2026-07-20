@@ -4,7 +4,7 @@
 import { useState, useTransition, useRef, useEffect } from 'react'
 import type { TeamMember, AppDepartment, InviteMemberInput, UpdateRoleInput } from '@/types/members'
 import { getMemberStatus, DEPARTMENT_LABELS, ROLE_LABELS, DEPARTMENTS } from '@/types/members'
-import { inviteMember, resendInvite, updateMemberRole, setMemberActive } from '../actions'
+import { inviteMember, resendInvite, updateMemberRole, setMemberActive, removeMember } from '../actions'
 
 // ── Utilities ─────────────────────────────────────────────────
 
@@ -102,6 +102,14 @@ export default function MembersClient({ members, currentUserId, currentUserRole 
   // Confirm deactivate
   const [confirmMember, setConfirmMember] = useState<TeamMember | null>(null)
 
+  // Confirm permanent removal (requires typing the member's name)
+  const [removeTarget,      setRemoveTarget]      = useState<TeamMember | null>(null)
+  const [removeConfirmText, setRemoveConfirmText] = useState('')
+
+  const removeNameMatches =
+    removeTarget !== null &&
+    removeConfirmText.trim().toLowerCase() === removeTarget.full_name.trim().toLowerCase()
+
   const menuRef = useRef<HTMLDivElement>(null)
 
   // Close action menu when clicking outside
@@ -177,6 +185,21 @@ export default function MembersClient({ members, currentUserId, currentUserRole 
       res.error
         ? toast_('error', res.error)
         : toast_('success', next ? 'Account reactivated.' : 'Account deactivated.')
+    })
+  }
+
+  // ── Permanently remove ─────────────────────────────────────
+
+  function handleRemove() {
+    if (!removeTarget) return
+    const target = removeTarget
+    setRemoveTarget(null)
+    setRemoveConfirmText('')
+    startTransition(async () => {
+      const res = await removeMember(target.id)
+      res.error
+        ? toast_('error', res.error)
+        : toast_('success', `${target.full_name} has been removed.`)
     })
   }
 
@@ -307,6 +330,14 @@ export default function MembersClient({ members, currentUserId, currentUserRole 
                             >
                               {m.is_active ? 'Deactivate' : 'Reactivate'}
                             </button>
+                            {m.role !== 'owner' && (
+                              <button
+                                style={{ ...menuItem, color: '#991b1b', fontWeight: 600 }}
+                                onClick={() => { setOpenMenu(null); setRemoveConfirmText(''); setRemoveTarget(m) }}
+                              >
+                                Remove member…
+                              </button>
+                            )}
                           </div>
                         )}
                       </div>
@@ -446,6 +477,37 @@ export default function MembersClient({ members, currentUserId, currentUserRole 
           </div>
         </Modal>
       )}
+
+      {/* ── Confirm permanent removal ────────────────────────── */}
+      {removeTarget && (
+        <Modal title="Remove member" onClose={() => { setRemoveTarget(null); setRemoveConfirmText('') }}>
+          <p style={{ fontFamily: 'Arial, sans-serif', fontSize: '14px', color: '#374151', margin: '0 0 8px' }}>
+            This permanently deletes <strong>{removeTarget.full_name}</strong> ({removeTarget.email}) —
+            their sign-in, profile, and role. It cannot be undone.
+          </p>
+          <p style={{ fontFamily: 'Arial, sans-serif', fontSize: '13px', color: '#6b7280', margin: '0 0 16px' }}>
+            If they may return, use <strong>Deactivate</strong> instead. To confirm removal, type the
+            member&apos;s full name below.
+          </p>
+          <input
+            style={F_INPUT}
+            type="text"
+            value={removeConfirmText}
+            onChange={e => setRemoveConfirmText(e.target.value)}
+            placeholder={removeTarget.full_name}
+          />
+          <div style={{ display: 'flex', gap: '12px', marginTop: '24px' }}>
+            <button onClick={() => { setRemoveTarget(null); setRemoveConfirmText('') }}
+              style={{ flex: 1, padding: '9px', backgroundColor: 'white', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '14px', fontFamily: 'Arial, sans-serif', cursor: 'pointer', color: '#374151' }}>
+              Cancel
+            </button>
+            <button onClick={handleRemove} disabled={isPending || !removeNameMatches}
+              style={{ flex: 1, padding: '9px', backgroundColor: (isPending || !removeNameMatches) ? '#9ca3af' : '#991b1b', color: 'white', border: 'none', borderRadius: '6px', fontSize: '14px', fontWeight: 600, fontFamily: 'Arial, sans-serif', cursor: (isPending || !removeNameMatches) ? 'not-allowed' : 'pointer' }}>
+              Remove permanently
+            </button>
+          </div>
+        </Modal>
+      )}
     </>
   )
 }
@@ -455,4 +517,3 @@ const menuItem: React.CSSProperties = {
   background: 'none', border: 'none', cursor: 'pointer', fontSize: '14px',
   fontFamily: 'Arial, sans-serif', color: '#374151',
 }
-

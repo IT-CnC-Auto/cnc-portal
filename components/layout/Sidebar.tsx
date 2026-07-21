@@ -16,6 +16,11 @@ const Icons = {
       <path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/>
     </svg>
   ),
+  brief: (
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 3v3M5.6 5.6l2.1 2.1M3 12h3M18.4 5.6l-2.1 2.1M21 12h-3M7 18a5 5 0 0110 0M2 18h20M4 21h16"/>
+    </svg>
+  ),
   directors: (
     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
       <path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/>
@@ -88,6 +93,7 @@ const Icons = {
 // ---------- Nav structure ----------
 const WORKSPACE = [
   { label: 'Home', icon: 'home', href: '/dashboard', live: true },
+  { label: 'Daily Briefs', icon: 'brief', href: '/sales/briefs', live: true },
 ]
 
 const DEPARTMENTS = [

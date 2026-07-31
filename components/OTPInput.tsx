@@ -1,14 +1,23 @@
 'use client'
 
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 interface OTPInputProps {
   value: string
   onChange: (v: string) => void
+  disabled?: boolean
 }
 
-export function OTPInput({ value, onChange }: OTPInputProps) {
+export function OTPInput({ value, onChange, disabled = false }: OTPInputProps) {
   const refs = useRef<(HTMLInputElement | null)[]>([])
+  const prevValue = useRef(value)
+
+  // When the code is cleared after a failed attempt, put focus back on the
+  // first box so the user can retype immediately. Mount behaviour unchanged.
+  useEffect(() => {
+    if (prevValue.current !== '' && value === '') refs.current[0]?.focus()
+    prevValue.current = value
+  }, [value])
 
   function handleChange(i: number, e: React.ChangeEvent<HTMLInputElement>) {
     const char = e.target.value.replace(/\D/g, '').slice(-1)
@@ -51,10 +60,11 @@ export function OTPInput({ value, onChange }: OTPInputProps) {
           inputMode="numeric"
           maxLength={1}
           value={value[i] ?? ''}
+          disabled={disabled}
           onChange={e => handleChange(i, e)}
           onKeyDown={e => handleKeyDown(i, e)}
           onPaste={handlePaste}
-          className="w-11 h-14 text-center text-xl font-bold font-heading border border-cnc-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cnc-red focus:border-transparent text-cnc-black"
+          className="w-11 h-14 text-center text-xl font-bold font-heading border border-cnc-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cnc-red focus:border-transparent text-cnc-black disabled:opacity-50 disabled:cursor-not-allowed"
         />
       ))}
     </div>

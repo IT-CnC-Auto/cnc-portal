@@ -3,12 +3,18 @@
 //
 // Rules:
 //  1. Unauthenticated user hitting a protected route → /login
-//  2. Authenticated user hitting /login → /
-//  3. Authenticated admin/owner hitting the portal without AAL2 → MFA flow
+//  2. Authenticated user idle for more than 5 hours → signed out → /login?reason=timeout
+//  3. Authenticated user hitting /login → /
+//  4. Authenticated admin/owner hitting the portal without AAL2 → MFA flow
 //     (checked only on /admin/* to keep DB queries minimal)
 
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import {
+  ACTIVITY_COOKIE,
+  ACTIVITY_COOKIE_MAX_AGE,
+  INACTIVITY_LIMIT_MS,
+} from '@/lib/inactivity'
 
 // Routes where an unauthenticated user is allowed
 const PUBLIC_PATHS = [
@@ -57,12 +63,52 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl)
   }
 
-  // ── 2. Authenticated on login page ───────────────────────
+  // ── 2. Inactivity timeout (5 hours) ──────────────────────
+  if (user && !isPublic) {
+    const lastActivity = Number(request.cookies.get(ACTIVITY_COOKIE)?.value ?? NaN)
+
+    if (Number.isFinite(lastActivity) && Date.now() - lastActivity > INACTIVITY_LIMIT_MS) {
+      // Revoke this session server-side. Failures are ignored because the
+      // auth cookies are cleared below regardless, which ends the session
+      // for this browser either way.
+      try { await supabase.auth.signOut({ scope: 'local' }) } catch { /* noop */ }
+
+      const loginUrl = new URL('/login', request.url)
+      loginUrl.searchParams.set('reason', 'timeout')
+      const redirect = NextResponse.redirect(loginUrl)
+      request.cookies.getAll().forEach(({ name }) => {
+        if (name.startsWith('sb-')) redirect.cookies.delete(name)
+      })
+      redirect.cookies.delete(ACTIVITY_COOKIE)
+      return redirect
+    }
+
+    // Stamp activity on real page navigations only. Background requests
+    // (RSC transitions, API polling) must not keep an idle session alive;
+    // in-page activity is stamped client-side by InactivityMonitor.
+    // A missing cookie starts the clock now (fresh login, or first visit
+    // after this feature deployed).
+    const isDocumentNavigation =
+      request.headers.get('sec-fetch-dest') === 'document' ||
+      (request.headers.get('accept') ?? '').includes('text/html')
+
+    if (isDocumentNavigation) {
+      response.cookies.set(ACTIVITY_COOKIE, String(Date.now()), {
+        path: '/',
+        maxAge: ACTIVITY_COOKIE_MAX_AGE,
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: false, // InactivityMonitor updates this same cookie in-page
+      })
+    }
+  }
+
+  // ── 3. Authenticated on login page ───────────────────────
   if (user && pathname === '/login') {
     return NextResponse.redirect(new URL('/', request.url))
   }
 
-  // ── 3. MFA enforcement for /admin/* ──────────────────────
+  // ── 4. MFA enforcement for /admin/* ──────────────────────
   // Only fetch role + AAL for admin routes to avoid a DB hit on every request.
   if (user && pathname.startsWith('/admin')) {
     // Check role

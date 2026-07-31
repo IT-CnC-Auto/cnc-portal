@@ -2,6 +2,7 @@ import { redirect }     from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { Sidebar }      from '@/components/layout/Sidebar'
 import { Header }       from '@/components/layout/Header'
+import { InactivityMonitor } from '@/components/layout/InactivityMonitor'
 
 export default async function PortalLayout({
   children,
@@ -29,6 +30,8 @@ export default async function PortalLayout({
 
   return (
     <div className="min-h-screen bg-cnc-gray-50">
+      {/* Auto sign-out after 5 hours of inactivity */}
+      <InactivityMonitor />
       {/* Fixed black sidebar (264px wide) */}
       <Sidebar />
       <div className="pl-64 min-h-screen flex flex-col">

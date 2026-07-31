@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { stampActivityCookie } from '@/lib/inactivity'
 
 const CNC_LOGO = 'https://pub-d5b31319f7724cca83d8b708f94830b0.r2.dev/CNC%20-%20Logo%20Re-working%20-%20red%20-%20with%20tag%20line%20-%20transparent%20-%201.1.png'
 const PATTERN  = 'https://pub-d5b31319f7724cca83d8b708f94830b0.r2.dev/Individual%20Patterns/1.svg'
@@ -12,8 +13,18 @@ export default function LoginPage() {
   const [email,    setEmail]    = useState('')
   const [password, setPassword] = useState('')
   const [error,    setError]    = useState('')
+  const [notice,   setNotice]   = useState('')
   const [loading,  setLoading]  = useState(false)
   const [ssoLoading, setSsoLoading] = useState(false)
+
+  // Read via window.location (not useSearchParams) to avoid needing a
+  // Suspense boundary at prerender time.
+  useEffect(() => {
+    const reason = new URLSearchParams(window.location.search).get('reason')
+    if (reason === 'timeout') {
+      setNotice('You were signed out after 5 hours of inactivity. Please sign in again.')
+    }
+  }, [])
 
 async function handleSubmit(e: React.FormEvent) {
   e.preventDefault()
@@ -22,11 +33,12 @@ async function handleSubmit(e: React.FormEvent) {
   const supabase = createClient()
   const { error: authError } = await supabase.auth.signInWithPassword({ email, password })
   if (authError) { setError(authError.message); setLoading(false); return }
+  stampActivityCookie() // start the 5-hour inactivity clock
   const next = new URLSearchParams(window.location.search).get('next') ?? '/dashboard'
   router.push(next)
   router.refresh()
 }
-  
+
   async function handleMicrosoftSSO() {
   setError('')
   setSsoLoading(true)
@@ -52,10 +64,10 @@ async function handleSubmit(e: React.FormEvent) {
         <div className="absolute top-0 left-0 w-1.5 h-full bg-cnc-red" />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={PATTERN} alt="" className="absolute top-8 left-8 w-28 opacity-90 z-10 pointer-events-none" />
-        
+
         {/* Spacer — keeps hero vertically centred */}
         <div className="h-12" />
-        
+
         <div className="relative z-10">
           <h1 className="font-heading font-black uppercase leading-none text-[44px] mb-4">
             One front door.<br />
@@ -89,6 +101,13 @@ async function handleSubmit(e: React.FormEvent) {
           <p className="text-sm text-cnc-gray-500 mb-7">
             Sign in with your Care Net account.
           </p>
+
+          {/* Inactivity sign-out notice */}
+          {notice && (
+            <div className="mb-5 px-4 py-3 rounded-lg bg-amber-50 border border-amber-200 text-sm text-amber-800">
+              {notice}
+            </div>
+          )}
 
           {/* Microsoft SSO button */}
           <button

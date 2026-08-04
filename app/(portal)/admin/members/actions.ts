@@ -10,7 +10,7 @@ import type { InviteMemberInput, UpdateRoleInput } from '@/types/members'
 
 // ── Guard helper ──────────────────────────────────────────────
 
-async function assertAdminOrOwner(): Promise<string> {
+async function assertAdminOrOwner(): Promise<{ id: string; role: 'owner' | 'administrator' }> {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error('Not authenticated.')
@@ -24,7 +24,7 @@ async function assertAdminOrOwner(): Promise<string> {
   if (!data || !['owner', 'administrator'].includes(data.role)) {
     throw new Error('Not authorised.')
   }
-  return user.id
+  return { id: user.id, role: data.role as 'owner' | 'administrator' }
 }
 
 
@@ -32,7 +32,12 @@ async function assertAdminOrOwner(): Promise<string> {
 
 export async function inviteMember(input: InviteMemberInput) {
   try {
-    const callerId = await assertAdminOrOwner()
+    const caller = await assertAdminOrOwner()
+
+    // Only an owner may create another owner-tier account.
+    if (input.role === 'owner' && caller.role !== 'owner') {
+      return { error: 'Only an owner can grant the owner role.' }
+    }
 
     const { data: inviteData, error: inviteErr } =
       await getSupabaseAdmin().auth.admin.inviteUserByEmail(input.email, {
@@ -52,7 +57,7 @@ export async function inviteMember(input: InviteMemberInput) {
         email:      input.email,
         job_title:  input.job_title || null,
         is_active:  true,
-        invited_by: callerId,
+        invited_by: caller.id,
       })
 
     if (profileErr) return { error: profileErr.message }
@@ -63,7 +68,7 @@ export async function inviteMember(input: InviteMemberInput) {
         user_id:     newId,
         role:        input.role,
         department:  input.department ?? null,
-        assigned_by: callerId,
+        assigned_by: caller.id,
       })
 
     if (roleErr) return { error: roleErr.message }
@@ -100,14 +105,36 @@ export async function resendInvite(email: string) {
 
 export async function updateMemberRole(input: UpdateRoleInput) {
   try {
-    const callerId = await assertAdminOrOwner()
+    const caller = await assertAdminOrOwner()
+
+    // Mirrors the deactivate/remove self-guards: prevents accidentally
+    // demoting yourself out of your own tier.
+    if (input.user_id === caller.id) {
+      return { error: 'You cannot change your own role.' }
+    }
+
+    const { data: targetRole } = await getSupabaseAdmin()
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', input.user_id)
+      .maybeSingle()
+
+    // Owner accounts are protected from deactivation and removal; without
+    // this guard an administrator could demote an owner first and then
+    // remove them, bypassing that protection entirely.
+    if (targetRole?.role === 'owner' && caller.role !== 'owner') {
+      return { error: "Only an owner can change another owner's role." }
+    }
+    if (input.role === 'owner' && caller.role !== 'owner') {
+      return { error: 'Only an owner can grant the owner role.' }
+    }
 
     const { error } = await getSupabaseAdmin()
       .from('user_roles')
       .update({
         role:        input.role,
         department:  input.department ?? null,
-        assigned_by: callerId,
+        assigned_by: caller.id,
       })
       .eq('user_id', input.user_id)
 
@@ -126,9 +153,9 @@ export async function updateMemberRole(input: UpdateRoleInput) {
 
 export async function setMemberActive(userId: string, isActive: boolean) {
   try {
-    const callerId = await assertAdminOrOwner()
+    const caller = await assertAdminOrOwner()
 
-    if (userId === callerId) {
+    if (userId === caller.id) {
       return { error: 'You cannot deactivate your own account.' }
     }
 
@@ -162,9 +189,9 @@ export async function setMemberActive(userId: string, isActive: boolean) {
 
 export async function removeMember(userId: string) {
   try {
-    const callerId = await assertAdminOrOwner()
+    const caller = await assertAdminOrOwner()
 
-    if (userId === callerId) {
+    if (userId === caller.id) {
       return { error: 'You cannot remove your own account.' }
     }
 

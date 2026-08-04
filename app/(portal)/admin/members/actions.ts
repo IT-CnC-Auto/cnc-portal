@@ -6,7 +6,7 @@
 import { revalidatePath }   from 'next/cache'
 import { createClient }     from '@/lib/supabase/server'
 import { getSupabaseAdmin } from '@/lib/supabase/admin'
-import type { InviteMemberInput, UpdateRoleInput } from '@/types/members'
+import type { AppRole, InviteMemberInput, UpdateRoleInput } from '@/types/members'
 
 // ── Guard helper ──────────────────────────────────────────────
 
@@ -34,8 +34,10 @@ export async function inviteMember(input: InviteMemberInput) {
   try {
     const caller = await assertAdminOrOwner()
 
-    // Only an owner may create another owner-tier account.
-    if (input.role === 'owner' && caller.role !== 'owner') {
+    // Only an owner may create another owner-tier account. The input type
+    // already excludes 'owner', but a server action is callable outside the
+    // UI, so the runtime check stays — hence the widening cast.
+    if ((input.role as AppRole) === 'owner' && caller.role !== 'owner') {
       return { error: 'Only an owner can grant the owner role.' }
     }
 
@@ -125,7 +127,7 @@ export async function updateMemberRole(input: UpdateRoleInput) {
     if (targetRole?.role === 'owner' && caller.role !== 'owner') {
       return { error: "Only an owner can change another owner's role." }
     }
-    if (input.role === 'owner' && caller.role !== 'owner') {
+    if ((input.role as AppRole) === 'owner' && caller.role !== 'owner') {
       return { error: 'Only an owner can grant the owner role.' }
     }
 

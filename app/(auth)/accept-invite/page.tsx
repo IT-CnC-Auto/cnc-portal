@@ -3,20 +3,45 @@
 // Landing page for the invite email link. The link carries a token_hash;
 // nothing is verified until the user submits the form, so mailbox link
 // scanners (e.g. Defender Safe Links) cannot consume the one-time token.
+//
+// The invite token is single-use, but setting the password can fail after
+// the token is consumed (e.g. password rejected as too weak). The session
+// created by the successful verification survives that failure, so this
+// page checks for an existing session first and, when present, skips the
+// token entirely and just sets the password.
 
-import { Suspense, useState } from 'react'
+import { Suspense, useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { stampActivityCookie } from '@/lib/inactivity'
 
 function AcceptInviteForm() {
   const router       = useRouter()
   const searchParams = useSearchParams()
   const tokenHash    = searchParams.get('token_hash')
 
-  const [password, setPassword] = useState('')
-  const [confirm,  setConfirm]  = useState('')
-  const [error,    setError]    = useState('')
-  const [loading,  setLoading]  = useState(false)
+  const [password,     setPassword]     = useState('')
+  const [confirm,      setConfirm]      = useState('')
+  const [error,        setError]        = useState('')
+  const [loading,      setLoading]      = useState(false)
+  const [sessionEmail, setSessionEmail] = useState<string | null>(null)
+
+  // A session already present here means a previous attempt consumed the
+  // invite token (or the page was reloaded mid-activation). Surface whose
+  // session it is so the wrong account can never be changed silently.
+  useEffect(() => {
+    const supabase = createClient()
+    supabase.auth.getUser().then(({ data }) => {
+      if (data.user?.email) setSessionEmail(data.user.email)
+    })
+  }, [])
+
+  async function handleSignOut() {
+    const supabase = createClient()
+    await supabase.auth.signOut({ scope: 'local' })
+    setSessionEmail(null)
+    setError('')
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -34,20 +59,30 @@ function AcceptInviteForm() {
     setLoading(true)
     const supabase = createClient()
 
-    // 1. Verify the invite token — this is the first moment it is consumed.
-    if (tokenHash) {
-      const { error: verifyError } = await supabase.auth.verifyOtp({
+    // 1. Verify the invite token — but only when no session exists yet.
+    //    A successful verification is what creates the session; once it
+    //    exists, the (single-use) token must not be touched again.
+    if (!sessionEmail) {
+      if (!tokenHash) {
+        setError('This invite link is incomplete. Please open the link from your invite email again, or ask your administrator for a new one.')
+        setLoading(false)
+        return
+      }
+      const { data: verifyData, error: verifyError } = await supabase.auth.verifyOtp({
         type: 'invite',
         token_hash: tokenHash,
       })
       if (verifyError) {
-        setError('This invite link is invalid or has already been used. Please ask your administrator to send a new one.')
+        setError('This invite link is invalid or has already been used. If you started activation earlier, use "Forgot Password" on the sign-in page to set your password — otherwise ask your administrator to send a new invite.')
         setLoading(false)
         return
       }
+      if (verifyData.user?.email) setSessionEmail(verifyData.user.email)
     }
 
-    // 2. Set the password on the session the verification just created.
+    // 2. Set the password on the active session. If this fails (e.g. the
+    //    password does not meet the policy), the session survives and the
+    //    user can simply try a stronger password.
     const { error: updateError } = await supabase.auth.updateUser({ password })
 
     if (updateError) {
@@ -56,6 +91,7 @@ function AcceptInviteForm() {
       return
     }
 
+    stampActivityCookie() // start the 5-hour inactivity clock
     router.push('/')
   }
 
@@ -88,7 +124,25 @@ function AcceptInviteForm() {
           Welcome to the portal
         </h1>
         <p style={{ fontFamily: 'Arial, sans-serif', color: '#6b7280', fontSize: '14px', margin: '0 0 32px' }}>
-          Set a password to activate your account.
+          {sessionEmail ? (
+            <>
+              Signed in as <strong>{sessionEmail}</strong> — set a password to
+              finish activating this account.{' '}
+              <button
+                type="button"
+                onClick={handleSignOut}
+                style={{
+                  background: 'none', border: 'none', padding: 0,
+                  color: '#ED1B24', fontSize: '14px', fontFamily: 'Arial, sans-serif',
+                  fontWeight: 600, cursor: 'pointer', textDecoration: 'underline',
+                }}
+              >
+                Not you? Sign out
+              </button>
+            </>
+          ) : (
+            'Set a password to activate your account.'
+          )}
         </p>
 
         <form onSubmit={handleSubmit}>

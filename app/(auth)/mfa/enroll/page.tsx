@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { stampActivityCookie } from '@/lib/inactivity'
 import { OTPInput } from '@/components/OTPInput'
 
 const CNC_LOGO = 'https://pub-d5b31319f7724cca83d8b708f94830b0.r2.dev/CNC%20-%20Logo%20Re-working%20-%20red%20-%20with%20tag%20line%20-%20transparent%20-%201.1.png'
@@ -23,6 +24,10 @@ export default function MFAEnrollPage() {
   const [showSecret, setShowSecret] = useState(false)
   const [copied,     setCopied]     = useState(false)
 
+  // Guards against duplicate auto-submits (e.g. React strict-mode
+  // double effects) while a verification is already in flight.
+  const verifyingRef = useRef(false)
+
   useEffect(() => {
     async function enroll() {
       const { data, error } = await supabase.auth.mfa.enroll({
@@ -37,25 +42,40 @@ export default function MFAEnrollPage() {
     enroll()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  async function handleVerify(e: React.FormEvent) {
-    e.preventDefault()
-    if (code.length !== 6) { setError('Enter all 6 digits.'); return }
+  // Auto-submit: the moment all 6 digits are in (typed or pasted),
+  // verify without needing a button click.
+  useEffect(() => {
+    if (step === 'confirm' && code.length === 6 && factorId) void verifyCode()
+  }, [step, code, factorId]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  async function verifyCode() {
+    if (verifyingRef.current) return
+    verifyingRef.current = true
     setError(''); setLoading(true)
 
     const { error: challengeError, data: challengeData } =
       await supabase.auth.mfa.challenge({ factorId })
-    if (challengeError) { setError(challengeError.message); setLoading(false); return }
+    if (challengeError) {
+      setError(challengeError.message)
+      setCode(''); setLoading(false); verifyingRef.current = false
+      return
+    }
 
     const { error: verifyError } = await supabase.auth.mfa.verify({
       factorId, challengeId: challengeData.id, code,
     })
-    if (verifyError) { setError('Incorrect code. Try again.'); setCode(''); setLoading(false); return }
+    if (verifyError) {
+      setError('Incorrect code. Try again.')
+      setCode(''); setLoading(false); verifyingRef.current = false
+      return
+    }
 
     await supabase.auth.refreshSession()
 
     const { data: { user } } = await supabase.auth.getUser()
     if (user) await supabase.from('user_profiles').update({ mfa_enrolled: true }).eq('id', user.id)
 
+    stampActivityCookie() // start the 5-hour inactivity clock
     router.push('/')
   }
 
@@ -176,21 +196,19 @@ export default function MFAEnrollPage() {
               </h2>
               <p className="text-sm text-cnc-gray-500 mb-7">
                 Enter the 6-digit code from your authenticator app to confirm setup.
+                It completes automatically.
               </p>
 
-              <form onSubmit={handleVerify}>
-                <OTPInput value={code} onChange={setCode} />
+              <OTPInput value={code} onChange={setCode} disabled={loading} />
 
-                {error && <p className="text-sm text-red-600 font-medium text-center mb-4">{error}</p>}
+              {error && <p className="text-sm text-red-600 font-medium text-center mb-4">{error}</p>}
 
-                <button
-                  type="submit"
-                  disabled={loading || code.length !== 6}
-                  className="w-full py-3.5 bg-cnc-red hover:bg-cnc-red-dark text-white font-heading font-bold text-sm tracking-wide rounded-lg shadow-cnc-red transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
-                >
-                  {loading ? 'Verifying…' : 'Confirm and continue'}
-                </button>
-              </form>
+              {/* Status area — same footprint the button occupied */}
+              <div className="h-12 flex items-center justify-center" aria-live="polite">
+                {loading && (
+                  <p className="text-sm font-semibold text-cnc-gray-500">Verifying…</p>
+                )}
+              </div>
 
               <div className="mt-5 text-xs text-cnc-gray-400">
                 <button
